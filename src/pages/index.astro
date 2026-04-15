@@ -1,5 +1,5 @@
 ---
-// index.astro - Insceo Digital Homepage — Rediseño Completo v2
+// index.astro - Insecto Digital Homepage — v3
 ---
 
 <!DOCTYPE html>
@@ -7,7 +7,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Insceo Digital — Hub Creativo</title>
+  <title>Insecto Digital — Hub Creativo</title>
   <meta name="description" content="Hub creativo digital. Diseño gráfico, fotografía, video, audio y desarrollo creativo con AI. Santiago, Chile." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -185,6 +185,7 @@
       text-decoration: none; letter-spacing: 0.05em;
       text-transform: uppercase;
       transition: transform 0.2s, box-shadow 0.2s;
+      border: none; cursor: none;
     }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(188,255,71,0.35); }
 
@@ -331,26 +332,15 @@
     .manifesto-title em { font-style: italic; font-weight: 400; }
 
     /* FOTO VIDEO AUDIO */
-    .visual-section {
-      padding: 8rem 4rem;
-      background: var(--gris);
-    }
-    .visual-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-    }
+    .visual-section { padding: 8rem 4rem; background: var(--gris); }
+    .visual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
     .visual-card {
       background: var(--negro);
       border: 1px solid var(--gris2);
-      border-radius: 4px;
-      overflow: hidden;
+      border-radius: 4px; overflow: hidden;
       transition: transform 0.3s, box-shadow 0.3s;
     }
-    .visual-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-    }
+    .visual-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,0.5); }
     .visual-card-header {
       height: 180px;
       display: flex; align-items: center; justify-content: center;
@@ -361,29 +351,12 @@
       display: flex; align-items: center; justify-content: center;
       opacity: 0.12;
     }
-    .aperture {
-      width: 120px; height: 120px;
-      border: 1px solid var(--naranja);
-      border-radius: 50%; position: relative;
-    }
-    .aperture::before, .aperture::after {
-      content: ''; position: absolute; inset: 15px;
-      border: 1px solid var(--naranja); border-radius: 50%;
-    }
+    .aperture { width: 120px; height: 120px; border: 1px solid var(--naranja); border-radius: 50%; position: relative; }
+    .aperture::before, .aperture::after { content: ''; position: absolute; inset: 15px; border: 1px solid var(--naranja); border-radius: 50%; }
     .aperture::after { inset: 35px; }
-    .play-deco {
-      width: 0; height: 0;
-      border-left: 50px solid var(--magenta);
-      border-top: 30px solid transparent;
-      border-bottom: 30px solid transparent;
-      margin-left: 10px;
-    }
+    .play-deco { width: 0; height: 0; border-left: 50px solid var(--magenta); border-top: 30px solid transparent; border-bottom: 30px solid transparent; margin-left: 10px; }
     .waveform { display: flex; align-items: center; gap: 3px; }
-    .waveform span {
-      width: 3px; border-radius: 2px;
-      background: var(--cyan);
-      animation: wave 1.2s ease-in-out infinite;
-    }
+    .waveform span { width: 3px; border-radius: 2px; background: var(--cyan); animation: wave 1.2s ease-in-out infinite; }
     .waveform span:nth-child(1) { height: 20px; animation-delay: 0s; }
     .waveform span:nth-child(2) { height: 40px; animation-delay: 0.1s; }
     .waveform span:nth-child(3) { height: 60px; animation-delay: 0.2s; }
@@ -393,37 +366,21 @@
     .waveform span:nth-child(7) { height: 60px; animation-delay: 0.6s; }
     .waveform span:nth-child(8) { height: 40px; animation-delay: 0.7s; }
     .waveform span:nth-child(9) { height: 20px; animation-delay: 0.8s; }
-    @keyframes wave {
-      0%, 100% { transform: scaleY(1); }
-      50% { transform: scaleY(0.4); }
-    }
+    @keyframes wave { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.4); } }
     .big-icon { font-size: 3.5rem; position: relative; z-index: 1; }
     .visual-card-body { padding: 2rem 2.5rem 2.5rem; }
-    .visual-card-num {
-      font-family: var(--font-display);
-      font-size: 0.65rem; letter-spacing: 0.15em;
-      color: var(--naranja); margin-bottom: 0.75rem; opacity: 0.8;
-    }
+    .visual-card-num { font-family: var(--font-display); font-size: 0.65rem; letter-spacing: 0.15em; color: var(--naranja); margin-bottom: 0.75rem; opacity: 0.8; }
     .visual-card-num.m { color: var(--magenta); }
     .visual-card-num.c { color: var(--cyan); }
-    .visual-card-num.v { color: var(--violeta); }
-    .visual-card-name {
-      font-family: var(--font-display);
-      font-weight: 700; font-size: 1.4rem;
-      margin-bottom: 0.75rem; letter-spacing: -0.02em;
-    }
+    .visual-card-name { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
     .visual-card-desc { font-size: 0.9rem; line-height: 1.6; opacity: 0.55; }
     .visual-card-tags { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
     /* AI CREATIVA */
-    .ai-section {
-      padding: 8rem 4rem;
-      position: relative; overflow: hidden;
-    }
+    .ai-section { padding: 8rem 4rem; position: relative; overflow: hidden; }
     .ai-section::before {
       content: ''; position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at 20% 50%, rgba(155,93,255,0.1) 0%, transparent 60%),
+      background: radial-gradient(ellipse at 20% 50%, rgba(155,93,255,0.1) 0%, transparent 60%),
         radial-gradient(ellipse at 80% 20%, rgba(42,250,223,0.07) 0%, transparent 50%),
         radial-gradient(ellipse at 60% 80%, rgba(255,60,172,0.07) 0%, transparent 50%);
       pointer-events: none;
@@ -431,127 +388,46 @@
     .ai-inner { position: relative; z-index: 1; }
     .ai-badge {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(155,93,255,0.12);
-      border: 1px solid rgba(155,93,255,0.25);
+      background: rgba(155,93,255,0.12); border: 1px solid rgba(155,93,255,0.25);
       padding: 0.4rem 1rem; border-radius: 100px;
-      font-size: 0.7rem; letter-spacing: 0.15em;
-      text-transform: uppercase; color: var(--violeta);
-      margin-bottom: 2rem;
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--violeta); margin-bottom: 2rem;
     }
-    .ai-badge::before {
-      content: ''; width: 6px; height: 6px; border-radius: 50%;
-      background: var(--violeta);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
-    }
-    .ai-title {
-      font-family: var(--font-display); font-weight: 800;
-      font-size: clamp(2.8rem, 6vw, 5.5rem);
-      line-height: 0.95; letter-spacing: -0.04em;
-      margin-bottom: 1.5rem;
-    }
-    .ai-title .grad {
-      background: linear-gradient(90deg, var(--violeta), var(--cyan), var(--magenta));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .ai-subtitle {
-      font-size: 1.05rem; opacity: 0.6; line-height: 1.6;
-      max-width: 520px; margin-bottom: 4rem;
-    }
-    .ai-tools-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-    .ai-tool {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 16px;
-      padding: 2rem;
-      transition: all 0.3s;
-      position: relative; overflow: hidden;
-    }
-    .ai-tool::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(155,93,255,0.07), transparent);
-      opacity: 0; transition: opacity 0.3s;
-    }
+    .ai-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--violeta); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+    .ai-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.8rem, 6vw, 5.5rem); line-height: 0.95; letter-spacing: -0.04em; margin-bottom: 1.5rem; }
+    .ai-title .grad { background: linear-gradient(90deg, var(--violeta), var(--cyan), var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .ai-subtitle { font-size: 1.05rem; opacity: 0.6; line-height: 1.6; max-width: 520px; margin-bottom: 4rem; }
+    .ai-tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .ai-tool { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 2rem; transition: all 0.3s; position: relative; overflow: hidden; }
+    .ai-tool::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(155,93,255,0.07), transparent); opacity: 0; transition: opacity 0.3s; }
     .ai-tool:hover::before { opacity: 1; }
-    .ai-tool:hover {
-      border-color: rgba(155,93,255,0.3);
-      transform: translateY(-4px);
-    }
+    .ai-tool:hover { border-color: rgba(155,93,255,0.3); transform: translateY(-4px); }
     .ai-tool-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
-    .ai-tool-name {
-      font-family: var(--font-display); font-weight: 700;
-      font-size: 1.1rem; margin-bottom: 0.6rem; letter-spacing: -0.02em;
-    }
+    .ai-tool-name { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; margin-bottom: 0.6rem; letter-spacing: -0.02em; }
     .ai-tool-desc { font-size: 0.85rem; opacity: 0.5; line-height: 1.55; }
     .ai-examples { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
-    .ai-example {
-      font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase;
-      background: rgba(155,93,255,0.1);
-      border: 1px solid rgba(155,93,255,0.2);
-      color: var(--violeta);
-      padding: 0.25rem 0.6rem; border-radius: 100px;
-    }
+    .ai-example { font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; background: rgba(155,93,255,0.1); border: 1px solid rgba(155,93,255,0.2); color: var(--violeta); padding: 0.25rem 0.6rem; border-radius: 100px; }
 
     /* PROCESO */
     .process { padding: 8rem 4rem; }
     .process-list { margin-top: 2rem; }
-    .process-item {
-      display: grid;
-      grid-template-columns: 80px 1fr 1fr;
-      gap: 2rem; align-items: center;
-      padding: 2.5rem 0;
-      border-bottom: 1px solid var(--gris2);
-      transition: all 0.3s;
-    }
+    .process-item { display: grid; grid-template-columns: 80px 1fr 1fr; gap: 2rem; align-items: center; padding: 2.5rem 0; border-bottom: 1px solid var(--gris2); transition: all 0.3s; }
     .process-item:hover { padding-left: 1rem; }
     .process-item:hover .process-num { color: var(--verde); }
-    .process-num {
-      font-family: var(--font-display); font-weight: 800;
-      font-size: 3rem; color: var(--gris2);
-      letter-spacing: -0.05em; transition: color 0.3s;
-    }
-    .process-name {
-      font-family: var(--font-display); font-weight: 700;
-      font-size: 1.5rem; letter-spacing: -0.02em;
-    }
+    .process-num { font-family: var(--font-display); font-weight: 800; font-size: 3rem; color: var(--gris2); letter-spacing: -0.05em; transition: color 0.3s; }
+    .process-name { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; }
     .process-desc { font-size: 0.9rem; line-height: 1.6; opacity: 0.5; }
 
     /* COMUNIDAD */
-    .community {
-      padding: 8rem 4rem;
-      background: var(--gris);
-    }
-    .community-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 6rem; align-items: center;
-    }
-    .community-stats {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 1px; background: var(--gris2);
-    }
+    .community { padding: 8rem 4rem; background: var(--gris); }
+    .community-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+    .community-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--gris2); }
     .stat { background: var(--gris); padding: 2.5rem; }
-    .stat-num {
-      font-family: var(--font-display); font-weight: 800;
-      font-size: 3.5rem; letter-spacing: -0.04em;
-      color: var(--verde); line-height: 1; margin-bottom: 0.5rem;
-    }
+    .stat-num { font-family: var(--font-display); font-weight: 800; font-size: 3.5rem; letter-spacing: -0.04em; color: var(--verde); line-height: 1; margin-bottom: 0.5rem; }
     .stat-label { font-size: 0.8rem; opacity: 0.5; line-height: 1.4; }
 
     /* CTA */
-    .cta-section {
-      padding: 10rem 4rem;
-      text-align: center;
-      position: relative; overflow: hidden;
-    }
+    .cta-section { padding: 10rem 4rem; text-align: center; position: relative; overflow: hidden; }
     .cta-section::before {
       content: ''; position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
@@ -559,58 +435,120 @@
       background: radial-gradient(circle, rgba(188,255,71,0.08) 0%, transparent 70%);
       pointer-events: none;
     }
-    .cta-title {
-      font-family: var(--font-display); font-weight: 800;
-      font-size: clamp(3rem, 7vw, 7rem);
-      line-height: 0.95; letter-spacing: -0.04em;
-      margin-bottom: 2.5rem; position: relative; z-index: 1;
-    }
+    .cta-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(3rem, 7vw, 7rem); line-height: 0.95; letter-spacing: -0.04em; margin-bottom: 2.5rem; position: relative; z-index: 1; }
     .cta-title span { color: var(--verde); }
-    .cta-subtitle {
-      font-size: 1.1rem; opacity: 0.5;
-      max-width: 450px; margin: 0 auto 3rem;
-      line-height: 1.6; position: relative; z-index: 1;
-    }
-    .cta-email {
-      font-family: var(--font-display); font-weight: 700;
-      font-size: 1rem; color: var(--negro);
-      background: var(--verde); padding: 1.1rem 2.5rem;
-      border-radius: 100px; text-decoration: none;
-      display: inline-block;
+    .cta-subtitle { font-size: 1.1rem; opacity: 0.5; max-width: 450px; margin: 0 auto 3rem; line-height: 1.6; position: relative; z-index: 1; }
+    .cta-btn {
+      font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+      color: var(--negro); background: var(--verde);
+      padding: 1.1rem 2.5rem; border-radius: 100px;
+      border: none; cursor: none;
+      display: inline-flex; align-items: center; gap: 0.6rem;
       transition: transform 0.2s, box-shadow 0.2s;
       position: relative; z-index: 1; letter-spacing: 0.03em;
     }
-    .cta-email:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 16px 60px rgba(188,255,71,0.3);
-    }
+    .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 60px rgba(188,255,71,0.3); }
 
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--gris2);
-      padding: 3rem 4rem;
-      display: flex; justify-content: space-between; align-items: center;
+    /* MODAL CONTACTO */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
     }
-    .footer-logo {
-      font-family: var(--font-display); font-weight: 800;
-      font-size: 1rem; color: var(--blanco); text-decoration: none;
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--gris);
+      border: 1px solid var(--gris2);
+      border-radius: 8px;
+      padding: 3rem;
+      width: 100%;
+      max-width: 560px;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
     }
-    .footer-logo span { color: var(--verde); }
-    .footer-links { display: flex; gap: 2rem; list-style: none; }
-    .footer-links a {
-      color: var(--blanco); text-decoration: none;
-      font-size: 0.75rem; opacity: 0.4;
-      letter-spacing: 0.08em; text-transform: uppercase;
+    .modal-overlay.active .modal { transform: translateY(0); }
+    .modal-close {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      background: none; border: none; cursor: none;
+      color: var(--blanco); opacity: 0.4;
+      font-size: 1.5rem; line-height: 1;
       transition: opacity 0.2s;
     }
+    .modal-close:hover { opacity: 1; }
+    .modal-label {
+      font-size: 0.65rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--verde);
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .modal-label::before { content: ''; width: 24px; height: 1px; background: var(--verde); }
+    .modal-title {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: 2rem; letter-spacing: -0.03em;
+      margin-bottom: 2rem; line-height: 1.1;
+    }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label {
+      display: block; font-size: 0.7rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      opacity: 0.5; margin-bottom: 0.5rem;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--gris2);
+      border-radius: 6px;
+      padding: 0.85rem 1rem;
+      color: var(--blanco);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 300;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--verde); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-group select option { background: var(--gris); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .btn-submit {
+      width: 100%;
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase;
+      background: var(--verde); color: var(--negro);
+      border: none; border-radius: 100px;
+      padding: 1rem; margin-top: 0.5rem;
+      cursor: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(188,255,71,0.3); }
+    .form-success {
+      text-align: center; padding: 2rem 0;
+      display: none;
+    }
+    .form-success .success-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+    .form-success h3 { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 0.75rem; }
+    .form-success p { opacity: 0.6; font-size: 0.95rem; line-height: 1.6; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--gris2); padding: 3rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { font-family: var(--font-display); font-weight: 800; font-size: 1rem; color: var(--blanco); text-decoration: none; }
+    .footer-logo span { color: var(--verde); }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a { color: var(--blanco); text-decoration: none; font-size: 0.75rem; opacity: 0.4; letter-spacing: 0.08em; text-transform: uppercase; transition: opacity 0.2s; }
     .footer-links a:hover { opacity: 1; }
     .footer-copy { font-size: 0.7rem; opacity: 0.25; letter-spacing: 0.05em; }
 
     /* REVEAL */
-    .reveal {
-      opacity: 0; transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-delay-1 { transition-delay: 0.1s; }
     .reveal-delay-2 { transition-delay: 0.2s; }
@@ -636,6 +574,8 @@
       .cta-section { padding: 6rem 2rem; }
       footer { padding: 2rem; flex-direction: column; gap: 1.5rem; text-align: center; }
       .hero-scroll { display: none; }
+      .modal { padding: 2rem; margin: 1rem; }
+      .form-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -644,15 +584,63 @@
   <div class="cursor" id="cursor"></div>
   <div class="cursor-follower" id="cursorFollower"></div>
 
+  <!-- MODAL CONTACTO -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div id="formContainer">
+        <div class="modal-label">Cuéntanos tu proyecto</div>
+        <h2 class="modal-title">Hablemos de<br>lo que necesitas</h2>
+        <form id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre</label>
+              <input type="text" name="nombre" placeholder="Tu nombre" required />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" name="email" placeholder="tu@correo.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Servicio de interés</label>
+            <select name="servicio">
+              <option value="">Selecciona un servicio...</option>
+              <option>Diseño Gráfico & Branding</option>
+              <option>Marketing & Redes Sociales</option>
+              <option>Fotografía Profesional</option>
+              <option>Producción de Video</option>
+              <option>Audio & Producción Musical</option>
+              <option>Dirección de Arte</option>
+              <option>AI Creativa</option>
+              <option>Comunidad & Formación</option>
+              <option>Proyecto completo</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tu mensaje</label>
+            <textarea name="mensaje" placeholder="Cuéntanos sobre tu proyecto, marca o idea..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Enviar mensaje →</button>
+        </form>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <span class="success-icon">✦</span>
+        <h3>¡Mensaje enviado!</h3>
+        <p>Gracias por escribirnos. Te contactaremos pronto para hablar de tu proyecto.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- NAV -->
   <nav>
-    <a href="/" class="logo">insceo<span>.</span>digital</a>
+    <a href="/" class="logo">insecto<span>.</span>digital</a>
     <ul>
       <li><a href="#servicios">Servicios</a></li>
       <li><a href="#visual">Foto & Video</a></li>
       <li><a href="#ai">AI Creativa</a></li>
       <li><a href="#proceso">Proceso</a></li>
-      <li><a href="#contacto" class="nav-cta">Hablemos</a></li>
+      <li><a href="#contacto" class="nav-cta" id="navCta">Hablemos</a></li>
     </ul>
   </nav>
 
@@ -690,7 +678,7 @@
 
   <!-- TICKER -->
   <div class="ticker">
-    <div class="ticker-inner" id="ticker">
+    <div class="ticker-inner">
       <span class="ticker-item"><span class="ticker-dot"></span>Diseño Gráfico</span>
       <span class="ticker-item"><span class="ticker-dot magenta"></span>Fotografía</span>
       <span class="ticker-item"><span class="ticker-dot naranja"></span>Video</span>
@@ -754,7 +742,7 @@
 
   <!-- MANIFIESTO -->
   <div class="manifesto">
-    <div class="manifesto-bg-text">INSCEO</div>
+    <div class="manifesto-bg-text">INSECTO</div>
     <div class="manifesto-content">
       <div class="manifesto-label">Nuestro manifiesto</div>
       <h2 class="manifesto-title">
@@ -767,80 +755,58 @@
 
   <!-- FOTO VIDEO AUDIO -->
   <section class="visual-section" id="visual">
-    <div style="padding: 0 0 0 0;">
-      <div class="section-label reveal">Producción visual & sonora</div>
-      <h2 class="section-title reveal reveal-delay-1">La imagen lo dice todo.<br>El sonido lo completa.</h2>
-      <div class="visual-grid">
-
-        <div class="visual-card reveal reveal-delay-1">
-          <div class="visual-card-header" style="background: linear-gradient(135deg, #0f0b06, #1a1206);">
-            <div class="decoration"><div class="aperture"></div></div>
-            <span class="big-icon">📸</span>
-          </div>
-          <div class="visual-card-body">
-            <div class="visual-card-num">04</div>
-            <div class="visual-card-name">Fotografía Profesional</div>
-            <p class="visual-card-desc">Capturamos la esencia de tu marca en cada imagen. Producto, retrato, editorial y contenido para redes con dirección artística propia.</p>
-            <div class="visual-card-tags">
-              <span class="tag">Producto</span><span class="tag">Retrato</span>
-              <span class="tag">Editorial</span><span class="tag">RRSS</span>
-            </div>
-          </div>
+    <div class="section-label reveal">Producción visual & sonora</div>
+    <h2 class="section-title reveal reveal-delay-1">La imagen lo dice todo.<br>El sonido lo completa.</h2>
+    <div class="visual-grid">
+      <div class="visual-card reveal reveal-delay-1">
+        <div class="visual-card-header" style="background: linear-gradient(135deg, #0f0b06, #1a1206);">
+          <div class="decoration"><div class="aperture"></div></div>
+          <span class="big-icon">📸</span>
         </div>
-
-        <div class="visual-card reveal reveal-delay-2">
-          <div class="visual-card-header" style="background: linear-gradient(135deg, #100810, #1a0818);">
-            <div class="decoration"><div class="play-deco"></div></div>
-            <span class="big-icon">🎥</span>
-          </div>
-          <div class="visual-card-body">
-            <div class="visual-card-num m">05</div>
-            <div class="visual-card-name">Producción de Video</div>
-            <p class="visual-card-desc">Desde reels hasta campañas completas. Producimos, dirigimos y editamos contenido audiovisual que detiene el scroll y comunica tu historia.</p>
-            <div class="visual-card-tags">
-              <span class="tag">Reels</span><span class="tag">Spots</span>
-              <span class="tag">Documental</span><span class="tag">Motion</span>
-            </div>
-          </div>
+        <div class="visual-card-body">
+          <div class="visual-card-num">04</div>
+          <div class="visual-card-name">Fotografía Profesional</div>
+          <p class="visual-card-desc">Capturamos la esencia de tu marca en cada imagen. Producto, retrato, editorial y contenido para redes con dirección artística propia.</p>
+          <div class="visual-card-tags"><span class="tag">Producto</span><span class="tag">Retrato</span><span class="tag">Editorial</span><span class="tag">RRSS</span></div>
         </div>
-
-        <div class="visual-card reveal reveal-delay-3">
-          <div class="visual-card-header" style="background: linear-gradient(135deg, #060810, #080a18);">
-            <div class="decoration">
-              <div class="waveform">
-                <span></span><span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span>
-              </div>
-            </div>
-            <span class="big-icon">🎧</span>
-          </div>
-          <div class="visual-card-body">
-            <div class="visual-card-num c">06</div>
-            <div class="visual-card-name">Audio & Producción Musical</div>
-            <p class="visual-card-desc">Jingles, identidad sonora, podcasts y bandas sonoras para campañas. El audio correcto convierte contenido en experiencia.</p>
-            <div class="visual-card-tags">
-              <span class="tag">Jingle</span><span class="tag">Podcast</span>
-              <span class="tag">Sound Branding</span><span class="tag">Score</span>
-            </div>
-          </div>
+      </div>
+      <div class="visual-card reveal reveal-delay-2">
+        <div class="visual-card-header" style="background: linear-gradient(135deg, #100810, #1a0818);">
+          <div class="decoration"><div class="play-deco"></div></div>
+          <span class="big-icon">🎥</span>
         </div>
-
-        <div class="visual-card reveal reveal-delay-4">
-          <div class="visual-card-header" style="background: linear-gradient(135deg, #0a0808, #180e06);">
-            <div class="decoration" style="font-size: 6rem; color: var(--naranja); opacity: 0.1; font-family: var(--font-display); font-weight: 800;">ART</div>
-            <span class="big-icon">🎨</span>
-          </div>
-          <div class="visual-card-body">
-            <div class="visual-card-num" style="color: var(--naranja);">07</div>
-            <div class="visual-card-name">Dirección de Arte</div>
-            <p class="visual-card-desc">Conceptualizamos y dirigimos la estética visual de tus campañas. Coherencia en todos los puntos de contacto de tu marca.</p>
-            <div class="visual-card-tags">
-              <span class="tag">Concepto</span><span class="tag">Estética</span>
-              <span class="tag">Campaña</span><span class="tag">Storytelling</span>
-            </div>
-          </div>
+        <div class="visual-card-body">
+          <div class="visual-card-num m">05</div>
+          <div class="visual-card-name">Producción de Video</div>
+          <p class="visual-card-desc">Desde reels hasta campañas completas. Producimos, dirigimos y editamos contenido audiovisual que detiene el scroll y comunica tu historia.</p>
+          <div class="visual-card-tags"><span class="tag">Reels</span><span class="tag">Spots</span><span class="tag">Documental</span><span class="tag">Motion</span></div>
         </div>
-
+      </div>
+      <div class="visual-card reveal reveal-delay-3">
+        <div class="visual-card-header" style="background: linear-gradient(135deg, #060810, #080a18);">
+          <div class="decoration">
+            <div class="waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
+          <span class="big-icon">🎧</span>
+        </div>
+        <div class="visual-card-body">
+          <div class="visual-card-num c">06</div>
+          <div class="visual-card-name">Audio & Producción Musical</div>
+          <p class="visual-card-desc">Jingles, identidad sonora, podcasts y bandas sonoras para campañas. El audio correcto convierte contenido en experiencia.</p>
+          <div class="visual-card-tags"><span class="tag">Jingle</span><span class="tag">Podcast</span><span class="tag">Sound Branding</span><span class="tag">Score</span></div>
+        </div>
+      </div>
+      <div class="visual-card reveal reveal-delay-4">
+        <div class="visual-card-header" style="background: linear-gradient(135deg, #0a0808, #180e06);">
+          <div class="decoration" style="font-size: 6rem; color: var(--naranja); opacity: 0.1; font-family: var(--font-display); font-weight: 800;">ART</div>
+          <span class="big-icon">🎨</span>
+        </div>
+        <div class="visual-card-body">
+          <div class="visual-card-num" style="color: var(--naranja);">07</div>
+          <div class="visual-card-name">Dirección de Arte</div>
+          <p class="visual-card-desc">Conceptualizamos y dirigimos la estética visual de tus campañas. Coherencia en todos los puntos de contacto de tu marca.</p>
+          <div class="visual-card-tags"><span class="tag">Concepto</span><span class="tag">Estética</span><span class="tag">Campaña</span><span class="tag">Storytelling</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -849,42 +815,26 @@
   <section class="ai-section" id="ai">
     <div class="ai-inner">
       <div class="ai-badge reveal">Tecnología de vanguardia</div>
-      <h2 class="ai-title reveal reveal-delay-1">
-        Desarrollo creativo<br>con <span class="grad">Inteligencia Artificial</span>
-      </h2>
-      <p class="ai-subtitle reveal reveal-delay-2">
-        Usamos las herramientas de AI más avanzadas del mundo para crear imagen, video y audio que antes era imposible. No reemplazamos la creatividad humana — la potenciamos.
-      </p>
+      <h2 class="ai-title reveal reveal-delay-1">Desarrollo creativo<br>con <span class="grad">Inteligencia Artificial</span></h2>
+      <p class="ai-subtitle reveal reveal-delay-2">Usamos las herramientas de AI más avanzadas del mundo para crear imagen, video y audio que antes era imposible. No reemplazamos la creatividad humana — la potenciamos.</p>
       <div class="ai-tools-grid">
         <div class="ai-tool reveal reveal-delay-1">
           <span class="ai-tool-icon">🖼️</span>
           <div class="ai-tool-name">Imagen con AI</div>
           <p class="ai-tool-desc">Generación y edición de imágenes fotorrealistas, ilustraciones y activos visuales únicos para cada proyecto.</p>
-          <div class="ai-examples">
-            <span class="ai-example">Midjourney</span>
-            <span class="ai-example">Stable Diffusion</span>
-            <span class="ai-example">Firefly</span>
-          </div>
+          <div class="ai-examples"><span class="ai-example">Midjourney</span><span class="ai-example">Stable Diffusion</span><span class="ai-example">Firefly</span></div>
         </div>
         <div class="ai-tool reveal reveal-delay-2">
           <span class="ai-tool-icon">🎬</span>
           <div class="ai-tool-name">Video con AI</div>
           <p class="ai-tool-desc">Producción de clips, animaciones y contenido audiovisual generado o potenciado con las últimas herramientas de video AI.</p>
-          <div class="ai-examples">
-            <span class="ai-example">Sora</span>
-            <span class="ai-example">Runway</span>
-            <span class="ai-example">Kling</span>
-          </div>
+          <div class="ai-examples"><span class="ai-example">Sora</span><span class="ai-example">Runway</span><span class="ai-example">Kling</span></div>
         </div>
         <div class="ai-tool reveal reveal-delay-3">
           <span class="ai-tool-icon">🎵</span>
           <div class="ai-tool-name">Audio con AI</div>
           <p class="ai-tool-desc">Composición musical, efectos de sonido y voz en off generados con AI para campañas, reels y spots publicitarios.</p>
-          <div class="ai-examples">
-            <span class="ai-example">Suno</span>
-            <span class="ai-example">ElevenLabs</span>
-            <span class="ai-example">Udio</span>
-          </div>
+          <div class="ai-examples"><span class="ai-example">Suno</span><span class="ai-example">ElevenLabs</span><span class="ai-example">Udio</span></div>
         </div>
       </div>
     </div>
@@ -895,26 +845,10 @@
     <div class="section-label reveal">Cómo trabajamos</div>
     <h2 class="section-title reveal reveal-delay-1">Un proceso tan vivo como tu marca</h2>
     <div class="process-list">
-      <div class="process-item reveal">
-        <div class="process-num">01</div>
-        <div class="process-name">Escuchar & Descubrir</div>
-        <div class="process-desc">Entendemos tu negocio, tu audiencia y el espacio que quieres ocupar en el mundo digital.</div>
-      </div>
-      <div class="process-item reveal">
-        <div class="process-num">02</div>
-        <div class="process-name">Estrategia & Concepto</div>
-        <div class="process-desc">Definimos la dirección creativa y la estrategia que va a guiar cada decisión de diseño y comunicación.</div>
-      </div>
-      <div class="process-item reveal">
-        <div class="process-num">03</div>
-        <div class="process-name">Diseñar & Construir</div>
-        <div class="process-desc">Damos vida al concepto con diseño de alto nivel y desarrollo robusto. Cada detalle importa.</div>
-      </div>
-      <div class="process-item reveal">
-        <div class="process-num">04</div>
-        <div class="process-name">Lanzar & Crecer</div>
-        <div class="process-desc">Salimos al mundo, medimos, aprendemos y evolucionamos. El trabajo no termina en el lanzamiento.</div>
-      </div>
+      <div class="process-item reveal"><div class="process-num">01</div><div class="process-name">Escuchar & Descubrir</div><div class="process-desc">Entendemos tu negocio, tu audiencia y el espacio que quieres ocupar en el mundo digital.</div></div>
+      <div class="process-item reveal"><div class="process-num">02</div><div class="process-name">Estrategia & Concepto</div><div class="process-desc">Definimos la dirección creativa y la estrategia que va a guiar cada decisión de diseño y comunicación.</div></div>
+      <div class="process-item reveal"><div class="process-num">03</div><div class="process-name">Diseñar & Construir</div><div class="process-desc">Damos vida al concepto con diseño de alto nivel y desarrollo robusto. Cada detalle importa.</div></div>
+      <div class="process-item reveal"><div class="process-num">04</div><div class="process-name">Lanzar & Crecer</div><div class="process-desc">Salimos al mundo, medimos, aprendemos y evolucionamos. El trabajo no termina en el lanzamiento.</div></div>
     </div>
   </section>
 
@@ -924,10 +858,8 @@
       <div>
         <div class="section-label reveal">Comunidad primero</div>
         <h2 class="section-title reveal reveal-delay-1" style="margin-bottom: 1.5rem;">Somos parte del ecosistema que construimos</h2>
-        <p class="reveal reveal-delay-2" style="opacity: 0.55; line-height: 1.7; font-size: 1rem; max-width: 400px;">
-          No somos una agencia externa que llega con soluciones enlatadas. Vivimos dentro de la comunidad digital, entendemos sus dinámicas y construimos desde adentro.
-        </p>
-        <a href="#contacto" class="btn-primary reveal reveal-delay-3" style="display: inline-block; margin-top: 2.5rem;">Únete a la comunidad</a>
+        <p class="reveal reveal-delay-2" style="opacity: 0.55; line-height: 1.7; font-size: 1rem; max-width: 400px;">No somos una agencia externa que llega con soluciones enlatadas. Vivimos dentro de la comunidad digital, entendemos sus dinámicas y construimos desde adentro.</p>
+        <button class="btn-primary reveal reveal-delay-3" style="margin-top: 2.5rem;" onclick="document.getElementById('modalOverlay').classList.add('active')">Únete a la comunidad</button>
       </div>
       <div class="community-stats reveal">
         <div class="stat"><div class="stat-num">+50</div><div class="stat-label">Proyectos<br>completados</div></div>
@@ -942,12 +874,14 @@
   <section class="cta-section" id="contacto">
     <h2 class="cta-title reveal">¿Listo para<br><span>crear algo</span><br>extraordinario?</h2>
     <p class="cta-subtitle reveal reveal-delay-1">Cuéntanos tu proyecto. Sin compromisos, sin plantillas. Solo una conversación real.</p>
-    <a href="mailto:hola@insceodigital.com" class="cta-email reveal reveal-delay-2">hola@insceodigital.com</a>
+    <button class="cta-btn reveal reveal-delay-2" id="openModal">
+      ✦ Escribenos
+    </button>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <a href="/" class="footer-logo">insceo<span>.</span>digital</a>
+    <a href="/" class="footer-logo">insecto<span>.</span>digital</a>
     <ul class="footer-links">
       <li><a href="#servicios">Servicios</a></li>
       <li><a href="#visual">Foto & Video</a></li>
@@ -955,51 +889,65 @@
       <li><a href="#proceso">Proceso</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
-    <span class="footer-copy">© 2025 Insceo Digital</span>
+    <span class="footer-copy">© 2025 Insecto Digital</span>
   </footer>
 
   <script>
+    // Cursor
     const cursor = document.getElementById('cursor');
     const follower = document.getElementById('cursorFollower');
     let mouseX = 0, mouseY = 0, followerX = 0, followerY = 0;
-
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX; mouseY = e.clientY;
-      cursor.style.left = mouseX + 'px';
-      cursor.style.top = mouseY + 'px';
+      cursor.style.left = mouseX + 'px'; cursor.style.top = mouseY + 'px';
     });
-
     function animateFollower() {
       followerX += (mouseX - followerX) * 0.12;
       followerY += (mouseY - followerY) * 0.12;
-      follower.style.left = followerX + 'px';
-      follower.style.top = followerY + 'px';
+      follower.style.left = followerX + 'px'; follower.style.top = followerY + 'px';
       requestAnimationFrame(animateFollower);
     }
     animateFollower();
-
     document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursor.style.width = '20px'; cursor.style.height = '20px';
-        follower.style.width = '60px'; follower.style.height = '60px';
-      });
-      el.addEventListener('mouseleave', () => {
-        cursor.style.width = '12px'; cursor.style.height = '12px';
-        follower.style.width = '36px'; follower.style.height = '36px';
-      });
+      el.addEventListener('mouseenter', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; follower.style.width = '60px'; follower.style.height = '60px'; });
+      el.addEventListener('mouseleave', () => { cursor.style.width = '12px'; cursor.style.height = '12px'; follower.style.width = '36px'; follower.style.height = '36px'; });
     });
 
+    // Modal
+    const overlay = document.getElementById('modalOverlay');
+    const openBtns = [document.getElementById('openModal'), document.getElementById('navCta')];
+    openBtns.forEach(btn => { if(btn) btn.addEventListener('click', (e) => { e.preventDefault(); overlay.classList.add('active'); }); });
+    document.getElementById('modalClose').addEventListener('click', () => overlay.classList.remove('active'));
+    overlay.addEventListener('click', (e) => { if(e.target === overlay) overlay.classList.remove('active'); });
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') overlay.classList.remove('active'); });
+
+    // Formulario — envío via Cloudflare Email Routing
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+      const body = `Nombre: ${data.get('nombre')}\nEmail: ${data.get('email')}\nServicio: ${data.get('servicio')}\n\nMensaje:\n${data.get('mensaje')}`;
+      const mailtoLink = `mailto:hola@insectodigital.com?subject=Nuevo contacto de ${data.get('nombre')}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoLink;
+      document.getElementById('formContainer').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+      setTimeout(() => {
+        overlay.classList.remove('active');
+        setTimeout(() => {
+          document.getElementById('formContainer').style.display = 'block';
+          document.getElementById('formSuccess').style.display = 'none';
+          form.reset();
+        }, 400);
+      }, 3000);
+    });
+
+    // Reveal on scroll
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     reveals.forEach(el => observer.observe(el));
-
-    document.querySelectorAll('.hero .reveal').forEach(el => {
-      setTimeout(() => el.classList.add('visible'), 100);
-    });
+    document.querySelectorAll('.hero .reveal').forEach(el => setTimeout(() => el.classList.add('visible'), 100));
   </script>
 
 </body>
