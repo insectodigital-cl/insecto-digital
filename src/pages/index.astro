@@ -1,6 +1,6 @@
 ---
-// index.astro - Insecto Digital Homepage — v7
-// Hero 3D inmersivo con Three.js + Automatización Digital
+// index.astro - Insecto Digital — v9
+// 3D objects spinning: camera, video camera, vinyl, easel
 ---
 <!DOCTYPE html>
 <html lang="es">
@@ -8,414 +8,242 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Insecto Digital — Hub Creativo</title>
-  <meta name="description" content="Hub creativo digital. Diseño gráfico, fotografía, video, audio, AI y automatización digital. Santiago, Chile." />
+  <meta name="description" content="Hub creativo digital. Diseño, fotografía, video, audio, AI y automatización. Santiago, Chile." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --negro: #080808; --verde: #BCFF47; --magenta: #FF3CAC;
-      --cyan: #2AFADF; --naranja: #FF6B2B; --violeta: #9B5DFF;
-      --blanco: #F5F0E8; --gris: #1A1A1A; --gris2: #2C2C2C;
-      --whatsapp: #25D366; --whatsapp-dark: #1da851;
-      --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --negro:#080808;--verde:#BCFF47;--magenta:#FF3CAC;
+      --cyan:#2AFADF;--naranja:#FF6B2B;--violeta:#9B5DFF;
+      --blanco:#F5F0E8;--gris:#1A1A1A;--gris2:#2C2C2C;
+      --wa:#25D366;--wa2:#1da851;
+      --fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
     }
-    html { scroll-behavior: smooth; }
-    body { background: var(--negro); color: var(--blanco); font-family: var(--font-body); font-weight: 300; overflow-x: hidden; cursor: none; }
+    html{scroll-behavior:smooth}
+    body{background:var(--negro);color:var(--blanco);font-family:var(--fb);font-weight:300;overflow-x:hidden;cursor:none}
+    .cursor{width:12px;height:12px;background:var(--verde);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:difference}
+    .cursor-follower{width:36px;height:36px;border:1px solid rgba(188,255,71,.4);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .12s ease-out}
 
-    .cursor { width: 12px; height: 12px; background: var(--verde); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .2s,height .2s; mix-blend-mode: difference; }
-    .cursor-follower { width: 36px; height: 36px; border: 1px solid rgba(188,255,71,.4); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: all .12s ease-out; }
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.5rem 4rem;transition:background .4s}
+    nav.scrolled{background:rgba(8,8,8,.88);backdrop-filter:blur(14px)}
+    .logo{font-family:var(--fd);font-weight:800;font-size:1.1rem;color:var(--blanco);text-decoration:none;letter-spacing:-.02em}
+    .logo span{color:var(--verde)}
+    nav ul{list-style:none;display:flex;gap:2.5rem;align-items:center}
+    nav ul a{color:var(--blanco);text-decoration:none;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;opacity:.7;transition:opacity .2s}
+    nav ul a:hover{opacity:1}
+    .nav-cta{font-family:var(--fd);font-weight:700;font-size:.75rem;color:#fff!important;background:var(--wa);padding:.5rem 1.25rem;border-radius:100px;opacity:1!important;display:inline-flex;align-items:center;gap:.4rem;text-transform:none!important;transition:background .2s!important}
+    .nav-cta:hover{background:var(--wa2)!important}
 
-    /* NAV */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 4rem; }
-    nav { background: transparent; transition: background .4s; }
-    nav.scrolled { background: rgba(8,8,8,.85); backdrop-filter: blur(12px); }
-    .logo { font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; color: var(--blanco); text-decoration: none; letter-spacing: -.02em; }
-    .logo span { color: var(--verde); }
-    nav ul { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
-    nav ul a { color: var(--blanco); text-decoration: none; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; opacity: .7; transition: opacity .2s; }
-    nav ul a:hover { opacity: 1; }
-    .nav-cta { font-family: var(--font-display); font-weight: 700; font-size: .75rem; color: #fff !important; background: var(--whatsapp); padding: .5rem 1.25rem; border-radius: 100px; opacity: 1 !important; display: inline-flex; align-items: center; gap: .4rem; letter-spacing: .03em; text-transform: none !important; transition: background .2s !important; }
-    .nav-cta:hover { background: var(--whatsapp-dark) !important; opacity: 1 !important; }
+    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 4rem 5rem;position:relative;overflow:hidden}
+    #hero-canvas{position:absolute;inset:0;z-index:0;width:100%;height:100%}
+    .hero-vignette{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at 50% 0%,rgba(8,8,8,0) 0%,rgba(8,8,8,.6) 70%),linear-gradient(to top,rgba(8,8,8,.95) 0%,rgba(8,8,8,.3) 50%,rgba(8,8,8,0) 100%);pointer-events:none}
+    .hero-content{position:relative;z-index:2}
+    .hero-label{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--verde);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
+    .hero-label::before{content:'';display:block;width:32px;height:1px;background:var(--verde)}
+    .hero-title{font-family:var(--fd);font-weight:800;font-size:clamp(3.2rem,10vw,9rem);line-height:.92;letter-spacing:-.04em;overflow-wrap:break-word}
+    .hero-title .la{color:var(--verde)}
+    .hero-title .ls{-webkit-text-stroke:1px var(--blanco);color:transparent}
+    .hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;margin-top:4rem}
+    .hero-desc{max-width:340px;font-size:1rem;line-height:1.6;opacity:.65}
+    .hero-actions{display:flex;gap:1rem;align-items:center}
+    .hero-scroll{position:absolute;right:4rem;bottom:5rem;z-index:2;writing-mode:vertical-rl;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;opacity:.35;display:flex;align-items:center;gap:.75rem}
+    .hero-scroll::after{content:'';width:1px;height:60px;background:var(--blanco);opacity:.3;animation:sl 2s ease-in-out infinite}
+    @keyframes sl{0%,100%{transform:scaleY(1);opacity:.3}50%{transform:scaleY(.5);opacity:.1}}
 
-    /* ═══════════════════════════════
-       HERO 3D
-    ═══════════════════════════════ */
-    .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 0 4rem 5rem;
-      position: relative; overflow: hidden;
-    }
-    /* Canvas Three.js ocupa todo el hero */
-    #hero-canvas {
-      position: absolute; inset: 0; z-index: 0;
-      width: 100%; height: 100%;
-    }
-    /* Gradiente de oscurecimiento sobre la escena 3D */
-    .hero-vignette {
-      position: absolute; inset: 0; z-index: 1;
-      background:
-        radial-gradient(ellipse at 50% 0%, rgba(8,8,8,0) 0%, rgba(8,8,8,.6) 70%),
-        linear-gradient(to top, rgba(8,8,8,.95) 0%, rgba(8,8,8,.3) 50%, rgba(8,8,8,0) 100%);
-      pointer-events: none;
-    }
-    .hero-content { position: relative; z-index: 2; }
-    .hero-label { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--verde); margin-bottom: 1.5rem; display: flex; align-items: center; gap: .75rem; }
-    .hero-label::before { content: ''; display: block; width: 32px; height: 1px; background: var(--verde); }
-    .hero-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(3.2rem,10vw,9rem); line-height: .92; letter-spacing: -.04em; max-width: 100%; overflow-wrap: break-word; }
-    .hero-title .line-accent { color: var(--verde); }
-    .hero-title .line-stroke { -webkit-text-stroke: 1px var(--blanco); color: transparent; }
-    .hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 4rem; }
-    .hero-desc { max-width: 340px; font-size: 1rem; line-height: 1.6; opacity: .65; }
-    .hero-actions { display: flex; gap: 1rem; align-items: center; }
+    .btn-p{font-family:var(--fd);font-weight:700;font-size:.85rem;background:var(--verde);color:var(--negro);padding:1rem 2rem;border-radius:100px;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:transform .2s,box-shadow .2s;border:none;cursor:pointer;display:inline-block}
+    .btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(188,255,71,.35)}
+    .btn-g{font-size:.8rem;color:var(--blanco);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;opacity:.6;display:flex;align-items:center;gap:.5rem;transition:opacity .2s}
+    .btn-g:hover{opacity:1}
+    .btn-g svg{transition:transform .2s}
+    .btn-g:hover svg{transform:translateX(4px)}
+    .btn-wa{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--fd);font-weight:700;font-size:.85rem;background:var(--wa);color:#fff;padding:1rem 2rem;border-radius:100px;text-decoration:none;transition:transform .2s,box-shadow .2s}
+    .btn-wa:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(37,211,102,.4);background:var(--wa2)}
+    .btn-wa-lg{display:inline-flex;align-items:center;gap:.75rem;font-family:var(--fd);font-weight:700;font-size:1.1rem;background:var(--wa);color:#fff;padding:1.2rem 3rem;border-radius:100px;text-decoration:none;transition:transform .2s,box-shadow .2s;position:relative;z-index:1}
+    .btn-wa-lg:hover{transform:translateY(-3px);box-shadow:0 16px 60px rgba(37,211,102,.45);background:var(--wa2)}
+    .wa-float{position:fixed;bottom:2rem;right:2rem;z-index:500;width:60px;height:60px;border-radius:50%;background:var(--wa);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.5);text-decoration:none;animation:fb 3s ease-in-out infinite}
+    .wa-float:hover{transform:scale(1.1)!important;animation:none}
+    @keyframes fb{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
-    /* Indicador scroll 3D */
-    .hero-scroll { position: absolute; right: 4rem; bottom: 5rem; z-index: 2; writing-mode: vertical-rl; font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; opacity: .35; display: flex; align-items: center; gap: .75rem; }
-    .hero-scroll::after { content: ''; width: 1px; height: 60px; background: var(--blanco); opacity: .3; animation: scrollLine 2s ease-in-out infinite; }
-    @keyframes scrollLine{0%,100%{transform:scaleY(1);opacity:.3}50%{transform:scaleY(.5);opacity:.1}}
+    .ticker{border-top:1px solid var(--gris2);border-bottom:1px solid var(--gris2);padding:1rem 0;overflow:hidden;white-space:nowrap}
+    .ticker-inner{display:inline-flex;animation:tk 30s linear infinite}
+    .ti{display:inline-flex;align-items:center;gap:1.5rem;padding:0 2rem;font-family:var(--fd);font-weight:700;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;opacity:.4}
+    .td{width:5px;height:5px;border-radius:50%;background:var(--verde);flex-shrink:0}
+    .td.mg{background:var(--magenta)}.td.cy{background:var(--cyan)}.td.na{background:var(--naranja)}.td.vi{background:var(--violeta)}
+    @keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-    /* BOTONES */
-    .btn-primary { font-family: var(--font-display); font-weight: 700; font-size: .85rem; background: var(--verde); color: var(--negro); padding: 1rem 2rem; border-radius: 100px; text-decoration: none; letter-spacing: .05em; text-transform: uppercase; transition: transform .2s,box-shadow .2s; border: none; cursor: pointer; display: inline-block; }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(188,255,71,.35); }
-    .btn-ghost { font-size: .8rem; color: var(--blanco); text-decoration: none; letter-spacing: .08em; text-transform: uppercase; opacity: .6; display: flex; align-items: center; gap: .5rem; transition: opacity .2s; }
-    .btn-ghost:hover { opacity: 1; }
-    .btn-ghost svg { transition: transform .2s; }
-    .btn-ghost:hover svg { transform: translateX(4px); }
-    .btn-whatsapp { display: inline-flex; align-items: center; gap: .6rem; font-family: var(--font-display); font-weight: 700; font-size: .85rem; background: var(--whatsapp); color: #fff; padding: 1rem 2rem; border-radius: 100px; text-decoration: none; transition: transform .2s,box-shadow .2s; border: none; cursor: pointer; }
-    .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(37,211,102,.4); background: var(--whatsapp-dark); }
-    .btn-whatsapp-lg { display: inline-flex; align-items: center; gap: .75rem; font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; background: var(--whatsapp); color: #fff; padding: 1.2rem 3rem; border-radius: 100px; text-decoration: none; transition: transform .2s,box-shadow .2s; position: relative; z-index: 1; }
-    .btn-whatsapp-lg:hover { transform: translateY(-3px); box-shadow: 0 16px 60px rgba(37,211,102,.45); background: var(--whatsapp-dark); }
-    .whatsapp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 500; width: 60px; height: 60px; border-radius: 50%; background: var(--whatsapp); color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,.5); text-decoration: none; transition: transform .2s,box-shadow .2s; animation: floatBtn 3s ease-in-out infinite; }
-    .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 8px 30px rgba(37,211,102,.6); animation: none; }
-    @keyframes floatBtn{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+    .sec{padding:8rem 4rem}
+    .sl{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--verde);margin-bottom:3rem;display:flex;align-items:center;gap:.75rem}
+    .sl::before{content:'';width:24px;height:1px;background:var(--verde)}
+    .st{font-family:var(--fd);font-weight:800;font-size:clamp(2rem,5vw,4.5rem);line-height:1.05;letter-spacing:-.03em;margin-bottom:5rem;max-width:700px}
 
-    /* TICKER */
-    .ticker { border-top: 1px solid var(--gris2); border-bottom: 1px solid var(--gris2); padding: 1rem 0; overflow: hidden; white-space: nowrap; }
-    .ticker-inner { display: inline-flex; animation: ticker 30s linear infinite; }
-    .ticker-item { display: inline-flex; align-items: center; gap: 1.5rem; padding: 0 2rem; font-family: var(--font-display); font-weight: 700; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; opacity: .4; }
-    .ticker-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--verde); flex-shrink: 0; }
-    .ticker-dot.mg{background:var(--magenta)}.ticker-dot.cy{background:var(--cyan)}.ticker-dot.na{background:var(--naranja)}.ticker-dot.vi{background:var(--violeta)}
-    @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .sg{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--gris2)}
+    .sc{padding:3rem 2.5rem;border-right:1px solid var(--gris2);position:relative;overflow:hidden;transition:background .3s}
+    .sc:last-child{border-right:none}
+    .sc::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--verde);transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
+    .sc:hover::before{transform:scaleX(1)}
+    .sc:hover{background:var(--gris)}
+    .sn{font-family:var(--fd);font-size:.65rem;letter-spacing:.15em;color:var(--verde);margin-bottom:2rem;opacity:.8}
+    .si{font-size:2.5rem;margin-bottom:1.5rem;display:block}
+    .snm{font-family:var(--fd);font-weight:700;font-size:1.25rem;margin-bottom:1rem;letter-spacing:-.02em}
+    .sd{font-size:.9rem;line-height:1.65;opacity:.55}
+    .stags{margin-top:2rem;display:flex;flex-wrap:wrap;gap:.4rem}
+    .tag{font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--gris2);padding:.3rem .7rem;border-radius:100px;opacity:.5;transition:border-color .2s,opacity .2s}
+    .sc:hover .tag{border-color:var(--verde);opacity:.8}
 
-    /* SECCIONES */
-    .section { padding: 8rem 4rem; }
-    .section-label { font-size: .65rem; letter-spacing: .25em; text-transform: uppercase; color: var(--verde); margin-bottom: 3rem; display: flex; align-items: center; gap: .75rem; }
-    .section-label::before { content: ''; width: 24px; height: 1px; background: var(--verde); }
-    .section-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem,5vw,4.5rem); line-height: 1.05; letter-spacing: -.03em; margin-bottom: 5rem; max-width: 700px; }
+    .manifesto{padding:8rem 4rem;background:var(--verde);color:var(--negro);position:relative;overflow:hidden}
+    .mbg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--fd);font-weight:800;font-size:25vw;color:rgba(0,0,0,.06);white-space:nowrap;pointer-events:none;user-select:none}
+    .mc{position:relative;z-index:1;max-width:1000px}
+    .ml{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;margin-bottom:2rem;opacity:.6;display:flex;align-items:center;gap:.75rem}
+    .ml::before{content:'';width:24px;height:1px;background:var(--negro)}
+    .mt{font-family:var(--fd);font-weight:800;font-size:clamp(2rem,5vw,5rem);line-height:1.05;letter-spacing:-.03em}
+    .mt em{font-style:italic;font-weight:400}
 
-    .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; border: 1px solid var(--gris2); }
-    .service-card { padding: 3rem 2.5rem; border-right: 1px solid var(--gris2); position: relative; overflow: hidden; transition: background .3s; }
-    .service-card:last-child { border-right: none; }
-    .service-card::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--verde); transform: scaleX(0); transform-origin: left; transition: transform .4s ease; }
-    .service-card:hover::before { transform: scaleX(1); }
-    .service-card:hover { background: var(--gris); }
-    .service-num { font-family: var(--font-display); font-size: .65rem; letter-spacing: .15em; color: var(--verde); margin-bottom: 2rem; opacity: .8; }
-    .service-icon { font-size: 2.5rem; margin-bottom: 1.5rem; display: block; }
-    .service-name { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; margin-bottom: 1rem; letter-spacing: -.02em; }
-    .service-desc { font-size: .9rem; line-height: 1.65; opacity: .55; }
-    .service-tags { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .4rem; }
-    .tag { font-size: .65rem; letter-spacing: .08em; text-transform: uppercase; border: 1px solid var(--gris2); padding: .3rem .7rem; border-radius: 100px; opacity: .5; transition: border-color .2s,opacity .2s; }
-    .service-card:hover .tag { border-color: var(--verde); opacity: .8; }
+    /* VISUAL SECTION */
+    .visual-section{padding:8rem 4rem;background:var(--gris)}
+    .vg{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+    .vc{background:var(--negro);border:1px solid var(--gris2);border-radius:8px;overflow:hidden;transition:transform .4s cubic-bezier(.25,.46,.45,.94),box-shadow .4s}
+    .vc:hover{transform:translateY(-8px);box-shadow:0 32px 80px rgba(0,0,0,.6)}
 
-    .manifesto { padding: 8rem 4rem; background: var(--verde); color: var(--negro); position: relative; overflow: hidden; }
-    .manifesto-bg-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: var(--font-display); font-weight: 800; font-size: 25vw; color: rgba(0,0,0,.06); white-space: nowrap; pointer-events: none; user-select: none; }
-    .manifesto-content { position: relative; z-index: 1; max-width: 1000px; }
-    .manifesto-label { font-size: .65rem; letter-spacing: .25em; text-transform: uppercase; margin-bottom: 2rem; opacity: .6; display: flex; align-items: center; gap: .75rem; }
-    .manifesto-label::before { content: ''; width: 24px; height: 1px; background: var(--negro); }
-    .manifesto-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem,5vw,5rem); line-height: 1.05; letter-spacing: -.03em; }
-    .manifesto-title em { font-style: italic; font-weight: 400; }
+    /* Canvas 3D header */
+    .cc{height:220px;position:relative;overflow:hidden}
+    .cc canvas{width:100%!important;height:100%!important;display:block}
+    .cc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to top,var(--negro),transparent);pointer-events:none;z-index:1}
 
-    .visual-section { padding: 8rem 4rem; background: var(--gris); }
-    .visual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-    .visual-card { background: var(--negro); border: 1px solid var(--gris2); border-radius: 4px; overflow: hidden; transition: transform .3s,box-shadow .3s; }
-    .visual-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,.5); }
-    .visual-card-header { height: 180px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-    .decoration { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: .12; }
-    .aperture { width: 120px; height: 120px; border: 1px solid var(--naranja); border-radius: 50%; position: relative; }
-    .aperture::before,.aperture::after { content: ''; position: absolute; inset: 15px; border: 1px solid var(--naranja); border-radius: 50%; }
-    .aperture::after { inset: 35px; }
-    .play-deco { width: 0; height: 0; border-left: 50px solid var(--magenta); border-top: 30px solid transparent; border-bottom: 30px solid transparent; margin-left: 10px; }
-    .waveform { display: flex; align-items: center; gap: 3px; }
-    .waveform span { width: 3px; border-radius: 2px; background: var(--cyan); animation: wave 1.2s ease-in-out infinite; }
-    .waveform span:nth-child(1){height:20px}.waveform span:nth-child(2){height:40px;animation-delay:.1s}.waveform span:nth-child(3){height:60px;animation-delay:.2s}.waveform span:nth-child(4){height:80px;animation-delay:.3s}.waveform span:nth-child(5){height:100px;animation-delay:.4s}.waveform span:nth-child(6){height:80px;animation-delay:.5s}.waveform span:nth-child(7){height:60px;animation-delay:.6s}.waveform span:nth-child(8){height:40px;animation-delay:.7s}.waveform span:nth-child(9){height:20px;animation-delay:.8s}
-    @keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.4)}}
-    .big-icon { font-size: 3.5rem; position: relative; z-index: 1; }
-    .visual-card-body { padding: 2rem 2.5rem 2.5rem; }
-    .visual-card-num { font-family: var(--font-display); font-size: .65rem; letter-spacing: .15em; color: var(--naranja); margin-bottom: .75rem; opacity: .8; }
-    .visual-card-num.m{color:var(--magenta)}.visual-card-num.c{color:var(--cyan)}
-    .visual-card-name { font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; margin-bottom: .75rem; letter-spacing: -.02em; }
-    .visual-card-desc { font-size: .9rem; line-height: 1.6; opacity: .55; }
-    .visual-card-tags { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: .4rem; }
+    .vb{padding:1.75rem 2.5rem 2.5rem}
+    .vn{font-family:var(--fd);font-size:.65rem;letter-spacing:.15em;color:var(--naranja);margin-bottom:.6rem;opacity:.8}
+    .vn.m{color:var(--magenta)}.vn.c{color:var(--cyan)}
+    .vnm{font-family:var(--fd);font-weight:700;font-size:1.3rem;margin-bottom:.7rem;letter-spacing:-.02em}
+    .vd{font-size:.9rem;line-height:1.6;opacity:.55}
+    .vt{margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:.4rem}
 
-    .ai-section { padding: 8rem 4rem; position: relative; overflow: hidden; }
-    .ai-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%,rgba(155,93,255,.1) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(42,250,223,.07) 0%,transparent 50%),radial-gradient(ellipse at 60% 80%,rgba(255,60,172,.07) 0%,transparent 50%); pointer-events: none; }
-    .ai-inner { position: relative; z-index: 1; }
-    .ai-badge { display: inline-flex; align-items: center; gap: .5rem; background: rgba(155,93,255,.12); border: 1px solid rgba(155,93,255,.25); padding: .4rem 1rem; border-radius: 100px; font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: var(--violeta); margin-bottom: 2rem; }
-    .ai-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--violeta); animation: pulse 2s ease-in-out infinite; }
+    /* AI */
+    .ai-section{padding:8rem 4rem;position:relative;overflow:hidden}
+    .ai-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(155,93,255,.1) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(42,250,223,.07) 0%,transparent 50%),radial-gradient(ellipse at 60% 80%,rgba(255,60,172,.07) 0%,transparent 50%);pointer-events:none}
+    .ai-inner{position:relative;z-index:1}
+    .ai-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(155,93,255,.12);border:1px solid rgba(155,93,255,.25);padding:.4rem 1rem;border-radius:100px;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--violeta);margin-bottom:2rem}
+    .ai-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--violeta);animation:pulse 2s ease-in-out infinite}
     @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
-    .ai-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem,6vw,5.5rem); line-height: 1; letter-spacing: -.04em; margin-bottom: 1.5rem; }
-    .ai-title .grad { background: linear-gradient(90deg,var(--violeta),var(--cyan),var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .ai-subtitle { font-size: 1.05rem; opacity: .6; line-height: 1.6; max-width: 520px; margin-bottom: 4rem; }
-    .ai-tools-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
-    .ai-tool { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: 16px; padding: 2rem; transition: all .3s; position: relative; overflow: hidden; }
-    .ai-tool::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg,rgba(155,93,255,.07),transparent); opacity: 0; transition: opacity .3s; }
-    .ai-tool:hover::before { opacity: 1; }
-    .ai-tool:hover { border-color: rgba(155,93,255,.3); transform: translateY(-4px); }
-    .ai-tool-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
-    .ai-tool-name { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; margin-bottom: .6rem; letter-spacing: -.02em; }
-    .ai-tool-desc { font-size: .85rem; opacity: .5; line-height: 1.55; }
-    .ai-examples { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: .35rem; }
-    .ai-example { font-size: .6rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(155,93,255,.1); border: 1px solid rgba(155,93,255,.2); color: var(--violeta); padding: .25rem .6rem; border-radius: 100px; }
+    .ai-title{font-family:var(--fd);font-weight:800;font-size:clamp(2rem,6vw,5.5rem);line-height:1;letter-spacing:-.04em;margin-bottom:1.5rem}
+    .ai-title .grad{background:linear-gradient(90deg,var(--violeta),var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .ai-sub{font-size:1.05rem;opacity:.6;line-height:1.6;max-width:520px;margin-bottom:4rem}
+    .atg{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    .at{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:2rem;transition:all .3s;position:relative;overflow:hidden}
+    .at::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(155,93,255,.07),transparent);opacity:0;transition:opacity .3s}
+    .at:hover::before{opacity:1}
+    .at:hover{border-color:rgba(155,93,255,.3);transform:translateY(-4px)}
+    .ati{font-size:2rem;margin-bottom:1rem;display:block}
+    .atn{font-family:var(--fd);font-weight:700;font-size:1.1rem;margin-bottom:.6rem;letter-spacing:-.02em}
+    .atd{font-size:.85rem;opacity:.5;line-height:1.55}
+    .ate{margin-top:1rem;display:flex;flex-wrap:wrap;gap:.35rem}
+    .atex{font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;background:rgba(155,93,255,.1);border:1px solid rgba(155,93,255,.2);color:var(--violeta);padding:.25rem .6rem;border-radius:100px}
 
-    /* ═══════════════════════════════════════════════
-       SECCIÓN AUTOMATIZACIÓN — aparece como un secreto
-    ═══════════════════════════════════════════════ */
-    .auto-section {
-      padding: 10rem 4rem;
-      position: relative;
-      overflow: hidden;
-      background: var(--negro);
-    }
-    /* Fondo de código/flujo animado */
-    .auto-bg {
-      position: absolute; inset: 0; z-index: 0;
-      opacity: 0;
-      transition: opacity 1.5s ease;
-      overflow: hidden;
-    }
-    .auto-section.revealed .auto-bg { opacity: 1; }
-    .auto-bg-text {
-      position: absolute;
-      font-family: 'Courier New', monospace;
-      font-size: .7rem;
-      color: var(--verde);
-      opacity: 0;
-      white-space: nowrap;
-      animation: floatCode 20s linear infinite;
-      pointer-events: none;
-    }
-    @keyframes floatCode {
-      from { transform: translateY(100vh); opacity: 0; }
-      10% { opacity: .15; }
-      90% { opacity: .15; }
-      to { transform: translateY(-20vh); opacity: 0; }
-    }
-    /* Líneas de conexión SVG animadas */
-    .auto-lines {
-      position: absolute; inset: 0; z-index: 0; pointer-events: none;
-      opacity: 0; transition: opacity 2s ease 0.5s;
-    }
-    .auto-section.revealed .auto-lines { opacity: 1; }
+    /* AUTO */
+    .auto-section{padding:10rem 4rem;position:relative;overflow:hidden;background:var(--negro)}
+    .auto-bg{position:absolute;inset:0;z-index:0;opacity:0;transition:opacity 1.5s ease;overflow:hidden}
+    .auto-section.revealed .auto-bg{opacity:1}
+    .auto-bg-text{position:absolute;font-family:'Courier New',monospace;font-size:.7rem;color:var(--verde);opacity:0;white-space:nowrap;animation:fc 20s linear infinite;pointer-events:none}
+    @keyframes fc{from{transform:translateY(100vh);opacity:0}10%{opacity:.15}90%{opacity:.15}to{transform:translateY(-20vh);opacity:0}}
+    .auto-inner{position:relative;z-index:1}
+    .auto-badge{display:inline-flex;align-items:center;gap:.6rem;background:rgba(188,255,71,.06);border:1px solid rgba(188,255,71,.2);padding:.5rem 1.2rem;border-radius:100px;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(188,255,71,.7);margin-bottom:2.5rem;opacity:0;transform:translateY(10px);transition:opacity .8s ease,transform .8s ease}
+    .auto-section.revealed .auto-badge{opacity:1;transform:translateY(0)}
+    .auto-badge::before{content:'///';font-family:'Courier New',monospace;margin-right:.3rem;animation:gl 4s ease-in-out infinite}
+    @keyframes gl{0%,90%,100%{opacity:1;transform:none}92%{opacity:.5;transform:skewX(-5deg)}94%{opacity:1}96%{opacity:.3;transform:skewX(3deg)}98%{opacity:1}}
+    .auto-title{font-family:var(--fd);font-weight:800;font-size:clamp(2.5rem,6vw,5rem);line-height:.95;letter-spacing:-.04em;margin-bottom:1.5rem;opacity:0;transform:translateY(30px);transition:opacity 1s ease .2s,transform 1s ease .2s}
+    .auto-section.revealed .auto-title{opacity:1;transform:translateY(0)}
+    .auto-title .aa{-webkit-text-stroke:1px var(--verde);color:transparent}
+    .auto-desc{font-size:1.05rem;opacity:0;line-height:1.7;max-width:580px;margin-bottom:4rem;color:rgba(245,240,232,.55);transform:translateY(20px);transition:opacity 1s ease .4s,transform 1s ease .4s}
+    .auto-section.revealed .auto-desc{opacity:1;transform:translateY(0)}
+    .auto-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;border:1px solid rgba(188,255,71,.1);opacity:0;transform:translateY(20px);transition:opacity 1s ease .6s,transform 1s ease .6s}
+    .auto-section.revealed .auto-grid{opacity:1;transform:translateY(0)}
+    .an{padding:2rem 1.75rem;border-right:1px solid rgba(188,255,71,.08);position:relative;overflow:hidden;transition:background .3s}
+    .an:last-child{border-right:none}
+    .an:hover{background:rgba(188,255,71,.04)}
+    .an::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--verde),transparent);transform:translateX(-100%);transition:transform .6s ease}
+    .an:hover::after{transform:translateX(0)}
+    .ani{font-size:1.8rem;margin-bottom:1rem;display:block}
+    .ann{font-family:var(--fd);font-weight:700;font-size:1rem;margin-bottom:.5rem;letter-spacing:-.01em}
+    .and{font-size:.8rem;line-height:1.55;opacity:.45}
+    .auto-ht{margin-top:5rem;padding-top:3rem;border-top:1px solid rgba(188,255,71,.08);display:flex;justify-content:space-between;align-items:center;gap:3rem;opacity:0;transform:translateY(15px);transition:opacity 1.2s ease .8s,transform 1.2s ease .8s}
+    .auto-section.revealed .auto-ht{opacity:1;transform:translateY(0)}
+    .auto-q{font-family:var(--fd);font-weight:700;font-size:clamp(1.2rem,2.5vw,2rem);letter-spacing:-.02em;line-height:1.2;max-width:500px;color:rgba(245,240,232,.25)}
+    .auto-q .rw{color:var(--verde);opacity:0;display:inline-block;transition:opacity .5s ease}
+    .auto-tools{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:flex-end}
+    .att{font-family:'Courier New',monospace;font-size:.65rem;letter-spacing:.05em;border:1px solid rgba(188,255,71,.2);color:rgba(188,255,71,.5);padding:.35rem .75rem;border-radius:4px;transition:all .3s}
+    .att:hover{border-color:var(--verde);color:var(--verde);background:rgba(188,255,71,.05)}
 
-    .auto-inner { position: relative; z-index: 1; }
+    .process{padding:8rem 4rem}
+    .pi{display:grid;grid-template-columns:80px 1fr 1fr;gap:2rem;align-items:center;padding:2.5rem 0;border-bottom:1px solid var(--gris2);transition:all .3s}
+    .pi:hover{padding-left:1rem}
+    .pi:hover .pn{color:var(--verde)}
+    .pn{font-family:var(--fd);font-weight:800;font-size:3rem;color:var(--gris2);letter-spacing:-.05em;transition:color .3s}
+    .pname{font-family:var(--fd);font-weight:700;font-size:1.5rem;letter-spacing:-.02em}
+    .pdesc{font-size:.9rem;line-height:1.6;opacity:.5}
 
-    /* Badge especial — aparece con efecto glitch */
-    .auto-badge {
-      display: inline-flex; align-items: center; gap: .6rem;
-      background: rgba(188,255,71,.06);
-      border: 1px solid rgba(188,255,71,.2);
-      padding: .5rem 1.2rem; border-radius: 100px;
-      font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;
-      color: rgba(188,255,71,.7); margin-bottom: 2.5rem;
-      position: relative;
-      opacity: 0; transform: translateY(10px);
-      transition: opacity .8s ease, transform .8s ease;
-    }
-    .auto-section.revealed .auto-badge { opacity: 1; transform: translateY(0); }
-    .auto-badge::before {
-      content: '///';
-      font-family: 'Courier New', monospace;
-      margin-right: .3rem;
-      animation: glitch 4s ease-in-out infinite;
-    }
-    @keyframes glitch {
-      0%,90%,100% { opacity: 1; transform: none; }
-      92% { opacity: .5; transform: skewX(-5deg); }
-      94% { opacity: 1; transform: none; }
-      96% { opacity: .3; transform: skewX(3deg); }
-      98% { opacity: 1; transform: none; }
-    }
+    .community{padding:8rem 4rem;background:var(--gris)}
+    .ci{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+    .cs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--gris2)}
+    .stat{background:var(--gris);padding:2.5rem}
+    .snum{font-family:var(--fd);font-weight:800;font-size:3.5rem;letter-spacing:-.04em;color:var(--verde);line-height:1;margin-bottom:.5rem}
+    .slbl{font-size:.8rem;opacity:.5;line-height:1.4}
 
-    .auto-title {
-      font-family: var(--font-display); font-weight: 800;
-      font-size: clamp(2.5rem,6vw,5rem);
-      line-height: .95; letter-spacing: -.04em;
-      margin-bottom: 1.5rem;
-      opacity: 0; transform: translateY(30px);
-      transition: opacity 1s ease .2s, transform 1s ease .2s;
-    }
-    .auto-section.revealed .auto-title { opacity: 1; transform: translateY(0); }
-    .auto-title .auto-accent {
-      -webkit-text-stroke: 1px var(--verde);
-      color: transparent;
-    }
+    .cta-section{padding:10rem 4rem;text-align:center;position:relative;overflow:hidden}
+    .cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(37,211,102,.06) 0%,transparent 70%);pointer-events:none}
+    .ctt{font-family:var(--fd);font-weight:800;font-size:clamp(2.5rem,7vw,7rem);line-height:.95;letter-spacing:-.04em;margin-bottom:2.5rem;position:relative;z-index:1}
+    .ctt span{color:var(--verde)}
+    .csub{font-size:1.1rem;opacity:.5;max-width:450px;margin:0 auto 3rem;line-height:1.6;position:relative;z-index:1}
 
-    .auto-desc {
-      font-size: 1.05rem; opacity: 0; line-height: 1.7;
-      max-width: 580px; margin-bottom: 4rem;
-      color: rgba(245,240,232,.55);
-      transform: translateY(20px);
-      transition: opacity 1s ease .4s, transform 1s ease .4s;
-    }
-    .auto-section.revealed .auto-desc { opacity: 1; transform: translateY(0); }
+    footer{border-top:1px solid var(--gris2);padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center}
+    .fl{font-family:var(--fd);font-weight:800;font-size:1rem;color:var(--blanco);text-decoration:none}
+    .fl span{color:var(--verde)}
+    .flinks{display:flex;gap:2rem;list-style:none}
+    .flinks a{color:var(--blanco);text-decoration:none;font-size:.75rem;opacity:.4;letter-spacing:.08em;text-transform:uppercase;transition:opacity .2s}
+    .flinks a:hover{opacity:1}
+    .fco{font-size:.7rem;opacity:.25}
 
-    .auto-grid {
-      display: grid; grid-template-columns: repeat(4,1fr); gap: 1px;
-      border: 1px solid rgba(188,255,71,.1);
-      opacity: 0; transform: translateY(20px);
-      transition: opacity 1s ease .6s, transform 1s ease .6s;
-    }
-    .auto-section.revealed .auto-grid { opacity: 1; transform: translateY(0); }
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .rd1{transition-delay:.1s}.rd2{transition-delay:.2s}.rd3{transition-delay:.3s}.rd4{transition-delay:.4s}
 
-    .auto-node {
-      padding: 2rem 1.75rem;
-      border-right: 1px solid rgba(188,255,71,.08);
-      position: relative; overflow: hidden;
-      transition: background .3s;
-    }
-    .auto-node:last-child { border-right: none; }
-    .auto-node:hover { background: rgba(188,255,71,.04); }
-    .auto-node::after {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--verde), transparent);
-      transform: translateX(-100%);
-      transition: transform .6s ease;
-    }
-    .auto-node:hover::after { transform: translateX(0); }
-    .auto-node-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; filter: grayscale(.3); }
-    .auto-node-name {
-      font-family: var(--font-display); font-weight: 700;
-      font-size: 1rem; margin-bottom: .5rem; letter-spacing: -.01em;
-      color: var(--blanco);
-    }
-    .auto-node-desc { font-size: .8rem; line-height: 1.55; opacity: .45; }
-
-    /* Texto oculto que aparece al final de la sección */
-    .auto-hidden-text {
-      margin-top: 5rem;
-      padding-top: 3rem;
-      border-top: 1px solid rgba(188,255,71,.08);
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 3rem;
-      opacity: 0; transform: translateY(15px);
-      transition: opacity 1.2s ease .8s, transform 1.2s ease .8s;
-    }
-    .auto-section.revealed .auto-hidden-text { opacity: 1; transform: translateY(0); }
-    .auto-hidden-quote {
-      font-family: var(--font-display); font-weight: 700;
-      font-size: clamp(1.2rem,2.5vw,2rem);
-      letter-spacing: -.02em; line-height: 1.2;
-      max-width: 500px;
-      color: rgba(245,240,232,.25);
-    }
-    .auto-hidden-quote .reveal-word {
-      color: var(--verde);
-      opacity: 0;
-      display: inline-block;
-      transition: opacity .5s ease;
-    }
-    .auto-tools {
-      display: flex; flex-wrap: wrap; gap: .5rem;
-      justify-content: flex-end;
-    }
-    .auto-tool-tag {
-      font-family: 'Courier New', monospace;
-      font-size: .65rem; letter-spacing: .05em;
-      border: 1px solid rgba(188,255,71,.2);
-      color: rgba(188,255,71,.5);
-      padding: .35rem .75rem; border-radius: 4px;
-      transition: all .3s;
-    }
-    .auto-tool-tag:hover { border-color: var(--verde); color: var(--verde); background: rgba(188,255,71,.05); }
-
-    .process { padding: 8rem 4rem; }
-    .process-item { display: grid; grid-template-columns: 80px 1fr 1fr; gap: 2rem; align-items: center; padding: 2.5rem 0; border-bottom: 1px solid var(--gris2); transition: all .3s; }
-    .process-item:hover { padding-left: 1rem; }
-    .process-item:hover .process-num { color: var(--verde); }
-    .process-num { font-family: var(--font-display); font-weight: 800; font-size: 3rem; color: var(--gris2); letter-spacing: -.05em; transition: color .3s; }
-    .process-name { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; letter-spacing: -.02em; }
-    .process-desc { font-size: .9rem; line-height: 1.6; opacity: .5; }
-
-    .community { padding: 8rem 4rem; background: var(--gris); }
-    .community-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
-    .community-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--gris2); }
-    .stat { background: var(--gris); padding: 2.5rem; }
-    .stat-num { font-family: var(--font-display); font-weight: 800; font-size: 3.5rem; letter-spacing: -.04em; color: var(--verde); line-height: 1; margin-bottom: .5rem; }
-    .stat-label { font-size: .8rem; opacity: .5; line-height: 1.4; }
-
-    .cta-section { padding: 10rem 4rem; text-align: center; position: relative; overflow: hidden; }
-    .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 600px; height: 600px; background: radial-gradient(circle,rgba(37,211,102,.06) 0%,transparent 70%); pointer-events: none; }
-    .cta-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.5rem,7vw,7rem); line-height: .95; letter-spacing: -.04em; margin-bottom: 2.5rem; position: relative; z-index: 1; }
-    .cta-title span { color: var(--verde); }
-    .cta-subtitle { font-size: 1.1rem; opacity: .5; max-width: 450px; margin: 0 auto 3rem; line-height: 1.6; position: relative; z-index: 1; }
-
-    footer { border-top: 1px solid var(--gris2); padding: 3rem 4rem; display: flex; justify-content: space-between; align-items: center; }
-    .footer-logo { font-family: var(--font-display); font-weight: 800; font-size: 1rem; color: var(--blanco); text-decoration: none; }
-    .footer-logo span { color: var(--verde); }
-    .footer-links { display: flex; gap: 2rem; list-style: none; }
-    .footer-links a { color: var(--blanco); text-decoration: none; font-size: .75rem; opacity: .4; letter-spacing: .08em; text-transform: uppercase; transition: opacity .2s; }
-    .footer-links a:hover { opacity: 1; }
-    .footer-copy { font-size: .7rem; opacity: .25; }
-
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease,transform .7s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}.reveal-delay-4{transition-delay:.4s}
-
-    /* RESPONSIVE */
     @media(max-width:900px){
-      body{cursor:auto}
-      .cursor,.cursor-follower{display:none}
-      nav{padding:1.2rem 1.5rem}
-      nav ul{display:none}
+      body{cursor:auto}.cursor,.cursor-follower{display:none}
+      nav{padding:1.2rem 1.5rem}nav ul{display:none}
       .hero{padding:0 1.5rem 4rem}
       .hero-title{font-size:clamp(2.6rem,11vw,4rem);overflow-wrap:break-word}
       .hero-bottom{flex-direction:column;align-items:flex-start;gap:2rem}
-      .hero-desc{max-width:100%}
-      .hero-scroll{display:none}
-      .section,.process,.community{padding:4rem 1.5rem}
-      .visual-section,.ai-section,.auto-section{padding:4rem 1.5rem}
+      .hero-desc{max-width:100%}.hero-scroll{display:none}
+      .sec,.process,.community,.visual-section,.ai-section,.auto-section{padding:4rem 1.5rem}
       .manifesto{padding:4rem 1.5rem}
-      .section-title{font-size:clamp(1.8rem,7vw,2.8rem);margin-bottom:2.5rem}
-      .manifesto-title{font-size:clamp(1.7rem,6vw,2.8rem)}
-      .ai-title{font-size:clamp(1.8rem,7vw,3rem)}
-      .auto-title{font-size:clamp(1.8rem,7vw,3rem)}
-      .cta-title{font-size:clamp(2rem,9vw,3.5rem)}
-      .services-grid{grid-template-columns:1fr}
-      .service-card{border-right:none;border-bottom:1px solid var(--gris2)}
-      .visual-grid{grid-template-columns:1fr}
-      .ai-tools-grid{grid-template-columns:1fr}
+      .st{font-size:clamp(1.8rem,7vw,2.8rem);margin-bottom:2.5rem}
+      .mt,.ai-title,.auto-title{font-size:clamp(1.8rem,7vw,3rem)}
+      .ctt{font-size:clamp(2rem,9vw,3.5rem)}
+      .sg,.vg,.atg{grid-template-columns:1fr}
+      .sc{border-right:none;border-bottom:1px solid var(--gris2)}
       .auto-grid{grid-template-columns:1fr 1fr}
-      .auto-hidden-text{flex-direction:column;gap:2rem}
-      .auto-tools{justify-content:flex-start}
-      .process-item{grid-template-columns:50px 1fr;gap:1rem}
-      .process-desc{display:none}
-      .process-num{font-size:2rem}
-      .community-inner{grid-template-columns:1fr;gap:3rem}
+      .auto-ht{flex-direction:column;gap:2rem}.auto-tools{justify-content:flex-start}
+      .pi{grid-template-columns:50px 1fr;gap:1rem}.pdesc{display:none}.pn{font-size:2rem}
+      .ci{grid-template-columns:1fr;gap:3rem}
       .cta-section{padding:5rem 1.5rem}
       footer{padding:2rem 1.5rem;flex-direction:column;gap:1.5rem;text-align:center}
-      .footer-links{flex-wrap:wrap;justify-content:center;gap:1rem}
-      .whatsapp-float{bottom:1.5rem;right:1.5rem;width:54px;height:54px}
+      .flinks{flex-wrap:wrap;justify-content:center;gap:1rem}
+      .wa-float{bottom:1.5rem;right:1.5rem;width:54px;height:54px}
     }
     @media(max-width:480px){
       .hero-title{font-size:clamp(2.2rem,12vw,3rem)}
-      .stat-num{font-size:2.5rem}
+      .snum{font-size:2.5rem}
       .auto-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
   <div class="cursor" id="cursor"></div>
-  <div class="cursor-follower" id="cursorFollower"></div>
+  <div class="cursor-follower" id="cf"></div>
 
-  <!-- WhatsApp flotante -->
-  <a href="https://wa.me/56948590700?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20sus%20servicios%20creativos." target="_blank" rel="noopener" class="whatsapp-float" aria-label="WhatsApp">
+  <a href="https://wa.me/56948590700?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20sus%20servicios." target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </a>
 
-  <!-- NAV -->
   <nav id="mainNav">
     <a href="/" class="logo">insecto<span>.</span>digital</a>
     <ul>
@@ -423,116 +251,128 @@
       <li><a href="#visual">Foto & Video</a></li>
       <li><a href="#ai">AI Creativa</a></li>
       <li><a href="#proceso">Proceso</a></li>
-      <li>
-        <a href="https://wa.me/56948590700?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20sus%20servicios%20creativos." target="_blank" rel="noopener" class="nav-cta">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Hablemos
-        </a>
-      </li>
+      <li><a href="https://wa.me/56948590700?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20sus%20servicios." target="_blank" rel="noopener" class="nav-cta">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Hablemos
+      </a></li>
     </ul>
   </nav>
 
-  <!-- ═══════════════════ HERO 3D ═══════════════════ -->
   <section class="hero">
     <canvas id="hero-canvas"></canvas>
     <div class="hero-vignette"></div>
     <div class="hero-content">
       <div class="hero-label">Hub Creativo Digital — Santiago, Chile</div>
-      <h1 class="hero-title">
-        Creamos<br>
-        <span class="line-stroke">mundos</span><br>
-        <span class="line-accent">digitales</span>
-      </h1>
+      <h1 class="hero-title">Creamos<br><span class="ls">mundos</span><br><span class="la">digitales</span></h1>
       <div class="hero-bottom">
         <p class="hero-desc">Somos un hub creativo que vive dentro de la comunidad digital. Diseño, fotografía, video, audio y desarrollo creativo con AI — todo bajo un mismo techo.</p>
         <div class="hero-actions">
-          <a href="#servicios" class="btn-primary">Ver servicios</a>
-          <a href="#contacto" class="btn-ghost">
-            Contáctanos
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          <a href="#servicios" class="btn-p">Ver servicios</a>
+          <a href="#contacto" class="btn-g">Contáctanos <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
       </div>
     </div>
     <div class="hero-scroll">Scroll</div>
   </section>
 
-  <!-- TICKER -->
   <div class="ticker"><div class="ticker-inner">
-    <span class="ticker-item"><span class="ticker-dot"></span>Diseño Gráfico</span>
-    <span class="ticker-item"><span class="ticker-dot mg"></span>Fotografía</span>
-    <span class="ticker-item"><span class="ticker-dot na"></span>Video</span>
-    <span class="ticker-item"><span class="ticker-dot cy"></span>Audio</span>
-    <span class="ticker-item"><span class="ticker-dot vi"></span>AI Creativa</span>
-    <span class="ticker-item"><span class="ticker-dot"></span>Automatización</span>
-    <span class="ticker-item"><span class="ticker-dot mg"></span>Branding</span>
-    <span class="ticker-item"><span class="ticker-dot na"></span>Contenido</span>
-    <span class="ticker-item"><span class="ticker-dot cy"></span>Imagen AI</span>
-    <span class="ticker-item"><span class="ticker-dot vi"></span>n8n · Make</span>
-    <span class="ticker-item"><span class="ticker-dot"></span>Diseño Gráfico</span>
-    <span class="ticker-item"><span class="ticker-dot mg"></span>Fotografía</span>
-    <span class="ticker-item"><span class="ticker-dot na"></span>Video</span>
-    <span class="ticker-item"><span class="ticker-dot cy"></span>Audio</span>
-    <span class="ticker-item"><span class="ticker-dot vi"></span>AI Creativa</span>
-    <span class="ticker-item"><span class="ticker-dot"></span>Automatización</span>
-    <span class="ticker-item"><span class="ticker-dot mg"></span>Branding</span>
-    <span class="ticker-item"><span class="ticker-dot na"></span>Contenido</span>
-    <span class="ticker-item"><span class="ticker-dot cy"></span>Imagen AI</span>
-    <span class="ticker-item"><span class="ticker-dot vi"></span>n8n · Make</span>
+    <span class="ti"><span class="td"></span>Diseño Gráfico</span><span class="ti"><span class="td mg"></span>Fotografía</span>
+    <span class="ti"><span class="td na"></span>Video</span><span class="ti"><span class="td cy"></span>Audio</span>
+    <span class="ti"><span class="td vi"></span>AI Creativa</span><span class="ti"><span class="td"></span>Automatización</span>
+    <span class="ti"><span class="td mg"></span>Branding</span><span class="ti"><span class="td na"></span>Contenido</span>
+    <span class="ti"><span class="td cy"></span>Imagen AI</span><span class="ti"><span class="td vi"></span>n8n · Make</span>
+    <span class="ti"><span class="td"></span>Diseño Gráfico</span><span class="ti"><span class="td mg"></span>Fotografía</span>
+    <span class="ti"><span class="td na"></span>Video</span><span class="ti"><span class="td cy"></span>Audio</span>
+    <span class="ti"><span class="td vi"></span>AI Creativa</span><span class="ti"><span class="td"></span>Automatización</span>
+    <span class="ti"><span class="td mg"></span>Branding</span><span class="ti"><span class="td na"></span>Contenido</span>
+    <span class="ti"><span class="td cy"></span>Imagen AI</span><span class="ti"><span class="td vi"></span>n8n · Make</span>
   </div></div>
 
-  <!-- SERVICIOS -->
-  <section class="section" id="servicios">
-    <div class="section-label reveal">Lo que hacemos</div>
-    <h2 class="section-title reveal reveal-delay-1">Soluciones que mueven el mundo digital</h2>
-    <div class="services-grid">
-      <div class="service-card reveal reveal-delay-1"><div class="service-num">01</div><span class="service-icon">◈</span><div class="service-name">Diseño Gráfico & Branding</div><p class="service-desc">Creamos identidades visuales que no se olvidan. Desde la estrategia de marca hasta cada pixel del producto final.</p><div class="service-tags"><span class="tag">UI/UX</span><span class="tag">Identidad</span><span class="tag">Logotipo</span><span class="tag">Web Design</span></div></div>
-      <div class="service-card reveal reveal-delay-2"><div class="service-num">02</div><span class="service-icon">◎</span><div class="service-name">Marketing & Redes Sociales</div><p class="service-desc">Estrategias de contenido y campañas que conectan genuinamente con audiencias reales. Sin ruido, solo impacto.</p><div class="service-tags"><span class="tag">Contenido</span><span class="tag">Campañas</span><span class="tag">Social Media</span><span class="tag">SEO</span></div></div>
-      <div class="service-card reveal reveal-delay-3"><div class="service-num">03</div><span class="service-icon">⬡</span><div class="service-name">Comunidad & Formación</div><p class="service-desc">Construimos espacios donde las personas aprenden, crecen y colaboran. La comunidad digital como motor de transformación.</p><div class="service-tags"><span class="tag">Talleres</span><span class="tag">Mentorías</span><span class="tag">Comunidad</span><span class="tag">Formación</span></div></div>
+  <section class="sec" id="servicios">
+    <div class="sl reveal">Lo que hacemos</div>
+    <h2 class="st reveal rd1">Soluciones que mueven el mundo digital</h2>
+    <div class="sg">
+      <div class="sc reveal rd1"><div class="sn">01</div><span class="si">◈</span><div class="snm">Diseño Gráfico & Branding</div><p class="sd">Creamos identidades visuales que no se olvidan. Desde la estrategia de marca hasta cada pixel del producto final.</p><div class="stags"><span class="tag">UI/UX</span><span class="tag">Identidad</span><span class="tag">Logotipo</span><span class="tag">Web Design</span></div></div>
+      <div class="sc reveal rd2"><div class="sn">02</div><span class="si">◎</span><div class="snm">Marketing & Redes Sociales</div><p class="sd">Estrategias de contenido y campañas que conectan genuinamente con audiencias reales. Sin ruido, solo impacto.</p><div class="stags"><span class="tag">Contenido</span><span class="tag">Campañas</span><span class="tag">Social Media</span><span class="tag">SEO</span></div></div>
+      <div class="sc reveal rd3"><div class="sn">03</div><span class="si">⬡</span><div class="snm">Comunidad & Formación</div><p class="sd">Construimos espacios donde las personas aprenden, crecen y colaboran. La comunidad digital como motor de transformación.</p><div class="stags"><span class="tag">Talleres</span><span class="tag">Mentorías</span><span class="tag">Comunidad</span><span class="tag">Formación</span></div></div>
     </div>
   </section>
 
-  <!-- MANIFIESTO -->
   <div class="manifesto">
-    <div class="manifesto-bg-text">INSECTO</div>
-    <div class="manifesto-content">
-      <div class="manifesto-label">Nuestro manifiesto</div>
-      <h2 class="manifesto-title">El mundo digital no espera.<br><em>Nosotros tampoco.</em><br>Creamos, conectamos,<br>transformamos.</h2>
+    <div class="mbg">INSECTO</div>
+    <div class="mc">
+      <div class="ml">Nuestro manifiesto</div>
+      <h2 class="mt">El mundo digital no espera.<br><em>Nosotros tampoco.</em><br>Creamos, conectamos,<br>transformamos.</h2>
     </div>
   </div>
 
-  <!-- VISUAL -->
   <section class="visual-section" id="visual">
-    <div class="section-label reveal">Producción visual & sonora</div>
-    <h2 class="section-title reveal reveal-delay-1">La imagen lo dice todo.<br>El sonido lo completa.</h2>
-    <div class="visual-grid">
-      <div class="visual-card reveal reveal-delay-1"><div class="visual-card-header" style="background:linear-gradient(135deg,#0f0b06,#1a1206)"><div class="decoration"><div class="aperture"></div></div><span class="big-icon">📸</span></div><div class="visual-card-body"><div class="visual-card-num">04</div><div class="visual-card-name">Fotografía Profesional</div><p class="visual-card-desc">Capturamos la esencia de tu marca. Producto, retrato, editorial y contenido para redes con dirección artística propia.</p><div class="visual-card-tags"><span class="tag">Producto</span><span class="tag">Retrato</span><span class="tag">Editorial</span><span class="tag">RRSS</span></div></div></div>
-      <div class="visual-card reveal reveal-delay-2"><div class="visual-card-header" style="background:linear-gradient(135deg,#100810,#1a0818)"><div class="decoration"><div class="play-deco"></div></div><span class="big-icon">🎥</span></div><div class="visual-card-body"><div class="visual-card-num m">05</div><div class="visual-card-name">Producción de Video</div><p class="visual-card-desc">Desde reels hasta campañas completas. Producimos, dirigimos y editamos contenido que detiene el scroll.</p><div class="visual-card-tags"><span class="tag">Reels</span><span class="tag">Spots</span><span class="tag">Documental</span><span class="tag">Motion</span></div></div></div>
-      <div class="visual-card reveal reveal-delay-3"><div class="visual-card-header" style="background:linear-gradient(135deg,#060810,#080a18)"><div class="decoration"><div class="waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div><span class="big-icon">🎧</span></div><div class="visual-card-body"><div class="visual-card-num c">06</div><div class="visual-card-name">Audio & Producción Musical</div><p class="visual-card-desc">Jingles, identidad sonora, podcasts y bandas sonoras. El audio correcto convierte contenido en experiencia.</p><div class="visual-card-tags"><span class="tag">Jingle</span><span class="tag">Podcast</span><span class="tag">Sound Branding</span><span class="tag">Score</span></div></div></div>
-      <div class="visual-card reveal reveal-delay-4"><div class="visual-card-header" style="background:linear-gradient(135deg,#0a0808,#180e06)"><div class="decoration" style="font-size:6rem;color:var(--naranja);opacity:.1;font-family:var(--font-display);font-weight:800">ART</div><span class="big-icon">🎨</span></div><div class="visual-card-body"><div class="visual-card-num" style="color:var(--naranja)">07</div><div class="visual-card-name">Dirección de Arte</div><p class="visual-card-desc">Conceptualizamos y dirigimos la estética visual de tus campañas. Coherencia en todos los puntos de contacto.</p><div class="visual-card-tags"><span class="tag">Concepto</span><span class="tag">Estética</span><span class="tag">Campaña</span><span class="tag">Storytelling</span></div></div></div>
+    <div class="sl reveal">Producción visual & sonora</div>
+    <h2 class="st reveal rd1">La imagen lo dice todo.<br>El sonido lo completa.</h2>
+    <div class="vg">
+
+      <!-- FOTOGRAFÍA -->
+      <div class="vc reveal rd1">
+        <div class="cc" id="w-foto"><canvas id="c-foto"></canvas></div>
+        <div class="vb">
+          <div class="vn">04</div>
+          <div class="vnm">Fotografía Profesional</div>
+          <p class="vd">Capturamos la esencia de tu marca. Producto, retrato, editorial y contenido para redes con dirección artística propia.</p>
+          <div class="vt"><span class="tag">Producto</span><span class="tag">Retrato</span><span class="tag">Editorial</span><span class="tag">RRSS</span></div>
+        </div>
+      </div>
+
+      <!-- VIDEO -->
+      <div class="vc reveal rd2">
+        <div class="cc" id="w-video"><canvas id="c-video"></canvas></div>
+        <div class="vb">
+          <div class="vn m">05</div>
+          <div class="vnm">Producción de Video</div>
+          <p class="vd">Desde reels hasta campañas completas. Producimos, dirigimos y editamos contenido que detiene el scroll.</p>
+          <div class="vt"><span class="tag">Reels</span><span class="tag">Spots</span><span class="tag">Documental</span><span class="tag">Motion</span></div>
+        </div>
+      </div>
+
+      <!-- AUDIO -->
+      <div class="vc reveal rd3">
+        <div class="cc" id="w-audio"><canvas id="c-audio"></canvas></div>
+        <div class="vb">
+          <div class="vn c">06</div>
+          <div class="vnm">Audio & Producción Musical</div>
+          <p class="vd">Jingles, identidad sonora, podcasts y bandas sonoras. El audio correcto convierte contenido en experiencia.</p>
+          <div class="vt"><span class="tag">Jingle</span><span class="tag">Podcast</span><span class="tag">Sound Branding</span><span class="tag">Score</span></div>
+        </div>
+      </div>
+
+      <!-- DIRECCIÓN DE ARTE -->
+      <div class="vc reveal rd4">
+        <div class="cc" id="w-arte"><canvas id="c-arte"></canvas></div>
+        <div class="vb">
+          <div class="vn" style="color:var(--naranja)">07</div>
+          <div class="vnm">Dirección de Arte</div>
+          <p class="vd">Conceptualizamos y dirigimos la estética visual de tus campañas. Coherencia en todos los puntos de contacto.</p>
+          <div class="vt"><span class="tag">Concepto</span><span class="tag">Estética</span><span class="tag">Campaña</span><span class="tag">Storytelling</span></div>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- AI -->
   <section class="ai-section" id="ai">
     <div class="ai-inner">
       <div class="ai-badge reveal">Tecnología de vanguardia</div>
-      <h2 class="ai-title reveal reveal-delay-1">Desarrollo creativo<br>con <span class="grad">Inteligencia Artificial</span></h2>
-      <p class="ai-subtitle reveal reveal-delay-2">Usamos las herramientas de AI más avanzadas del mundo para crear imagen, video y audio. No reemplazamos la creatividad humana — la potenciamos.</p>
-      <div class="ai-tools-grid">
-        <div class="ai-tool reveal reveal-delay-1"><span class="ai-tool-icon">🖼️</span><div class="ai-tool-name">Imagen con AI</div><p class="ai-tool-desc">Generación y edición de imágenes fotorrealistas, ilustraciones y activos visuales únicos.</p><div class="ai-examples"><span class="ai-example">Midjourney</span><span class="ai-example">Stable Diffusion</span><span class="ai-example">Firefly</span></div></div>
-        <div class="ai-tool reveal reveal-delay-2"><span class="ai-tool-icon">🎬</span><div class="ai-tool-name">Video con AI</div><p class="ai-tool-desc">Clips, animaciones y contenido audiovisual generado con las últimas herramientas.</p><div class="ai-examples"><span class="ai-example">Sora</span><span class="ai-example">Runway</span><span class="ai-example">Kling</span></div></div>
-        <div class="ai-tool reveal reveal-delay-3"><span class="ai-tool-icon">🎵</span><div class="ai-tool-name">Audio con AI</div><p class="ai-tool-desc">Composición musical, efectos de sonido y voz en off para campañas, reels y spots.</p><div class="ai-examples"><span class="ai-example">Suno</span><span class="ai-example">ElevenLabs</span><span class="ai-example">Udio</span></div></div>
+      <h2 class="ai-title reveal rd1">Desarrollo creativo<br>con <span class="grad">Inteligencia Artificial</span></h2>
+      <p class="ai-sub reveal rd2">Usamos las herramientas de AI más avanzadas del mundo para crear imagen, video y audio. No reemplazamos la creatividad humana — la potenciamos.</p>
+      <div class="atg">
+        <div class="at reveal rd1"><span class="ati">🖼️</span><div class="atn">Imagen con AI</div><p class="atd">Generación y edición de imágenes fotorrealistas, ilustraciones y activos visuales únicos.</p><div class="ate"><span class="atex">Midjourney</span><span class="atex">Stable Diffusion</span><span class="atex">Firefly</span></div></div>
+        <div class="at reveal rd2"><span class="ati">🎬</span><div class="atn">Video con AI</div><p class="atd">Clips, animaciones y contenido audiovisual generado con las últimas herramientas.</p><div class="ate"><span class="atex">Sora</span><span class="atex">Runway</span><span class="atex">Kling</span></div></div>
+        <div class="at reveal rd3"><span class="ati">🎵</span><div class="atn">Audio con AI</div><p class="atd">Composición musical, efectos de sonido y voz en off para campañas, reels y spots.</p><div class="ate"><span class="atex">Suno</span><span class="atex">ElevenLabs</span><span class="atex">Udio</span></div></div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════
-       AUTOMATIZACIÓN DIGITAL — sección que emerge
-  ════════════════════════════════════════════════════ -->
   <section class="auto-section" id="automatizacion">
-    <!-- Fondo de código flotante -->
-    <div class="auto-bg" id="autoBg">
+    <div class="auto-bg">
       <div class="auto-bg-text" style="left:5%;animation-delay:0s;animation-duration:18s">if(workflow.trigger) → execute()</div>
       <div class="auto-bg-text" style="left:20%;animation-delay:-5s;animation-duration:22s">n8n.connect(ai, crm, slack)</div>
       <div class="auto-bg-text" style="left:40%;animation-delay:-10s;animation-duration:16s">make.scenario.run() → true</div>
@@ -540,355 +380,708 @@
       <div class="auto-bg-text" style="left:75%;animation-delay:-8s;animation-duration:24s">automation.status: active ✓</div>
       <div class="auto-bg-text" style="left:88%;animation-delay:-15s;animation-duration:19s">AI.agent.loop()</div>
     </div>
-
     <div class="auto-inner">
       <div class="auto-badge">Algo está cambiando</div>
-
-      <h2 class="auto-title">
-        Automatización<br>
-        <span class="auto-accent">Digital</span>
-      </h2>
-
-      <p class="auto-desc">
-        No lo gritamos — lo construimos en silencio. Mientras el mundo descubre la automatización, nosotros ya la integramos en flujos reales: conectando plataformas, eliminando trabajo manual y haciendo que la creatividad escale sola.
-      </p>
-
+      <h2 class="auto-title">Automatización<br><span class="aa">Digital</span></h2>
+      <p class="auto-desc">No lo gritamos — lo construimos en silencio. Mientras el mundo descubre la automatización, nosotros ya la integramos en flujos reales.</p>
       <div class="auto-grid">
-        <div class="auto-node">
-          <span class="auto-node-icon">⚙️</span>
-          <div class="auto-node-name">Flujos Inteligentes</div>
-          <p class="auto-node-desc">Diseñamos workflows que conectan tus herramientas y automatizan tareas repetitivas sin código.</p>
-        </div>
-        <div class="auto-node">
-          <span class="auto-node-icon">🔗</span>
-          <div class="auto-node-name">Integraciones</div>
-          <p class="auto-node-desc">Unimos CRMs, plataformas sociales, herramientas AI y canales de comunicación en un solo flujo.</p>
-        </div>
-        <div class="auto-node">
-          <span class="auto-node-icon">🤖</span>
-          <div class="auto-node-name">Agentes AI</div>
-          <p class="auto-node-desc">Configuramos agentes que toman decisiones, generan contenido y responden en tiempo real.</p>
-        </div>
-        <div class="auto-node">
-          <span class="auto-node-icon">📊</span>
-          <div class="auto-node-name">Datos & Reportes</div>
-          <p class="auto-node-desc">Automatizamos la captura y procesamiento de datos para tomar decisiones más rápido.</p>
-        </div>
+        <div class="an"><span class="ani">⚙️</span><div class="ann">Flujos Inteligentes</div><p class="and">Diseñamos workflows que conectan tus herramientas y automatizan tareas repetitivas.</p></div>
+        <div class="an"><span class="ani">🔗</span><div class="ann">Integraciones</div><p class="and">Unimos CRMs, plataformas sociales, herramientas AI y canales de comunicación.</p></div>
+        <div class="an"><span class="ani">🤖</span><div class="ann">Agentes AI</div><p class="and">Configuramos agentes que toman decisiones, generan contenido y responden en tiempo real.</p></div>
+        <div class="an"><span class="ani">📊</span><div class="ann">Datos & Reportes</div><p class="and">Automatizamos la captura y procesamiento de datos para tomar decisiones más rápido.</p></div>
       </div>
-
-      <div class="auto-hidden-text">
-        <div class="auto-hidden-quote">
-          "El futuro no se anuncia.<br>
-          <span class="reveal-word" id="rw1">Se</span>
-          <span class="reveal-word" id="rw2">construye</span>
-          <span class="reveal-word" id="rw3">en</span>
-          <span class="reveal-word" id="rw4">silencio."</span>
-        </div>
+      <div class="auto-ht">
+        <div class="auto-q">"El futuro no se anuncia.<br><span class="rw" id="rw1">Se</span> <span class="rw" id="rw2">construye</span> <span class="rw" id="rw3">en</span> <span class="rw" id="rw4">silencio."</span></div>
         <div class="auto-tools">
-          <span class="auto-tool-tag">n8n</span>
-          <span class="auto-tool-tag">Make</span>
-          <span class="auto-tool-tag">Zapier</span>
-          <span class="auto-tool-tag">Claude AI</span>
-          <span class="auto-tool-tag">OpenAI</span>
-          <span class="auto-tool-tag">Airtable</span>
-          <span class="auto-tool-tag">Notion API</span>
-          <span class="auto-tool-tag">Webhooks</span>
+          <span class="att">n8n</span><span class="att">Make</span><span class="att">Zapier</span>
+          <span class="att">Claude AI</span><span class="att">OpenAI</span>
+          <span class="att">Airtable</span><span class="att">Notion API</span><span class="att">Webhooks</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROCESO -->
-  <section class="process section" id="proceso">
-    <div class="section-label reveal">Cómo trabajamos</div>
-    <h2 class="section-title reveal reveal-delay-1">Un proceso tan vivo como tu marca</h2>
-    <div class="process-list">
-      <div class="process-item reveal"><div class="process-num">01</div><div class="process-name">Escuchar & Descubrir</div><div class="process-desc">Entendemos tu negocio, tu audiencia y el espacio que quieres ocupar.</div></div>
-      <div class="process-item reveal"><div class="process-num">02</div><div class="process-name">Estrategia & Concepto</div><div class="process-desc">Definimos la dirección creativa y la estrategia que va a guiar cada decisión.</div></div>
-      <div class="process-item reveal"><div class="process-num">03</div><div class="process-name">Diseñar & Construir</div><div class="process-desc">Damos vida al concepto con diseño de alto nivel y desarrollo robusto.</div></div>
-      <div class="process-item reveal"><div class="process-num">04</div><div class="process-name">Lanzar & Crecer</div><div class="process-desc">Salimos al mundo, medimos, aprendemos y evolucionamos.</div></div>
+  <section class="process sec" id="proceso">
+    <div class="sl reveal">Cómo trabajamos</div>
+    <h2 class="st reveal rd1">Un proceso tan vivo como tu marca</h2>
+    <div>
+      <div class="pi reveal"><div class="pn">01</div><div class="pname">Escuchar & Descubrir</div><div class="pdesc">Entendemos tu negocio, tu audiencia y el espacio que quieres ocupar.</div></div>
+      <div class="pi reveal"><div class="pn">02</div><div class="pname">Estrategia & Concepto</div><div class="pdesc">Definimos la dirección creativa que va a guiar cada decisión.</div></div>
+      <div class="pi reveal"><div class="pn">03</div><div class="pname">Diseñar & Construir</div><div class="pdesc">Damos vida al concepto con diseño de alto nivel y desarrollo robusto.</div></div>
+      <div class="pi reveal"><div class="pn">04</div><div class="pname">Lanzar & Crecer</div><div class="pdesc">Salimos al mundo, medimos, aprendemos y evolucionamos.</div></div>
     </div>
   </section>
 
-  <!-- COMUNIDAD -->
   <section class="community" id="comunidad">
-    <div class="community-inner">
+    <div class="ci">
       <div>
-        <div class="section-label reveal">Comunidad primero</div>
-        <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:1.5rem">Somos parte del ecosistema que construimos</h2>
-        <p class="reveal reveal-delay-2" style="opacity:.55;line-height:1.7;font-size:1rem;max-width:400px">No somos una agencia externa con soluciones enlatadas. Vivimos dentro de la comunidad digital y construimos desde adentro.</p>
-        <a href="https://wa.me/56948590700?text=Hola%2C%20me%20interesa%20ser%20parte%20de%20la%20comunidad%20Insecto%20Digital." target="_blank" rel="noopener" class="btn-whatsapp reveal reveal-delay-3" style="margin-top:2.5rem">
+        <div class="sl reveal">Comunidad primero</div>
+        <h2 class="st reveal rd1" style="margin-bottom:1.5rem">Somos parte del ecosistema que construimos</h2>
+        <p class="reveal rd2" style="opacity:.55;line-height:1.7;font-size:1rem;max-width:400px">No somos una agencia externa con soluciones enlatadas. Vivimos dentro de la comunidad digital y construimos desde adentro.</p>
+        <a href="https://wa.me/56948590700?text=Hola%2C%20me%20interesa%20ser%20parte%20de%20la%20comunidad." target="_blank" rel="noopener" class="btn-wa reveal rd3" style="margin-top:2.5rem">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           Únete a la comunidad
         </a>
       </div>
-      <div class="community-stats reveal">
-        <div class="stat"><div class="stat-num">+50</div><div class="stat-label">Proyectos<br>completados</div></div>
-        <div class="stat"><div class="stat-num">3×</div><div class="stat-label">Crecimiento<br>promedio en redes</div></div>
-        <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Proyectos<br>entregados a tiempo</div></div>
-        <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Ganas de seguir<br>construyendo</div></div>
+      <div class="cs reveal">
+        <div class="stat"><div class="snum">+50</div><div class="slbl">Proyectos<br>completados</div></div>
+        <div class="stat"><div class="snum">3×</div><div class="slbl">Crecimiento<br>promedio en redes</div></div>
+        <div class="stat"><div class="snum">100%</div><div class="slbl">Proyectos<br>entregados a tiempo</div></div>
+        <div class="stat"><div class="snum">∞</div><div class="slbl">Ganas de seguir<br>construyendo</div></div>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
   <section class="cta-section" id="contacto">
-    <h2 class="cta-title reveal">¿Listo para<br><span>crear algo</span><br>extraordinario?</h2>
-    <p class="cta-subtitle reveal reveal-delay-1">Cuéntanos tu proyecto. Sin compromisos, sin formularios. Solo una conversación real por WhatsApp.</p>
-    <a href="https://wa.me/56948590700?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20sus%20servicios%20creativos." target="_blank" rel="noopener" class="btn-whatsapp-lg reveal reveal-delay-2">
+    <h2 class="ctt reveal">¿Listo para<br><span>crear algo</span><br>extraordinario?</h2>
+    <p class="csub reveal rd1">Cuéntanos tu proyecto. Sin compromisos. Solo una conversación real por WhatsApp.</p>
+    <a href="https://wa.me/56948590700?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20sus%20servicios." target="_blank" rel="noopener" class="btn-wa-lg reveal rd2">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       Escríbenos por WhatsApp
     </a>
   </section>
 
-  <!-- FOOTER -->
   <footer>
-    <a href="/" class="footer-logo">insecto<span>.</span>digital</a>
-    <ul class="footer-links">
-      <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#visual">Foto & Video</a></li>
-      <li><a href="#ai">AI Creativa</a></li>
-      <li><a href="#automatizacion">Automatización</a></li>
-      <li><a href="#proceso">Proceso</a></li>
-      <li><a href="#contacto">Contacto</a></li>
+    <a href="/" class="fl">insecto<span>.</span>digital</a>
+    <ul class="flinks">
+      <li><a href="#servicios">Servicios</a></li><li><a href="#visual">Foto & Video</a></li>
+      <li><a href="#ai">AI Creativa</a></li><li><a href="#automatizacion">Automatización</a></li>
+      <li><a href="#proceso">Proceso</a></li><li><a href="#contacto">Contacto</a></li>
     </ul>
-    <span class="footer-copy">© 2025 Insecto Digital</span>
+    <span class="fco">© 2025 Insecto Digital</span>
   </footer>
 
-  <!-- Three.js desde CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
   <script>
-  // ═══════════════════════════════════════════════
-  // HERO 3D — Three.js
-  // ═══════════════════════════════════════════════
+  // ─────────────────────────────────────────────────────
+  // UTILITY: create mini scene in a card canvas
+  // ─────────────────────────────────────────────────────
+  function mkCard(canvasId, bgHex) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return null;
+    const wrap = document.getElementById(canvasId.replace('c-', 'w-'));
+    const W = wrap.clientWidth || 560, H = wrap.clientHeight || 220;
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: bgHex === undefined });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(W, H);
+    if (bgHex !== undefined) renderer.setClearColor(bgHex, 1);
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(48, W / H, 0.1, 100);
+    camera.position.z = 4.2;
+    new ResizeObserver(() => {
+      const nw = wrap.clientWidth, nh = wrap.clientHeight;
+      renderer.setSize(nw, nh);
+      camera.aspect = nw / nh;
+      camera.updateProjectionMatrix();
+    }).observe(wrap);
+    // Lights
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    const key = new THREE.DirectionalLight(0xffffff, 1.4);
+    key.position.set(4, 5, 6);
+    scene.add(key);
+    const fill = new THREE.DirectionalLight(0xffffff, 0.4);
+    fill.position.set(-4, -2, 3);
+    scene.add(fill);
+    return { renderer, scene, camera, wrap };
+  }
+
+  // ─────────────────────────────────────────────────────
+  // 1. FOTOGRAFÍA — Mirrorless camera, spins on Y axis
+  // Body + lens barrel + aperture ring + shutter button
+  // ─────────────────────────────────────────────────────
+  (function() {
+    const s = mkCard('c-foto', 0x0a0806);
+    if (!s) return;
+    const { renderer, scene, camera } = s;
+
+    const root = new THREE.Group();
+    scene.add(root);
+
+    // Body
+    const bodyMat = new THREE.MeshStandardMaterial({ color: 0x1c1c1c, metalness: 0.85, roughness: 0.25 });
+    root.add(new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.35, 0.8), bodyMat));
+
+    // Grip
+    const grip = new THREE.Mesh(new THREE.BoxGeometry(0.42, 1.2, 0.88), new THREE.MeshStandardMaterial({ color: 0x181818, metalness: 0.8, roughness: 0.35 }));
+    grip.position.set(1.15, -0.07, 0);
+    root.add(grip);
+
+    // Top plate
+    const top = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.1, 0.8), new THREE.MeshStandardMaterial({ color: 0x252525, metalness: 0.9, roughness: 0.2 }));
+    top.position.y = 0.725;
+    root.add(top);
+
+    // Mode dial
+    const dial = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.07, 32), new THREE.MeshStandardMaterial({ color: 0x444, metalness: 0.8, roughness: 0.3 }));
+    dial.rotation.x = Math.PI / 2;
+    dial.position.set(-0.6, 0.79, 0);
+    root.add(dial);
+
+    // Shutter button (red)
+    const shutter = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.04, 20), new THREE.MeshStandardMaterial({ color: 0xdd3311 }));
+    shutter.rotation.x = Math.PI / 2;
+    shutter.position.set(0.72, 0.79, 0);
+    root.add(shutter);
+
+    // Viewfinder bump
+    const vf = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.26, 0.46), bodyMat);
+    vf.position.set(-0.35, 0.925, -0.17);
+    root.add(vf);
+
+    // Lens mount ring (gold)
+    const mount = new THREE.Mesh(
+      new THREE.TorusGeometry(0.46, 0.028, 8, 48),
+      new THREE.MeshStandardMaterial({ color: 0xddaa33, metalness: 1, roughness: 0.1 })
+    );
+    mount.rotation.x = Math.PI / 2;
+    mount.position.set(0, 0, 0.41);
+    root.add(mount);
+
+    // Lens barrel group
+    const lens = new THREE.Group();
+    lens.position.set(0, 0, 0.42);
+    root.add(lens);
+
+    const barrelMat = new THREE.MeshStandardMaterial({ color: 0x202020, metalness: 0.85, roughness: 0.3 });
+    // Barrel layers
+    const b1 = new THREE.Mesh(new THREE.CylinderGeometry(0.44, 0.44, 0.36, 48), barrelMat);
+    b1.rotation.x = Math.PI / 2; b1.position.z = 0.14; lens.add(b1);
+    const b2 = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.24, 48), new THREE.MeshStandardMaterial({ color: 0x2a2a2a, metalness: 0.9, roughness: 0.2 }));
+    b2.rotation.x = Math.PI / 2; b2.position.z = 0.38; lens.add(b2);
+    const b3 = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.32, 0.18, 48), barrelMat);
+    b3.rotation.x = Math.PI / 2; b3.position.z = 0.56; lens.add(b3);
+
+    // Focus ring ribs
+    for (let i = 0; i < 24; i++) {
+      const rib = new THREE.Mesh(
+        new THREE.BoxGeometry(0.016, 0.36, 0.035),
+        new THREE.MeshStandardMaterial({ color: 0x3a3a3a, metalness: 0.6, roughness: 0.6 })
+      );
+      const a = (i / 24) * Math.PI * 2;
+      rib.position.set(Math.cos(a) * 0.455, Math.sin(a) * 0.455, 0.14);
+      rib.rotation.z = a;
+      lens.add(rib);
+    }
+
+    // Front glass (blue tinted)
+    const glass = new THREE.Mesh(
+      new THREE.CircleGeometry(0.28, 48),
+      new THREE.MeshStandardMaterial({ color: 0x2244bb, metalness: 0.1, roughness: 0, transparent: true, opacity: 0.7 })
+    );
+    glass.position.z = 0.655;
+    lens.add(glass);
+
+    // Glass highlight ring
+    const gRing = new THREE.Mesh(
+      new THREE.RingGeometry(0.24, 0.28, 48),
+      new THREE.MeshBasicMaterial({ color: 0x88ccff, transparent: true, opacity: 0.45, side: THREE.DoubleSide })
+    );
+    gRing.position.z = 0.66;
+    lens.add(gRing);
+
+    // 8 aperture blades
+    const bladeGroup = new THREE.Group();
+    bladeGroup.position.z = 0.64;
+    lens.add(bladeGroup);
+    const blades = [];
+    for (let i = 0; i < 8; i++) {
+      const shape = new THREE.Shape();
+      shape.moveTo(0, 0); shape.lineTo(0.16, 0.035); shape.lineTo(0.19, 0.13); shape.lineTo(0.04, 0.16); shape.closePath();
+      const bMesh = new THREE.Mesh(
+        new THREE.ShapeGeometry(shape),
+        new THREE.MeshStandardMaterial({ color: 0x0d0d0d, metalness: 0.7, roughness: 0.4, side: THREE.DoubleSide })
+      );
+      const angle = (i / 8) * Math.PI * 2;
+      bMesh.rotation.z = angle;
+      bladeGroup.add(bMesh);
+      blades.push({ m: bMesh, a: angle });
+    }
+
+    // Hotshoe
+    const shoe = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.05, 0.22), new THREE.MeshStandardMaterial({ color: 0x777, metalness: 1, roughness: 0.05 }));
+    shoe.position.set(-0.1, 0.78, 0);
+    root.add(shoe);
+
+    const clock = new THREE.Clock();
+    (function animate() {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+      root.rotation.y = t * 0.55;
+      root.rotation.x = Math.sin(t * 0.3) * 0.06;
+      // Aperture breathe
+      const ap = Math.sin(t * 1.1) * 0.09 + 0.11;
+      blades.forEach(({ m, a }) => { m.rotation.z = a + ap; });
+      // Focus ring slow spin
+      b1.rotation.z = t * 0.3;
+      renderer.render(scene, camera);
+    })();
+  })();
+
+  // ─────────────────────────────────────────────────────
+  // 2. VIDEO — Cinema camera, spins on Y axis
+  // Professional video camera body + lens + viewfinder arm
+  // ─────────────────────────────────────────────────────
+  (function() {
+    const s = mkCard('c-video', 0x060608);
+    if (!s) return;
+    const { renderer, scene, camera } = s;
+
+    const root = new THREE.Group();
+    scene.add(root);
+
+    const darkMat = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.75, roughness: 0.3 });
+    const midMat = new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.8, roughness: 0.25 });
+
+    // Main body — wider and more rectangular than photo camera
+    root.add(new THREE.Mesh(new THREE.BoxGeometry(2.2, 1.2, 1.1), darkMat));
+
+    // Top handle
+    const handle = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.18, 0.9), midMat);
+    handle.position.y = 0.72;
+    root.add(handle);
+
+    // Handle arch supports
+    [-0.6, 0.6].forEach(x => {
+      const s = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.3, 0.08), midMat);
+      s.position.set(x, 0.56, 0);
+      root.add(s);
+    });
+
+    // Side panel detail
+    const panel = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.8, 0.8), new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.6, roughness: 0.4 }));
+    panel.position.set(1.13, 0, 0);
+    root.add(panel);
+
+    // Lens mount ring (silver)
+    const mount = new THREE.Mesh(
+      new THREE.TorusGeometry(0.5, 0.03, 8, 48),
+      new THREE.MeshStandardMaterial({ color: 0x888888, metalness: 1, roughness: 0.1 })
+    );
+    mount.rotation.x = Math.PI / 2;
+    mount.position.set(-0.2, 0, 0.56);
+    root.add(mount);
+
+    // Lens — bigger cinema lens
+    const lensGroup = new THREE.Group();
+    lensGroup.position.set(-0.2, 0, 0.57);
+    root.add(lensGroup);
+
+    const l1 = new THREE.Mesh(new THREE.CylinderGeometry(0.48, 0.48, 0.55, 48), darkMat);
+    l1.rotation.x = Math.PI / 2; l1.position.z = 0.22; lensGroup.add(l1);
+
+    const l2 = new THREE.Mesh(new THREE.CylinderGeometry(0.41, 0.41, 0.3, 48), midMat);
+    l2.rotation.x = Math.PI / 2; l2.position.z = 0.54; lensGroup.add(l2);
+
+    // Lens focus ring ribs
+    for (let i = 0; i < 30; i++) {
+      const rib = new THREE.Mesh(
+        new THREE.BoxGeometry(0.012, 0.55, 0.028),
+        new THREE.MeshStandardMaterial({ color: 0x333, metalness: 0.5, roughness: 0.7 })
+      );
+      const a = (i / 30) * Math.PI * 2;
+      rib.position.set(Math.cos(a) * 0.49, Math.sin(a) * 0.49, 0.22);
+      rib.rotation.z = a;
+      lensGroup.add(rib);
+    }
+
+    // Front glass
+    lensGroup.add(new THREE.Mesh(
+      new THREE.CircleGeometry(0.35, 48),
+      new THREE.MeshStandardMaterial({ color: 0x112244, transparent: true, opacity: 0.75, roughness: 0, metalness: 0.05 })
+    )).position.z = 0.7;
+
+    lensGroup.add(new THREE.Mesh(
+      new THREE.RingGeometry(0.3, 0.35, 48),
+      new THREE.MeshBasicMaterial({ color: 0x99aaff, transparent: true, opacity: 0.4, side: THREE.DoubleSide })
+    )).position.z = 0.705;
+
+    // EVF (electronic viewfinder) arm on top right
+    const evfArm = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.45, 0.12), midMat);
+    evfArm.position.set(0.8, 0.84, 0);
+    root.add(evfArm);
+    const evf = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.28, 0.22), darkMat);
+    evf.position.set(0.8, 1.1, -0.05);
+    root.add(evf);
+    // EVF screen
+    root.add(new THREE.Mesh(
+      new THREE.PlaneGeometry(0.42, 0.22),
+      new THREE.MeshBasicMaterial({ color: 0x001133, transparent: true, opacity: 0.9 })
+    )).position.set(0.8, 1.1, 0.075);
+
+    // REC button (red)
+    root.add(new THREE.Mesh(
+      new THREE.CylinderGeometry(0.075, 0.075, 0.04, 18),
+      new THREE.MeshStandardMaterial({ color: 0xff2200 })
+    )).position.set(0.65, 0.68, 0.56);
+
+    // XLR audio inputs (back)
+    [-0.2, 0.2].forEach(y => {
+      const xlr = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.1, 12), new THREE.MeshStandardMaterial({ color: 0x444, metalness: 0.9 }));
+      xlr.position.set(-1.15, y, 0.2);
+      root.add(xlr);
+    });
+
+    const clock = new THREE.Clock();
+    (function animate() {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+      root.rotation.y = t * 0.5;
+      root.rotation.x = Math.sin(t * 0.35) * 0.05;
+      l1.rotation.z = t * 0.25;
+      renderer.render(scene, camera);
+    })();
+  })();
+
+  // ─────────────────────────────────────────────────────
+  // 3. AUDIO — Vinyl record + tonearm, spins on Y axis
+  // Full vinyl record with grooves, label, tonearm resting on it
+  // ─────────────────────────────────────────────────────
+  (function() {
+    const s = mkCard('c-audio', 0x060608);
+    if (!s) return;
+    const { renderer, scene, camera } = s;
+
+    const root = new THREE.Group();
+    scene.add(root);
+
+    // Vinyl disc
+    const disc = new THREE.Mesh(
+      new THREE.CylinderGeometry(1.5, 1.5, 0.07, 80),
+      new THREE.MeshStandardMaterial({ color: 0x101015, metalness: 0.25, roughness: 0.55 })
+    );
+    root.add(disc);
+
+    // Vinyl grooves — concentric rings
+    for (let i = 0; i < 22; i++) {
+      const r = 0.42 + i * 0.05;
+      const groove = new THREE.Mesh(
+        new THREE.TorusGeometry(r, 0.005, 4, 80),
+        new THREE.MeshBasicMaterial({ color: 0x252530, transparent: true, opacity: 0.7 })
+      );
+      groove.rotation.x = Math.PI / 2;
+      groove.position.y = 0.038;
+      root.add(groove);
+    }
+
+    // Outer edge highlight
+    root.add(new THREE.Mesh(
+      new THREE.TorusGeometry(1.5, 0.008, 6, 80),
+      new THREE.MeshBasicMaterial({ color: 0x333344, transparent: true, opacity: 0.5 })
+    )).rotation.x = Math.PI / 2;
+
+    // Label (center circle) — cyan
+    const label = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.38, 0.38, 0.075, 48),
+      new THREE.MeshStandardMaterial({ color: 0x2AFADF, roughness: 0.55, metalness: 0.1 })
+    );
+    root.add(label);
+
+    // Label text lines
+    for (let i = 0; i < 4; i++) {
+      const line = new THREE.Mesh(
+        new THREE.BoxGeometry(0.28 - i * 0.04, 0.012, 0.078),
+        new THREE.MeshBasicMaterial({ color: 0x001122 })
+      );
+      line.position.set(0, 0.04 - i * 0.06, 0);
+      root.add(line);
+    }
+
+    // Spindle hole
+    root.add(new THREE.Mesh(
+      new THREE.CylinderGeometry(0.028, 0.028, 0.1, 12),
+      new THREE.MeshBasicMaterial({ color: 0x000000 })
+    ));
+
+    // Reflection arc
+    const refArc = new THREE.Mesh(
+      new THREE.RingGeometry(0.7, 1.2, 80),
+      new THREE.MeshBasicMaterial({ color: 0x334466, transparent: true, opacity: 0.1, side: THREE.DoubleSide })
+    );
+    refArc.rotation.x = Math.PI / 2;
+    refArc.position.y = 0.04;
+    root.add(refArc);
+
+    // TONEARM — separate group, doesn't spin with disc
+    const arm = new THREE.Group();
+    scene.add(arm);
+    arm.position.set(1.3, 0.15, 0.8);
+
+    // Pivot base
+    arm.add(new THREE.Mesh(
+      new THREE.CylinderGeometry(0.09, 0.11, 0.14, 16),
+      new THREE.MeshStandardMaterial({ color: 0x555, metalness: 0.9, roughness: 0.2 })
+    ));
+
+    // Arm tube
+    const tube = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.026, 0.018, 1.5, 8),
+      new THREE.MeshStandardMaterial({ color: 0x999, metalness: 0.95, roughness: 0.1 })
+    );
+    tube.rotation.z = Math.PI / 2 - 0.35;
+    tube.rotation.y = -0.6;
+    tube.position.set(-0.72, 0.04, -0.45);
+    arm.add(tube);
+
+    // Headshell
+    const headshell = new THREE.Mesh(
+      new THREE.BoxGeometry(0.16, 0.055, 0.085),
+      new THREE.MeshStandardMaterial({ color: 0x333, metalness: 0.75, roughness: 0.35 })
+    );
+    headshell.position.set(-1.42, -0.34, -0.85);
+    arm.add(headshell);
+
+    // Needle
+    const needle = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.007, 0.002, 0.14, 6),
+      new THREE.MeshStandardMaterial({ color: 0xdddddd, metalness: 1, roughness: 0 })
+    );
+    needle.rotation.z = 0.22;
+    needle.position.set(-1.46, -0.43, -0.87);
+    arm.add(needle);
+
+    // Counterweight
+    const cw = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.065, 0.065, 0.1, 12),
+      new THREE.MeshStandardMaterial({ color: 0x222, metalness: 0.8, roughness: 0.2 })
+    );
+    cw.rotation.z = Math.PI / 2;
+    cw.position.set(0.55, 0.04, 0);
+    arm.add(cw);
+
+    camera.position.set(0, 1.8, 3.2);
+    camera.lookAt(0, 0, 0);
+
+    const clock = new THREE.Clock();
+    (function animate() {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+      // Vinyl spins on its own axis (Y)
+      root.rotation.y = t * 0.7;
+      // Tonearm gentle sway
+      arm.rotation.y = Math.sin(t * 0.18) * 0.04;
+      renderer.render(scene, camera);
+    })();
+  })();
+
+  // ─────────────────────────────────────────────────────
+  // 4. DIRECCIÓN DE ARTE — Artist easel, spins on Y axis
+  // Wooden easel with a canvas on it, paint palette nearby
+  // ─────────────────────────────────────────────────────
+  (function() {
+    const s = mkCard('c-arte', 0x080608);
+    if (!s) return;
+    const { renderer, scene, camera } = s;
+
+    const root = new THREE.Group();
+    scene.add(root);
+
+    const woodMat = new THREE.MeshStandardMaterial({ color: 0xaa7733, roughness: 0.7, metalness: 0.05 });
+    const darkWood = new THREE.MeshStandardMaterial({ color: 0x7a5520, roughness: 0.75, metalness: 0.0 });
+
+    // EASEL — 3 legs
+    // Front left leg
+    const leg = (x, z, rx, rz) => {
+      const m = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.035, 2.4, 8), woodMat);
+      m.rotation.x = rx; m.rotation.z = rz;
+      m.position.set(x, -0.3, z);
+      return m;
+    };
+    root.add(leg(-0.35, 0.25, 0.18, 0.08));
+    root.add(leg(0.35, 0.25, 0.18, -0.08));
+    root.add(leg(0, -0.55, -0.2, 0));
+
+    // Cross brace
+    const brace = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.8, 8), darkWood);
+    brace.rotation.z = Math.PI / 2;
+    brace.position.set(0, -0.85, 0.15);
+    root.add(brace);
+
+    // Top bar
+    const topBar = new THREE.Mesh(new THREE.CylinderGeometry(0.038, 0.038, 0.85, 8), woodMat);
+    topBar.rotation.z = Math.PI / 2;
+    topBar.position.set(0, 0.72, 0.18);
+    root.add(topBar);
+
+    // Canvas ledge
+    const ledge = new THREE.Mesh(new THREE.BoxGeometry(0.82, 0.06, 0.12), darkWood);
+    ledge.position.set(0, -0.1, 0.22);
+    root.add(ledge);
+
+    // CANVAS — white rectangle sitting on ledge
+    const canvasFrame = new THREE.Mesh(
+      new THREE.BoxGeometry(0.72, 0.9, 0.03),
+      new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.8 })
+    );
+    canvasFrame.position.set(0, 0.38, 0.24);
+    root.add(canvasFrame);
+
+    // Canvas surface
+    const canvasSurf = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.64, 0.82),
+      new THREE.MeshStandardMaterial({ color: 0xf0ead8, roughness: 0.9 })
+    );
+    canvasSurf.position.set(0, 0.38, 0.26);
+    root.add(canvasSurf);
+
+    // Paint strokes on canvas
+    const strokeColors = [0xFF6B2B, 0xFF3CAC, 0x2AFADF, 0xBCFF47, 0x9B5DFF];
+    strokeColors.forEach((col, i) => {
+      const stroke = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.18 + Math.random() * 0.2, 0.035 + Math.random() * 0.04),
+        new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.85 })
+      );
+      stroke.position.set(
+        -0.22 + i * 0.1,
+        0.15 + (i % 3) * 0.16,
+        0.265
+      );
+      stroke.rotation.z = (Math.random() - 0.5) * 0.3;
+      root.add(stroke);
+    });
+
+    // PALETTE — small kidney shape to the side
+    const palette = new THREE.Group();
+    palette.position.set(0.85, 0.2, 0.4);
+    palette.rotation.y = -0.5;
+    root.add(palette);
+
+    palette.add(new THREE.Mesh(
+      new THREE.CylinderGeometry(0.28, 0.28, 0.04, 32),
+      new THREE.MeshStandardMaterial({ color: 0xd4b896, roughness: 0.8 })
+    ));
+
+    // Paint blobs on palette
+    [0xFF6B2B, 0xFF3CAC, 0xBCFF47, 0x2AFADF, 0x9B5DFF].forEach((col, i) => {
+      const blob = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.05, 0.05, 0.05, 14),
+        new THREE.MeshStandardMaterial({ color: col, roughness: 0.7 })
+      );
+      const a = (i / 5) * Math.PI * 2;
+      blob.position.set(Math.cos(a) * 0.16, 0.04, Math.sin(a) * 0.16);
+      palette.add(blob);
+    });
+
+    // BRUSH — floating near palette
+    const brush = new THREE.Group();
+    brush.position.set(-0.9, 0.4, 0.3);
+    brush.rotation.z = -0.6;
+    root.add(brush);
+
+    brush.add(new THREE.Mesh(
+      new THREE.CylinderGeometry(0.032, 0.025, 1.1, 8),
+      new THREE.MeshStandardMaterial({ color: 0xbb7722, roughness: 0.6 })
+    ));
+
+    // Ferrule
+    brush.add(new THREE.Mesh(
+      new THREE.CylinderGeometry(0.036, 0.036, 0.1, 10),
+      new THREE.MeshStandardMaterial({ color: 0xaaaaaa, metalness: 0.9, roughness: 0.1 })
+    )).position.y = -0.58;
+
+    // Bristle tip
+    const bristle = new THREE.Mesh(
+      new THREE.ConeGeometry(0.036, 0.24, 8),
+      new THREE.MeshStandardMaterial({ color: 0xFF6B2B, roughness: 0.8 })
+    );
+    bristle.position.y = -0.73;
+    brush.add(bristle);
+
+    camera.position.set(0, 0.4, 4.5);
+    camera.lookAt(0, 0, 0);
+
+    const clock = new THREE.Clock();
+    (function animate() {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+      root.rotation.y = t * 0.45;
+      root.rotation.x = Math.sin(t * 0.28) * 0.04;
+      renderer.render(scene, camera);
+    })();
+  })();
+
+  // ─────────────────────────────────────────────────────
+  // HERO 3D
+  // ─────────────────────────────────────────────────────
   (function() {
     const canvas = document.getElementById('hero-canvas');
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
-
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
     camera.position.set(0, 0, 5);
-
-    // Redimensionar
     function resize() {
-      const w = canvas.parentElement.clientWidth;
-      const h = canvas.parentElement.clientHeight;
-      renderer.setSize(w, h);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
+      const w = canvas.parentElement.clientWidth, h = canvas.parentElement.clientHeight;
+      renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix();
     }
-    resize();
-    window.addEventListener('resize', resize);
-
-    // ── Partículas de fondo ──
-    const particleCount = 1800;
-    const positions = new Float32Array(particleCount * 3);
-    const sizes = new Float32Array(particleCount);
-    for (let i = 0; i < particleCount; i++) {
-      positions[i*3]   = (Math.random() - 0.5) * 20;
-      positions[i*3+1] = (Math.random() - 0.5) * 20;
-      positions[i*3+2] = (Math.random() - 0.5) * 15;
-      sizes[i] = Math.random() * 2 + 0.5;
-    }
-    const pGeo = new THREE.BufferGeometry();
-    pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    pGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-    const pMat = new THREE.PointsMaterial({
-      color: 0xBCFF47, size: 0.03, transparent: true, opacity: 0.6,
-      sizeAttenuation: true
-    });
-    scene.add(new THREE.Points(pGeo, pMat));
-
-    // ── Partículas secundarias (magenta) ──
-    const p2Count = 600;
-    const pos2 = new Float32Array(p2Count * 3);
-    for (let i = 0; i < p2Count; i++) {
-      pos2[i*3]   = (Math.random() - 0.5) * 18;
-      pos2[i*3+1] = (Math.random() - 0.5) * 18;
-      pos2[i*3+2] = (Math.random() - 0.5) * 12;
-    }
-    const pGeo2 = new THREE.BufferGeometry();
-    pGeo2.setAttribute('position', new THREE.BufferAttribute(pos2, 3));
-    const pMat2 = new THREE.PointsMaterial({
-      color: 0xFF3CAC, size: 0.025, transparent: true, opacity: 0.35,
-      sizeAttenuation: true
-    });
-    scene.add(new THREE.Points(pGeo2, pMat2));
-
-    // ── Partículas cyan ──
-    const p3Count = 400;
-    const pos3 = new Float32Array(p3Count * 3);
-    for (let i = 0; i < p3Count; i++) {
-      pos3[i*3]   = (Math.random() - 0.5) * 16;
-      pos3[i*3+1] = (Math.random() - 0.5) * 16;
-      pos3[i*3+2] = (Math.random() - 0.5) * 10;
-    }
-    const pGeo3 = new THREE.BufferGeometry();
-    pGeo3.setAttribute('position', new THREE.BufferAttribute(pos3, 3));
-    const pMat3 = new THREE.PointsMaterial({
-      color: 0x2AFADF, size: 0.02, transparent: true, opacity: 0.25,
-      sizeAttenuation: true
-    });
-    scene.add(new THREE.Points(pGeo3, pMat3));
-
-    // ── Geometría flotante principal (icosaedro wireframe) ──
-    const icoGeo = new THREE.IcosahedronGeometry(1.2, 1);
-    const icoMat = new THREE.MeshBasicMaterial({
-      color: 0xBCFF47, wireframe: true, transparent: true, opacity: 0.08
-    });
-    const ico = new THREE.Mesh(icoGeo, icoMat);
-    ico.position.set(2.5, 0.5, 0);
-    scene.add(ico);
-
-    // ── Geometría secundaria (octaedro) ──
-    const octGeo = new THREE.OctahedronGeometry(0.7, 0);
-    const octMat = new THREE.MeshBasicMaterial({
-      color: 0xFF3CAC, wireframe: true, transparent: true, opacity: 0.12
-    });
-    const oct = new THREE.Mesh(octGeo, octMat);
-    oct.position.set(-3, -0.8, -1);
-    scene.add(oct);
-
-    // ── Tetraedro (cyan) ──
-    const tetGeo = new THREE.TetrahedronGeometry(0.5, 0);
-    const tetMat = new THREE.MeshBasicMaterial({
-      color: 0x2AFADF, wireframe: true, transparent: true, opacity: 0.15
-    });
-    const tet = new THREE.Mesh(tetGeo, tetMat);
-    tet.position.set(-1.5, 1.5, -2);
-    scene.add(tet);
-
-    // ── Torus (violeta) ──
-    const torGeo = new THREE.TorusGeometry(0.6, 0.08, 8, 24);
-    const torMat = new THREE.MeshBasicMaterial({
-      color: 0x9B5DFF, wireframe: true, transparent: true, opacity: 0.1
-    });
-    const tor = new THREE.Mesh(torGeo, torMat);
-    tor.position.set(1, -1.8, -1.5);
-    scene.add(tor);
-
-    // ── Mouse tracking ──
-    let mouseX = 0, mouseY = 0;
-    let targetX = 0, targetY = 0;
-    document.addEventListener('mousemove', e => {
-      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-      mouseY = -(e.clientY / window.innerHeight - 0.5) * 2;
-    });
-
-    // ── Scroll para mover cámara ──
-    let scrollY = 0;
+    resize(); window.addEventListener('resize', resize);
+    const mkP = (n, sp, col, sz, op) => {
+      const p = new Float32Array(n * 3);
+      for (let i = 0; i < n; i++) { p[i*3] = (Math.random()-.5)*sp; p[i*3+1] = (Math.random()-.5)*sp; p[i*3+2] = (Math.random()-.5)*(sp*.7); }
+      const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(p, 3));
+      return new THREE.Points(g, new THREE.PointsMaterial({ color: col, size: sz, transparent: true, opacity: op, sizeAttenuation: true }));
+    };
+    scene.add(mkP(1800, 20, 0xBCFF47, .03, .6));
+    scene.add(mkP(600, 18, 0xFF3CAC, .025, .35));
+    scene.add(mkP(400, 16, 0x2AFADF, .02, .25));
+    const ag = (geo, col, op) => { const m = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color: col, wireframe: true, transparent: true, opacity: op })); scene.add(m); return m; };
+    const ico = ag(new THREE.IcosahedronGeometry(1.2, 1), 0xBCFF47, .08); ico.position.set(2.5, .5, 0);
+    const oct = ag(new THREE.OctahedronGeometry(.7, 0), 0xFF3CAC, .12); oct.position.set(-3, -.8, -1);
+    const tet = ag(new THREE.TetrahedronGeometry(.5, 0), 0x2AFADF, .15); tet.position.set(-1.5, 1.5, -2);
+    const tor = ag(new THREE.TorusGeometry(.6, .08, 8, 24), 0x9B5DFF, .1); tor.position.set(1, -1.8, -1.5);
+    let mouseX = 0, mouseY = 0, tX = 0, tY = 0, scrollY = 0;
+    document.addEventListener('mousemove', e => { mouseX = (e.clientX / window.innerWidth - .5) * 2; mouseY = -(e.clientY / window.innerHeight - .5) * 2; });
     window.addEventListener('scroll', () => { scrollY = window.scrollY; });
-
-    // ── Animación ──
     const clock = new THREE.Clock();
-    function animate() {
+    (function animate() {
       requestAnimationFrame(animate);
       const t = clock.getElapsedTime();
-
-      // Suavizar mouse
-      targetX += (mouseX - targetX) * 0.05;
-      targetY += (mouseY - targetY) * 0.05;
-
-      // Mover cámara con mouse (sutil)
-      camera.position.x = targetX * 0.4;
-      camera.position.y = targetY * 0.2;
-
-      // Scroll mueve cámara hacia dentro (efecto inmersivo)
-      const hero = document.querySelector('.hero');
-      const heroH = hero ? hero.clientHeight : window.innerHeight;
-      const scrollProgress = Math.min(scrollY / heroH, 1);
-      camera.position.z = 5 - scrollProgress * 2.5;
-      camera.rotation.z = scrollProgress * 0.1;
-
-      // Rotar partículas
-      scene.children[0].rotation.y = t * 0.04;
-      scene.children[0].rotation.x = t * 0.02;
-      scene.children[1].rotation.y = -t * 0.03;
-      scene.children[2].rotation.x = t * 0.05;
-
-      // Rotar geometrías flotantes
-      ico.rotation.x = t * 0.3 + targetY * 0.5;
-      ico.rotation.y = t * 0.4 + targetX * 0.5;
-      ico.position.y = 0.5 + Math.sin(t * 0.7) * 0.3;
-
-      oct.rotation.x = -t * 0.5;
-      oct.rotation.z = t * 0.3;
-      oct.position.y = -0.8 + Math.cos(t * 0.5) * 0.25;
-
-      tet.rotation.y = t * 0.8;
-      tet.rotation.x = t * 0.6;
-      tet.position.x = -1.5 + Math.sin(t * 0.4) * 0.2;
-
-      tor.rotation.x = t * 0.4;
-      tor.rotation.y = t * 0.6;
-      tor.position.y = -1.8 + Math.sin(t * 0.8) * 0.2;
-
+      tX += (mouseX - tX) * .05; tY += (mouseY - tY) * .05;
+      camera.position.x = tX * .4; camera.position.y = tY * .2;
+      const sp = Math.min(scrollY / (canvas.parentElement.clientHeight || window.innerHeight), 1);
+      camera.position.z = 5 - sp * 2.5; camera.rotation.z = sp * .1;
+      scene.children[0].rotation.y = t * .04; scene.children[0].rotation.x = t * .02;
+      scene.children[1].rotation.y = -t * .03; scene.children[2].rotation.x = t * .05;
+      ico.rotation.x = t * .3 + tY * .5; ico.rotation.y = t * .4 + tX * .5; ico.position.y = .5 + Math.sin(t * .7) * .3;
+      oct.rotation.x = -t * .5; oct.rotation.z = t * .3; oct.position.y = -.8 + Math.cos(t * .5) * .25;
+      tet.rotation.y = t * .8; tet.rotation.x = t * .6; tet.position.x = -1.5 + Math.sin(t * .4) * .2;
+      tor.rotation.x = t * .4; tor.rotation.y = t * .6; tor.position.y = -1.8 + Math.sin(t * .8) * .2;
       renderer.render(scene, camera);
-    }
-    animate();
+    })();
   })();
 
-  // ═══════════════════════════════════════════════
-  // CURSOR PERSONALIZADO
-  // ═══════════════════════════════════════════════
-  const cursor = document.getElementById('cursor');
-  const follower = document.getElementById('cursorFollower');
-  let mx=0,my=0,fx=0,fy=0;
-  document.addEventListener('mousemove', e => {
-    mx=e.clientX; my=e.clientY;
-    cursor.style.left=mx+'px'; cursor.style.top=my+'px';
-  });
-  (function anim(){
-    fx+=(mx-fx)*.12; fy+=(my-fy)*.12;
-    follower.style.left=fx+'px'; follower.style.top=fy+'px';
-    requestAnimationFrame(anim);
-  })();
+  // CURSOR
+  const cursor = document.getElementById('cursor'), cf = document.getElementById('cf');
+  let mx = 0, my = 0, fx = 0, fy = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
+  (function a() { fx += (mx - fx) * .12; fy += (my - fy) * .12; cf.style.left = fx + 'px'; cf.style.top = fy + 'px'; requestAnimationFrame(a); })();
   document.querySelectorAll('a,button').forEach(el => {
-    el.addEventListener('mouseenter',()=>{ cursor.style.width='20px'; cursor.style.height='20px'; follower.style.width='60px'; follower.style.height='60px'; });
-    el.addEventListener('mouseleave',()=>{ cursor.style.width='12px'; cursor.style.height='12px'; follower.style.width='36px'; follower.style.height='36px'; });
+    el.addEventListener('mouseenter', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; cf.style.width = '60px'; cf.style.height = '60px'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width = '12px'; cursor.style.height = '12px'; cf.style.width = '36px'; cf.style.height = '36px'; });
   });
 
-  // ═══════════════════════════════════════════════
-  // NAV — fondo al hacer scroll
-  // ═══════════════════════════════════════════════
-  const nav = document.getElementById('mainNav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 80);
-  });
+  // NAV scroll
+  window.addEventListener('scroll', () => document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 80));
 
-  // ═══════════════════════════════════════════════
-  // REVEAL ON SCROLL
-  // ═══════════════════════════════════════════════
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.08 });
+  // Reveal
+  const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) x.target.classList.add('visible'); }), { threshold: .08 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-  document.querySelectorAll('.hero .reveal').forEach(el => setTimeout(()=>el.classList.add('visible'), 100));
+  document.querySelectorAll('.hero .reveal').forEach(el => setTimeout(() => el.classList.add('visible'), 100));
 
-  // ═══════════════════════════════════════════════
-  // SECCIÓN AUTOMATIZACIÓN — reveal especial
-  // ═══════════════════════════════════════════════
-  const autoSection = document.querySelector('.auto-section');
-  const autoObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if(e.isIntersecting) {
-        autoSection.classList.add('revealed');
-        // Revelar palabras del quote con delay
-        const words = ['rw1','rw2','rw3','rw4'];
-        words.forEach((id, i) => {
-          setTimeout(() => {
-            const el = document.getElementById(id);
-            if(el) el.style.opacity = '1';
-          }, 1200 + i * 200);
-        });
-        autoObs.disconnect();
-      }
-    });
-  }, { threshold: 0.2 });
-  if(autoSection) autoObs.observe(autoSection);
+  // Auto section
+  const autoSec = document.querySelector('.auto-section');
+  if (autoSec) {
+    const ao = new IntersectionObserver(e => {
+      e.forEach(x => {
+        if (x.isIntersecting) {
+          autoSec.classList.add('revealed');
+          ['rw1','rw2','rw3','rw4'].forEach((id, i) => setTimeout(() => { const el = document.getElementById(id); if (el) el.style.opacity = '1'; }, 1200 + i * 200));
+          ao.disconnect();
+        }
+      });
+    }, { threshold: .2 });
+    ao.observe(autoSec);
+  }
   </script>
 </body>
 </html>
