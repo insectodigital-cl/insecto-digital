@@ -1,6 +1,6 @@
 ---
-// index.astro - Insecto Digital — v9
-// 3D objects spinning: camera, video camera, vinyl, easel
+// index.astro - Insecto Digital — v10
+// Highly detailed centered 3D: mirrorless camera, cinema camera, headphones, easel
 ---
 <!DOCTYPE html>
 <html lang="es">
@@ -60,8 +60,34 @@
     .btn-g:hover svg{transform:translateX(4px)}
     .btn-wa{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--fd);font-weight:700;font-size:.85rem;background:var(--wa);color:#fff;padding:1rem 2rem;border-radius:100px;text-decoration:none;transition:transform .2s,box-shadow .2s}
     .btn-wa:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(37,211,102,.4);background:var(--wa2)}
-    .btn-wa-lg{display:inline-flex;align-items:center;gap:.75rem;font-family:var(--fd);font-weight:700;font-size:1.1rem;background:var(--wa);color:#fff;padding:1.2rem 3rem;border-radius:100px;text-decoration:none;transition:transform .2s,box-shadow .2s;position:relative;z-index:1}
-    .btn-wa-lg:hover{transform:translateY(-3px);box-shadow:0 16px 60px rgba(37,211,102,.45);background:var(--wa2)}
+    /* CTA button — larger, value-driven */
+    .btn-wa-lg{
+      display:inline-flex;align-items:center;gap:.85rem;
+      font-family:var(--fd);font-weight:700;font-size:1.15rem;
+      background:var(--wa);color:#fff;
+      padding:1.3rem 3.2rem;border-radius:100px;
+      text-decoration:none;
+      transition:transform .25s,box-shadow .25s,background .2s;
+      position:relative;z-index:1;
+      box-shadow:0 0 0 0 rgba(37,211,102,0);
+    }
+    .btn-wa-lg:hover{
+      transform:translateY(-4px) scale(1.02);
+      box-shadow:0 20px 60px rgba(37,211,102,.5);
+      background:var(--wa2);
+    }
+    /* Pulse ring on CTA button */
+    .btn-wa-lg::before{
+      content:'';
+      position:absolute;inset:-4px;
+      border-radius:100px;
+      border:2px solid rgba(37,211,102,.4);
+      animation:btnPulse 2.5s ease-in-out infinite;
+    }
+    @keyframes btnPulse{
+      0%,100%{transform:scale(1);opacity:.4}
+      50%{transform:scale(1.04);opacity:.1}
+    }
     .wa-float{position:fixed;bottom:2rem;right:2rem;z-index:500;width:60px;height:60px;border-radius:50%;background:var(--wa);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.5);text-decoration:none;animation:fb 3s ease-in-out infinite}
     .wa-float:hover{transform:scale(1.1)!important;animation:none}
     @keyframes fb{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
@@ -100,17 +126,14 @@
     .mt{font-family:var(--fd);font-weight:800;font-size:clamp(2rem,5vw,5rem);line-height:1.05;letter-spacing:-.03em}
     .mt em{font-style:italic;font-weight:400}
 
-    /* VISUAL SECTION */
+    /* VISUAL — 3D cards */
     .visual-section{padding:8rem 4rem;background:var(--gris)}
     .vg{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
     .vc{background:var(--negro);border:1px solid var(--gris2);border-radius:8px;overflow:hidden;transition:transform .4s cubic-bezier(.25,.46,.45,.94),box-shadow .4s}
     .vc:hover{transform:translateY(-8px);box-shadow:0 32px 80px rgba(0,0,0,.6)}
-
-    /* Canvas 3D header */
-    .cc{height:220px;position:relative;overflow:hidden}
+    .cc{height:240px;position:relative;overflow:hidden}
     .cc canvas{width:100%!important;height:100%!important;display:block}
     .cc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to top,var(--negro),transparent);pointer-events:none;z-index:1}
-
     .vb{padding:1.75rem 2.5rem 2.5rem}
     .vn{font-family:var(--fd);font-size:.65rem;letter-spacing:.15em;color:var(--naranja);margin-bottom:.6rem;opacity:.8}
     .vn.m{color:var(--magenta)}.vn.c{color:var(--cyan)}
@@ -118,7 +141,6 @@
     .vd{font-size:.9rem;line-height:1.6;opacity:.55}
     .vt{margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:.4rem}
 
-    /* AI */
     .ai-section{padding:8rem 4rem;position:relative;overflow:hidden}
     .ai-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(155,93,255,.1) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(42,250,223,.07) 0%,transparent 50%),radial-gradient(ellipse at 60% 80%,rgba(255,60,172,.07) 0%,transparent 50%);pointer-events:none}
     .ai-inner{position:relative;z-index:1}
@@ -139,7 +161,6 @@
     .ate{margin-top:1rem;display:flex;flex-wrap:wrap;gap:.35rem}
     .atex{font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;background:rgba(155,93,255,.1);border:1px solid rgba(155,93,255,.2);color:var(--violeta);padding:.25rem .6rem;border-radius:100px}
 
-    /* AUTO */
     .auto-section{padding:10rem 4rem;position:relative;overflow:hidden;background:var(--negro)}
     .auto-bg{position:absolute;inset:0;z-index:0;opacity:0;transition:opacity 1.5s ease;overflow:hidden}
     .auto-section.revealed .auto-bg{opacity:1}
@@ -188,11 +209,21 @@
     .snum{font-family:var(--fd);font-weight:800;font-size:3.5rem;letter-spacing:-.04em;color:var(--verde);line-height:1;margin-bottom:.5rem}
     .slbl{font-size:.8rem;opacity:.5;line-height:1.4}
 
+    /* CTA — redesigned with more impact */
     .cta-section{padding:10rem 4rem;text-align:center;position:relative;overflow:hidden}
-    .cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(37,211,102,.06) 0%,transparent 70%);pointer-events:none}
+    .cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(37,211,102,.07) 0%,transparent 70%);pointer-events:none;animation:ctaGlow 4s ease-in-out infinite}
+    @keyframes ctaGlow{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.08)}}
     .ctt{font-family:var(--fd);font-weight:800;font-size:clamp(2.5rem,7vw,7rem);line-height:.95;letter-spacing:-.04em;margin-bottom:2.5rem;position:relative;z-index:1}
     .ctt span{color:var(--verde)}
-    .csub{font-size:1.1rem;opacity:.5;max-width:450px;margin:0 auto 3rem;line-height:1.6;position:relative;z-index:1}
+    .csub{font-size:1.1rem;opacity:.5;max-width:500px;margin:0 auto 1.5rem;line-height:1.6;position:relative;z-index:1}
+    /* Value proposition line */
+    .cta-value{
+      font-family:var(--fd);font-weight:700;font-size:1rem;
+      color:var(--verde);opacity:.8;
+      margin-bottom:3rem;position:relative;z-index:1;
+      letter-spacing:.05em;text-transform:uppercase;
+    }
+    .cta-value::before,.cta-value::after{content:'—';margin:0 .75rem;opacity:.4}
 
     footer{border-top:1px solid var(--gris2);padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center}
     .fl{font-family:var(--fd);font-weight:800;font-size:1rem;color:var(--blanco);text-decoration:none}
@@ -240,7 +271,7 @@
   <div class="cursor" id="cursor"></div>
   <div class="cursor-follower" id="cf"></div>
 
-  <a href="https://wa.me/56948590700?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20sus%20servicios." target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
+  <a href="https://wa.me/56948590700?text=Hola%2C%20quiero%20conocer%20las%20soluciones%20de%20Insecto%20Digital." target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </a>
 
@@ -251,7 +282,7 @@
       <li><a href="#visual">Foto & Video</a></li>
       <li><a href="#ai">AI Creativa</a></li>
       <li><a href="#proceso">Proceso</a></li>
-      <li><a href="https://wa.me/56948590700?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20sus%20servicios." target="_blank" rel="noopener" class="nav-cta">
+      <li><a href="https://wa.me/56948590700?text=Hola%2C%20quiero%20conocer%20las%20soluciones%20de%20Insecto%20Digital." target="_blank" rel="noopener" class="nav-cta">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Hablemos
       </a></li>
@@ -311,7 +342,6 @@
     <h2 class="st reveal rd1">La imagen lo dice todo.<br>El sonido lo completa.</h2>
     <div class="vg">
 
-      <!-- FOTOGRAFÍA -->
       <div class="vc reveal rd1">
         <div class="cc" id="w-foto"><canvas id="c-foto"></canvas></div>
         <div class="vb">
@@ -322,7 +352,6 @@
         </div>
       </div>
 
-      <!-- VIDEO -->
       <div class="vc reveal rd2">
         <div class="cc" id="w-video"><canvas id="c-video"></canvas></div>
         <div class="vb">
@@ -333,7 +362,6 @@
         </div>
       </div>
 
-      <!-- AUDIO -->
       <div class="vc reveal rd3">
         <div class="cc" id="w-audio"><canvas id="c-audio"></canvas></div>
         <div class="vb">
@@ -344,7 +372,6 @@
         </div>
       </div>
 
-      <!-- DIRECCIÓN DE ARTE -->
       <div class="vc reveal rd4">
         <div class="cc" id="w-arte"><canvas id="c-arte"></canvas></div>
         <div class="vb">
@@ -362,7 +389,7 @@
     <div class="ai-inner">
       <div class="ai-badge reveal">Tecnología de vanguardia</div>
       <h2 class="ai-title reveal rd1">Desarrollo creativo<br>con <span class="grad">Inteligencia Artificial</span></h2>
-      <p class="ai-sub reveal rd2">Usamos las herramientas de AI más avanzadas del mundo para crear imagen, video y audio. No reemplazamos la creatividad humana — la potenciamos.</p>
+      <p class="ai-sub reveal rd2">Usamos las herramientas de AI más avanzadas del mundo. No reemplazamos la creatividad humana — la potenciamos.</p>
       <div class="atg">
         <div class="at reveal rd1"><span class="ati">🖼️</span><div class="atn">Imagen con AI</div><p class="atd">Generación y edición de imágenes fotorrealistas, ilustraciones y activos visuales únicos.</p><div class="ate"><span class="atex">Midjourney</span><span class="atex">Stable Diffusion</span><span class="atex">Firefly</span></div></div>
         <div class="at reveal rd2"><span class="ati">🎬</span><div class="atn">Video con AI</div><p class="atd">Clips, animaciones y contenido audiovisual generado con las últimas herramientas.</p><div class="ate"><span class="atex">Sora</span><span class="atex">Runway</span><span class="atex">Kling</span></div></div>
@@ -386,9 +413,9 @@
       <p class="auto-desc">No lo gritamos — lo construimos en silencio. Mientras el mundo descubre la automatización, nosotros ya la integramos en flujos reales.</p>
       <div class="auto-grid">
         <div class="an"><span class="ani">⚙️</span><div class="ann">Flujos Inteligentes</div><p class="and">Diseñamos workflows que conectan tus herramientas y automatizan tareas repetitivas.</p></div>
-        <div class="an"><span class="ani">🔗</span><div class="ann">Integraciones</div><p class="and">Unimos CRMs, plataformas sociales, herramientas AI y canales de comunicación.</p></div>
-        <div class="an"><span class="ani">🤖</span><div class="ann">Agentes AI</div><p class="and">Configuramos agentes que toman decisiones, generan contenido y responden en tiempo real.</p></div>
-        <div class="an"><span class="ani">📊</span><div class="ann">Datos & Reportes</div><p class="and">Automatizamos la captura y procesamiento de datos para tomar decisiones más rápido.</p></div>
+        <div class="an"><span class="ani">🔗</span><div class="ann">Integraciones</div><p class="and">Unimos CRMs, plataformas sociales, herramientas AI y canales en un solo flujo.</p></div>
+        <div class="an"><span class="ani">🤖</span><div class="ann">Agentes AI</div><p class="and">Configuramos agentes que toman decisiones y generan contenido en tiempo real.</p></div>
+        <div class="an"><span class="ani">📊</span><div class="ann">Datos & Reportes</div><p class="and">Automatizamos captura y procesamiento de datos para decisiones más rápidas.</p></div>
       </div>
       <div class="auto-ht">
         <div class="auto-q">"El futuro no se anuncia.<br><span class="rw" id="rw1">Se</span> <span class="rw" id="rw2">construye</span> <span class="rw" id="rw3">en</span> <span class="rw" id="rw4">silencio."</span></div>
@@ -418,7 +445,7 @@
         <div class="sl reveal">Comunidad primero</div>
         <h2 class="st reveal rd1" style="margin-bottom:1.5rem">Somos parte del ecosistema que construimos</h2>
         <p class="reveal rd2" style="opacity:.55;line-height:1.7;font-size:1rem;max-width:400px">No somos una agencia externa con soluciones enlatadas. Vivimos dentro de la comunidad digital y construimos desde adentro.</p>
-        <a href="https://wa.me/56948590700?text=Hola%2C%20me%20interesa%20ser%20parte%20de%20la%20comunidad." target="_blank" rel="noopener" class="btn-wa reveal rd3" style="margin-top:2.5rem">
+        <a href="https://wa.me/56948590700?text=Hola%2C%20quiero%20ser%20parte%20de%20la%20comunidad%20Insecto%20Digital." target="_blank" rel="noopener" class="btn-wa reveal rd3" style="margin-top:2.5rem">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           Únete a la comunidad
         </a>
@@ -432,12 +459,14 @@
     </div>
   </section>
 
+  <!-- CTA FINAL — redesigned -->
   <section class="cta-section" id="contacto">
     <h2 class="ctt reveal">¿Listo para<br><span>crear algo</span><br>extraordinario?</h2>
-    <p class="csub reveal rd1">Cuéntanos tu proyecto. Sin compromisos. Solo una conversación real por WhatsApp.</p>
-    <a href="https://wa.me/56948590700?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20sus%20servicios." target="_blank" rel="noopener" class="btn-wa-lg reveal rd2">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Escríbenos por WhatsApp
+    <p class="csub reveal rd1">Sin compromisos, sin formularios.<br>Solo una conversación que puede cambiar tu proyecto.</p>
+    <div class="cta-value reveal rd2">Primera consulta gratuita</div>
+    <a href="https://wa.me/56948590700?text=Hola%2C%20quiero%20conocer%20las%20soluciones%20de%20Insecto%20Digital%20para%20mi%20proyecto." target="_blank" rel="noopener" class="btn-wa-lg reveal rd3">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Soluciones que crean impacto
     </a>
   </section>
 
@@ -453,556 +482,830 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
-  // ─────────────────────────────────────────────────────
-  // UTILITY: create mini scene in a card canvas
-  // ─────────────────────────────────────────────────────
-  function mkCard(canvasId, bgHex) {
+  // ═══════════════════════════════════════════════════════
+  // SHARED SETUP — all cards centered, lit, responsive
+  // ═══════════════════════════════════════════════════════
+  function initCard(canvasId, wrapId, bgColor) {
     const canvas = document.getElementById(canvasId);
-    if (!canvas) return null;
-    const wrap = document.getElementById(canvasId.replace('c-', 'w-'));
-    const W = wrap.clientWidth || 560, H = wrap.clientHeight || 220;
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: bgHex === undefined });
+    const wrap = document.getElementById(wrapId);
+    if (!canvas || !wrap) return null;
+    const W = wrap.clientWidth || 560, H = wrap.clientHeight || 240;
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(W, H);
-    if (bgHex !== undefined) renderer.setClearColor(bgHex, 1);
+    renderer.setClearColor(bgColor, 1);
+    renderer.shadowMap.enabled = true;
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(48, W / H, 0.1, 100);
-    camera.position.z = 4.2;
+    // Camera — always centered on origin
+    const camera = new THREE.PerspectiveCamera(46, W / H, 0.1, 80);
+    camera.position.set(0, 0, 5);
+    camera.lookAt(0, 0, 0);
+    // Resize
     new ResizeObserver(() => {
       const nw = wrap.clientWidth, nh = wrap.clientHeight;
       renderer.setSize(nw, nh);
       camera.aspect = nw / nh;
       camera.updateProjectionMatrix();
     }).observe(wrap);
-    // Lights
-    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-    const key = new THREE.DirectionalLight(0xffffff, 1.4);
-    key.position.set(4, 5, 6);
+    // Lighting rig
+    const ambient = new THREE.AmbientLight(0xffffff, 0.35);
+    scene.add(ambient);
+    const key = new THREE.DirectionalLight(0xffffff, 1.6);
+    key.position.set(5, 6, 8);
     scene.add(key);
-    const fill = new THREE.DirectionalLight(0xffffff, 0.4);
-    fill.position.set(-4, -2, 3);
+    const fill = new THREE.DirectionalLight(0xffffff, 0.5);
+    fill.position.set(-5, -3, 4);
     scene.add(fill);
-    return { renderer, scene, camera, wrap };
+    const rim = new THREE.DirectionalLight(0xffffff, 0.3);
+    rim.position.set(0, -5, -3);
+    scene.add(rim);
+    return { renderer, scene, camera };
   }
 
-  // ─────────────────────────────────────────────────────
-  // 1. FOTOGRAFÍA — Mirrorless camera, spins on Y axis
-  // Body + lens barrel + aperture ring + shutter button
-  // ─────────────────────────────────────────────────────
-  (function() {
-    const s = mkCard('c-foto', 0x0a0806);
+  // ═══════════════════════════════════════════════════════
+  // 1. MIRRORLESS CAMERA — centered, spins Y
+  //    Body + top plate + grip + lens barrel with glass
+  //    aperture blades + mount ring + shutter + dial
+  // ═══════════════════════════════════════════════════════
+  (function buildMirrorless() {
+    const s = initCard('c-foto', 'w-foto', 0x0b0906);
     if (!s) return;
     const { renderer, scene, camera } = s;
 
+    // Accent light (orange for photography)
+    const accent = new THREE.PointLight(0xFF6B2B, 0.8, 20);
+    accent.position.set(-3, 2, 4);
+    scene.add(accent);
+
     const root = new THREE.Group();
     scene.add(root);
+    // Center the whole camera in frame
+    root.position.set(0, 0, 0);
 
-    // Body
-    const bodyMat = new THREE.MeshStandardMaterial({ color: 0x1c1c1c, metalness: 0.85, roughness: 0.25 });
-    root.add(new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.35, 0.8), bodyMat));
+    // Materials
+    const bodyMat  = new THREE.MeshStandardMaterial({ color: 0x181818, metalness: 0.88, roughness: 0.22 });
+    const darkMat  = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.82, roughness: 0.3 });
+    const silverMat= new THREE.MeshStandardMaterial({ color: 0x888888, metalness: 0.95, roughness: 0.08 });
+    const goldMat  = new THREE.MeshStandardMaterial({ color: 0xddaa33, metalness: 1.0,  roughness: 0.06 });
+    const redMat   = new THREE.MeshStandardMaterial({ color: 0xdd2200, metalness: 0.3,  roughness: 0.5  });
+    const glassMat = new THREE.MeshStandardMaterial({ color: 0x1122aa, metalness: 0.05, roughness: 0.0, transparent: true, opacity: 0.72 });
 
-    // Grip
-    const grip = new THREE.Mesh(new THREE.BoxGeometry(0.42, 1.2, 0.88), new THREE.MeshStandardMaterial({ color: 0x181818, metalness: 0.8, roughness: 0.35 }));
-    grip.position.set(1.15, -0.07, 0);
+    // ── BODY ──
+    const body = new THREE.Mesh(new THREE.BoxGeometry(1.95, 1.28, 0.78), bodyMat);
+    root.add(body);
+
+    // Grip (right side bulge)
+    const grip = new THREE.Mesh(new THREE.BoxGeometry(0.38, 1.18, 0.86), darkMat);
+    grip.position.set(1.1, -0.06, 0);
     root.add(grip);
 
     // Top plate
-    const top = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.1, 0.8), new THREE.MeshStandardMaterial({ color: 0x252525, metalness: 0.9, roughness: 0.2 }));
-    top.position.y = 0.725;
-    root.add(top);
+    const topPlate = new THREE.Mesh(new THREE.BoxGeometry(1.95, 0.09, 0.78), new THREE.MeshStandardMaterial({ color: 0x212121, metalness: 0.92, roughness: 0.18 }));
+    topPlate.position.y = 0.685;
+    root.add(topPlate);
 
-    // Mode dial
-    const dial = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.07, 32), new THREE.MeshStandardMaterial({ color: 0x444, metalness: 0.8, roughness: 0.3 }));
-    dial.rotation.x = Math.PI / 2;
-    dial.position.set(-0.6, 0.79, 0);
-    root.add(dial);
-
-    // Shutter button (red)
-    const shutter = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.04, 20), new THREE.MeshStandardMaterial({ color: 0xdd3311 }));
-    shutter.rotation.x = Math.PI / 2;
-    shutter.position.set(0.72, 0.79, 0);
-    root.add(shutter);
-
-    // Viewfinder bump
-    const vf = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.26, 0.46), bodyMat);
-    vf.position.set(-0.35, 0.925, -0.17);
+    // Viewfinder hump
+    const vf = new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.24, 0.44), bodyMat);
+    vf.position.set(-0.32, 0.845, -0.18);
     root.add(vf);
 
-    // Lens mount ring (gold)
-    const mount = new THREE.Mesh(
-      new THREE.TorusGeometry(0.46, 0.028, 8, 48),
-      new THREE.MeshStandardMaterial({ color: 0xddaa33, metalness: 1, roughness: 0.1 })
-    );
-    mount.rotation.x = Math.PI / 2;
-    mount.position.set(0, 0, 0.41);
-    root.add(mount);
+    // VF glass
+    const vfGlass = new THREE.Mesh(new THREE.PlaneGeometry(0.24, 0.16), new THREE.MeshBasicMaterial({ color: 0x000816, transparent: true, opacity: 0.9 }));
+    vfGlass.position.set(-0.32, 0.845, 0.04);
+    root.add(vfGlass);
 
-    // Lens barrel group
-    const lens = new THREE.Group();
-    lens.position.set(0, 0, 0.42);
-    root.add(lens);
+    // Mode dial
+    const dial = new THREE.Mesh(new THREE.CylinderGeometry(0.185, 0.185, 0.065, 36), silverMat);
+    dial.rotation.x = Math.PI / 2;
+    dial.position.set(-0.58, 0.755, 0);
+    root.add(dial);
 
-    const barrelMat = new THREE.MeshStandardMaterial({ color: 0x202020, metalness: 0.85, roughness: 0.3 });
-    // Barrel layers
-    const b1 = new THREE.Mesh(new THREE.CylinderGeometry(0.44, 0.44, 0.36, 48), barrelMat);
-    b1.rotation.x = Math.PI / 2; b1.position.z = 0.14; lens.add(b1);
-    const b2 = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.24, 48), new THREE.MeshStandardMaterial({ color: 0x2a2a2a, metalness: 0.9, roughness: 0.2 }));
-    b2.rotation.x = Math.PI / 2; b2.position.z = 0.38; lens.add(b2);
-    const b3 = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.32, 0.18, 48), barrelMat);
-    b3.rotation.x = Math.PI / 2; b3.position.z = 0.56; lens.add(b3);
-
-    // Focus ring ribs
-    for (let i = 0; i < 24; i++) {
-      const rib = new THREE.Mesh(
-        new THREE.BoxGeometry(0.016, 0.36, 0.035),
-        new THREE.MeshStandardMaterial({ color: 0x3a3a3a, metalness: 0.6, roughness: 0.6 })
-      );
-      const a = (i / 24) * Math.PI * 2;
-      rib.position.set(Math.cos(a) * 0.455, Math.sin(a) * 0.455, 0.14);
-      rib.rotation.z = a;
-      lens.add(rib);
+    // Dial markers
+    for (let i = 0; i < 12; i++) {
+      const mk = new THREE.Mesh(new THREE.BoxGeometry(0.01, 0.185*1.8, 0.008), new THREE.MeshBasicMaterial({ color: 0x333333 }));
+      mk.rotation.z = (i / 12) * Math.PI * 2;
+      mk.position.set(-0.58 + Math.cos((i/12)*Math.PI*2)*0.18, 0.755 + Math.sin((i/12)*Math.PI*2)*0.18, 0);
+      root.add(mk);
     }
 
-    // Front glass (blue tinted)
-    const glass = new THREE.Mesh(
-      new THREE.CircleGeometry(0.28, 48),
-      new THREE.MeshStandardMaterial({ color: 0x2244bb, metalness: 0.1, roughness: 0, transparent: true, opacity: 0.7 })
-    );
-    glass.position.z = 0.655;
-    lens.add(glass);
+    // Shutter button
+    const shutter = new THREE.Mesh(new THREE.CylinderGeometry(0.085, 0.085, 0.038, 22), redMat);
+    shutter.rotation.x = Math.PI / 2;
+    shutter.position.set(0.7, 0.755, 0);
+    root.add(shutter);
 
-    // Glass highlight ring
-    const gRing = new THREE.Mesh(
-      new THREE.RingGeometry(0.24, 0.28, 48),
-      new THREE.MeshBasicMaterial({ color: 0x88ccff, transparent: true, opacity: 0.45, side: THREE.DoubleSide })
-    );
-    gRing.position.z = 0.66;
-    lens.add(gRing);
+    // Hotshoe
+    const shoe = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.046, 0.2), silverMat);
+    shoe.position.set(-0.12, 0.748, 0);
+    root.add(shoe);
 
-    // 8 aperture blades
-    const bladeGroup = new THREE.Group();
-    bladeGroup.position.z = 0.64;
-    lens.add(bladeGroup);
+    // Speaker grille (right side) — tiny dot grid
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) {
+      const dot = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.02, 8), darkMat);
+      dot.rotation.z = Math.PI / 2;
+      dot.position.set(1.29, 0.25 - r * 0.1, -0.15 + c * 0.1);
+      root.add(dot);
+    }
+
+    // Memory card slot line
+    const slotLine = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.22, 0.06), new THREE.MeshBasicMaterial({ color: 0x333333 }));
+    slotLine.position.set(1.29, -0.25, 0.2);
+    root.add(slotLine);
+
+    // ── LENS MOUNT ──
+    const mount = new THREE.Mesh(new THREE.TorusGeometry(0.44, 0.028, 10, 52), goldMat);
+    mount.rotation.x = Math.PI / 2;
+    mount.position.set(0, 0, 0.4);
+    root.add(mount);
+
+    // Mount bayonet notch
+    for (let i = 0; i < 3; i++) {
+      const notch = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.03, 0.04), goldMat);
+      const a = (i / 3) * Math.PI * 2;
+      notch.position.set(Math.cos(a) * 0.44, Math.sin(a) * 0.44, 0.4);
+      root.add(notch);
+    }
+
+    // ── LENS GROUP ──
+    const lensGrp = new THREE.Group();
+    lensGrp.position.set(0, 0, 0.41);
+    root.add(lensGrp);
+
+    // Barrel 1 — widest, closest to body
+    const bar1Mat = new THREE.MeshStandardMaterial({ color: 0x1e1e1e, metalness: 0.87, roughness: 0.28 });
+    const bar1 = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.34, 52), bar1Mat);
+    bar1.rotation.x = Math.PI / 2; bar1.position.z = 0.13; lensGrp.add(bar1);
+
+    // Focus ring — ribbed
+    const focusRing = new THREE.Group(); focusRing.position.z = 0.13; lensGrp.add(focusRing);
+    for (let i = 0; i < 30; i++) {
+      const rib = new THREE.Mesh(new THREE.BoxGeometry(0.012, 0.34, 0.026),
+        new THREE.MeshStandardMaterial({ color: 0x303030, metalness: 0.5, roughness: 0.7 }));
+      const a = (i / 30) * Math.PI * 2;
+      rib.position.set(Math.cos(a)*0.432, Math.sin(a)*0.432, 0); rib.rotation.z = a;
+      focusRing.add(rib);
+    }
+
+    // Barrel 2 — mid
+    const bar2 = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.36, 0.26, 52),
+      new THREE.MeshStandardMaterial({ color: 0x252525, metalness: 0.9, roughness: 0.22 }));
+    bar2.rotation.x = Math.PI / 2; bar2.position.z = 0.38; lensGrp.add(bar2);
+
+    // Aperture ring (engraved markings)
+    const apRing = new THREE.Mesh(new THREE.TorusGeometry(0.37, 0.015, 6, 48), silverMat);
+    apRing.rotation.x = Math.PI / 2; apRing.position.z = 0.38; lensGrp.add(apRing);
+
+    // Barrel 3 — front
+    const bar3 = new THREE.Mesh(new THREE.CylinderGeometry(0.30, 0.30, 0.18, 52), bar1Mat);
+    bar3.rotation.x = Math.PI / 2; bar3.position.z = 0.56; lensGrp.add(bar3);
+
+    // Front element frame
+    const frontFrame = new THREE.Mesh(new THREE.TorusGeometry(0.28, 0.022, 10, 48),
+      new THREE.MeshStandardMaterial({ color: 0x555555, metalness: 0.9, roughness: 0.15 }));
+    frontFrame.rotation.x = Math.PI / 2; frontFrame.position.z = 0.655; lensGrp.add(frontFrame);
+
+    // Front glass
+    const glass = new THREE.Mesh(new THREE.CircleGeometry(0.262, 52), glassMat);
+    glass.position.z = 0.66; lensGrp.add(glass);
+
+    // Glass inner reflection
+    const gRef = new THREE.Mesh(new THREE.CircleGeometry(0.12, 36),
+      new THREE.MeshBasicMaterial({ color: 0x6688ff, transparent: true, opacity: 0.22 }));
+    gRef.position.z = 0.662; lensGrp.add(gRef);
+
+    // Glass highlight arc
+    const gHighlight = new THREE.Mesh(
+      new THREE.RingGeometry(0.22, 0.26, 52, 1, 0, Math.PI * 0.7),
+      new THREE.MeshBasicMaterial({ color: 0xaaccff, transparent: true, opacity: 0.38, side: THREE.DoubleSide }));
+    gHighlight.position.z = 0.663; gHighlight.rotation.z = 0.5; lensGrp.add(gHighlight);
+
+    // ── APERTURE BLADES (8) ──
+    const bladeGroup = new THREE.Group(); bladeGroup.position.z = 0.645; lensGrp.add(bladeGroup);
     const blades = [];
     for (let i = 0; i < 8; i++) {
       const shape = new THREE.Shape();
-      shape.moveTo(0, 0); shape.lineTo(0.16, 0.035); shape.lineTo(0.19, 0.13); shape.lineTo(0.04, 0.16); shape.closePath();
-      const bMesh = new THREE.Mesh(
-        new THREE.ShapeGeometry(shape),
-        new THREE.MeshStandardMaterial({ color: 0x0d0d0d, metalness: 0.7, roughness: 0.4, side: THREE.DoubleSide })
-      );
-      const angle = (i / 8) * Math.PI * 2;
-      bMesh.rotation.z = angle;
-      bladeGroup.add(bMesh);
-      blades.push({ m: bMesh, a: angle });
+      shape.moveTo(0, 0); shape.lineTo(0.165, 0.032); shape.lineTo(0.198, 0.125); shape.lineTo(0.038, 0.162); shape.closePath();
+      const bm = new THREE.Mesh(new THREE.ShapeGeometry(shape),
+        new THREE.MeshStandardMaterial({ color: 0x090909, metalness: 0.65, roughness: 0.45, side: THREE.DoubleSide }));
+      const a = (i / 8) * Math.PI * 2; bm.rotation.z = a;
+      bladeGroup.add(bm); blades.push({ m: bm, a });
     }
 
-    // Hotshoe
-    const shoe = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.05, 0.22), new THREE.MeshStandardMaterial({ color: 0x777, metalness: 1, roughness: 0.05 }));
-    shoe.position.set(-0.1, 0.78, 0);
-    root.add(shoe);
+    // ── REAR SCREEN (back) ──
+    const screen = new THREE.Mesh(new THREE.PlaneGeometry(1.3, 0.94),
+      new THREE.MeshBasicMaterial({ color: 0x001133, transparent: true, opacity: 0.85 }));
+    screen.position.set(0, 0, -0.4); screen.rotation.y = Math.PI;
+    root.add(screen);
+
+    // Screen grid lines
+    for (let r = 0; r < 3; r++) {
+      const line = new THREE.Mesh(new THREE.PlaneGeometry(1.28, 0.008),
+        new THREE.MeshBasicMaterial({ color: 0x113355, transparent: true, opacity: 0.5 }));
+      line.position.set(0, -0.28 + r * 0.28, -0.39); line.rotation.y = Math.PI;
+      root.add(line);
+    }
 
     const clock = new THREE.Clock();
     (function animate() {
       requestAnimationFrame(animate);
       const t = clock.getElapsedTime();
-      root.rotation.y = t * 0.55;
-      root.rotation.x = Math.sin(t * 0.3) * 0.06;
+      // Spin on Y, gentle X bob
+      root.rotation.y = t * 0.52;
+      root.rotation.x = Math.sin(t * 0.32) * 0.055;
       // Aperture breathe
-      const ap = Math.sin(t * 1.1) * 0.09 + 0.11;
+      const ap = Math.sin(t * 1.05) * 0.1 + 0.12;
       blades.forEach(({ m, a }) => { m.rotation.z = a + ap; });
-      // Focus ring slow spin
-      b1.rotation.z = t * 0.3;
+      // Focus ring counter-rotation for detail
+      focusRing.rotation.z = -t * 0.28;
+      bar2.rotation.z = t * 0.15;
+      // Accent light orbit
+      accent.position.x = Math.cos(t * 0.4) * 4;
+      accent.position.z = Math.sin(t * 0.4) * 4 + 3;
       renderer.render(scene, camera);
     })();
   })();
 
-  // ─────────────────────────────────────────────────────
-  // 2. VIDEO — Cinema camera, spins on Y axis
-  // Professional video camera body + lens + viewfinder arm
-  // ─────────────────────────────────────────────────────
-  (function() {
-    const s = mkCard('c-video', 0x060608);
+  // ═══════════════════════════════════════════════════════
+  // 2. CINEMA CAMERA — centered, spins Y
+  //    Professional box-style body, large PL lens,
+  //    top handle, side screen, XLR ports, follow focus
+  // ═══════════════════════════════════════════════════════
+  (function buildCinema() {
+    const s = initCard('c-video', 'w-video', 0x060508);
     if (!s) return;
     const { renderer, scene, camera } = s;
+
+    const accent = new THREE.PointLight(0xFF3CAC, 0.7, 20);
+    accent.position.set(3, 2, 5);
+    scene.add(accent);
 
     const root = new THREE.Group();
     scene.add(root);
 
-    const darkMat = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.75, roughness: 0.3 });
-    const midMat = new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.8, roughness: 0.25 });
+    const bodyMat  = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.82, roughness: 0.28 });
+    const darkMat  = new THREE.MeshStandardMaterial({ color: 0x0d0d0d, metalness: 0.75, roughness: 0.35 });
+    const silverMat= new THREE.MeshStandardMaterial({ color: 0x777777, metalness: 0.93, roughness: 0.1  });
+    const redMat   = new THREE.MeshStandardMaterial({ color: 0xff1100, metalness: 0.2,  roughness: 0.55 });
 
-    // Main body — wider and more rectangular than photo camera
-    root.add(new THREE.Mesh(new THREE.BoxGeometry(2.2, 1.2, 1.1), darkMat));
+    // ── MAIN BODY — wide box ──
+    const body = new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.15, 1.05), bodyMat);
+    root.add(body);
 
-    // Top handle
-    const handle = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.18, 0.9), midMat);
-    handle.position.y = 0.72;
-    root.add(handle);
-
-    // Handle arch supports
+    // Body panel lines (vertical grooves)
     [-0.6, 0.6].forEach(x => {
-      const s = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.3, 0.08), midMat);
-      s.position.set(x, 0.56, 0);
-      root.add(s);
+      const groove = new THREE.Mesh(new THREE.BoxGeometry(0.02, 1.18, 1.08), darkMat);
+      groove.position.x = x; root.add(groove);
     });
 
-    // Side panel detail
-    const panel = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.8, 0.8), new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.6, roughness: 0.4 }));
-    panel.position.set(1.13, 0, 0);
-    root.add(panel);
+    // Side panel (left — circuit detail)
+    const sidePanel = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.85, 0.75),
+      new THREE.MeshStandardMaterial({ color: 0x181818, metalness: 0.7, roughness: 0.4 }));
+    sidePanel.position.set(-1.04, -0.05, 0); root.add(sidePanel);
 
-    // Lens mount ring (silver)
-    const mount = new THREE.Mesh(
-      new THREE.TorusGeometry(0.5, 0.03, 8, 48),
-      new THREE.MeshStandardMaterial({ color: 0x888888, metalness: 1, roughness: 0.1 })
-    );
-    mount.rotation.x = Math.PI / 2;
-    mount.position.set(-0.2, 0, 0.56);
-    root.add(mount);
-
-    // Lens — bigger cinema lens
-    const lensGroup = new THREE.Group();
-    lensGroup.position.set(-0.2, 0, 0.57);
-    root.add(lensGroup);
-
-    const l1 = new THREE.Mesh(new THREE.CylinderGeometry(0.48, 0.48, 0.55, 48), darkMat);
-    l1.rotation.x = Math.PI / 2; l1.position.z = 0.22; lensGroup.add(l1);
-
-    const l2 = new THREE.Mesh(new THREE.CylinderGeometry(0.41, 0.41, 0.3, 48), midMat);
-    l2.rotation.x = Math.PI / 2; l2.position.z = 0.54; lensGroup.add(l2);
-
-    // Lens focus ring ribs
-    for (let i = 0; i < 30; i++) {
-      const rib = new THREE.Mesh(
-        new THREE.BoxGeometry(0.012, 0.55, 0.028),
-        new THREE.MeshStandardMaterial({ color: 0x333, metalness: 0.5, roughness: 0.7 })
-      );
-      const a = (i / 30) * Math.PI * 2;
-      rib.position.set(Math.cos(a) * 0.49, Math.sin(a) * 0.49, 0.22);
-      rib.rotation.z = a;
-      lensGroup.add(rib);
+    // CFast card slots
+    for (let i = 0; i < 2; i++) {
+      const slot = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.12, 0.28),
+        new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.6, roughness: 0.5 }));
+      slot.position.set(-1.07, 0.18 - i * 0.2, 0.2 - i * 0.1); root.add(slot);
     }
 
-    // Front glass
-    lensGroup.add(new THREE.Mesh(
-      new THREE.CircleGeometry(0.35, 48),
-      new THREE.MeshStandardMaterial({ color: 0x112244, transparent: true, opacity: 0.75, roughness: 0, metalness: 0.05 })
-    )).position.z = 0.7;
+    // ── TOP HANDLE ──
+    const handle = new THREE.Mesh(new THREE.BoxGeometry(1.55, 0.16, 0.82),
+      new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.78, roughness: 0.32 }));
+    handle.position.y = 0.705; root.add(handle);
 
-    lensGroup.add(new THREE.Mesh(
-      new THREE.RingGeometry(0.3, 0.35, 48),
-      new THREE.MeshBasicMaterial({ color: 0x99aaff, transparent: true, opacity: 0.4, side: THREE.DoubleSide })
-    )).position.z = 0.705;
+    // Handle grip texture
+    for (let i = 0; i < 8; i++) {
+      const bump = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.18, 0.8),
+        new THREE.MeshStandardMaterial({ color: 0x252525, metalness: 0.6, roughness: 0.6 }));
+      bump.position.set(-0.6 + i * 0.18, 0.72, 0); root.add(bump);
+    }
 
-    // EVF (electronic viewfinder) arm on top right
-    const evfArm = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.45, 0.12), midMat);
-    evfArm.position.set(0.8, 0.84, 0);
-    root.add(evfArm);
-    const evf = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.28, 0.22), darkMat);
-    evf.position.set(0.8, 1.1, -0.05);
-    root.add(evf);
-    // EVF screen
-    root.add(new THREE.Mesh(
-      new THREE.PlaneGeometry(0.42, 0.22),
-      new THREE.MeshBasicMaterial({ color: 0x001133, transparent: true, opacity: 0.9 })
-    )).position.set(0.8, 1.1, 0.075);
-
-    // REC button (red)
-    root.add(new THREE.Mesh(
-      new THREE.CylinderGeometry(0.075, 0.075, 0.04, 18),
-      new THREE.MeshStandardMaterial({ color: 0xff2200 })
-    )).position.set(0.65, 0.68, 0.56);
-
-    // XLR audio inputs (back)
-    [-0.2, 0.2].forEach(y => {
-      const xlr = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.1, 12), new THREE.MeshStandardMaterial({ color: 0x444, metalness: 0.9 }));
-      xlr.position.set(-1.15, y, 0.2);
-      root.add(xlr);
+    // Handle support struts
+    [-0.55, 0.55].forEach(x => {
+      const s = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.27, 0.1), silverMat);
+      s.position.set(x, 0.51, 0); root.add(s);
     });
+
+    // ── TOP ACCESSORIES ──
+    // Mini hotshoe
+    const shoe = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.04, 0.18), silverMat);
+    shoe.position.set(0, 0.79, 0); root.add(shoe);
+
+    // REC button (top right)
+    const rec = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.075, 0.04, 20), redMat);
+    rec.rotation.x = Math.PI / 2;
+    rec.position.set(0.65, 0.64, 0.54); root.add(rec);
+
+    // REC light ring
+    const recRing = new THREE.Mesh(new THREE.TorusGeometry(0.09, 0.012, 6, 24),
+      new THREE.MeshBasicMaterial({ color: 0xff3300, transparent: true, opacity: 0.6 }));
+    recRing.rotation.x = Math.PI / 2;
+    recRing.position.set(0.65, 0.64, 0.545); root.add(recRing);
+
+    // ── EVF ARM + MONITOR ──
+    const evfArm = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.38, 0.1), silverMat);
+    evfArm.position.set(0.82, 0.72, 0.2); root.add(evfArm);
+
+    const monitor = new THREE.Mesh(new THREE.BoxGeometry(0.58, 0.36, 0.05),
+      new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.7, roughness: 0.3 }));
+    monitor.position.set(0.82, 1.01, 0.18); root.add(monitor);
+
+    // Monitor screen
+    const monScreen = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.3),
+      new THREE.MeshBasicMaterial({ color: 0x001122, transparent: true, opacity: 0.95 }));
+    monScreen.position.set(0.82, 1.01, 0.21); root.add(monScreen);
+
+    // Screen UI lines
+    for (let r = 0; r < 2; r++) {
+      const ui = new THREE.Mesh(new THREE.PlaneGeometry(0.48, 0.007),
+        new THREE.MeshBasicMaterial({ color: 0x113355, transparent: true, opacity: 0.7 }));
+      ui.position.set(0.82, 0.96 + r * 0.1, 0.212); root.add(ui);
+    }
+
+    // ── LENS MOUNT (PL style) ──
+    const mountRing = new THREE.Mesh(new THREE.TorusGeometry(0.5, 0.032, 10, 52), silverMat);
+    mountRing.rotation.x = Math.PI / 2;
+    mountRing.position.set(-0.1, 0, 0.535); root.add(mountRing);
+
+    // PL lock notch
+    const lockNotch = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.06, 0.05), silverMat);
+    lockNotch.position.set(-0.1, 0.52, 0.535); root.add(lockNotch);
+
+    // ── CINEMA LENS ──
+    const lensGrp = new THREE.Group();
+    lensGrp.position.set(-0.1, 0, 0.545);
+    root.add(lensGrp);
+
+    // Lens barrel — large cinema prime style
+    const lb1 = new THREE.Mesh(new THREE.CylinderGeometry(0.48, 0.48, 0.58, 56),
+      new THREE.MeshStandardMaterial({ color: 0x151515, metalness: 0.88, roughness: 0.25 }));
+    lb1.rotation.x = Math.PI / 2; lb1.position.z = 0.23; lensGrp.add(lb1);
+
+    // Focus ring (wide, marked)
+    for (let i = 0; i < 36; i++) {
+      const rib = new THREE.Mesh(new THREE.BoxGeometry(0.011, 0.58, 0.025),
+        new THREE.MeshStandardMaterial({ color: 0x2e2e2e, metalness: 0.5, roughness: 0.7 }));
+      const a = (i / 36) * Math.PI * 2;
+      rib.position.set(Math.cos(a)*0.492, Math.sin(a)*0.492, 0.23); rib.rotation.z = a;
+      lensGrp.add(rib);
+    }
+
+    // Iris ring
+    const irisRing = new THREE.Mesh(new THREE.TorusGeometry(0.49, 0.018, 8, 52),
+      new THREE.MeshStandardMaterial({ color: 0xaaaaaa, metalness: 1, roughness: 0.06 }));
+    irisRing.rotation.x = Math.PI / 2; irisRing.position.z = 0.45; lensGrp.add(irisRing);
+
+    // Front element
+    const lb2 = new THREE.Mesh(new THREE.CylinderGeometry(0.40, 0.40, 0.24, 52),
+      new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.88, roughness: 0.22 }));
+    lb2.rotation.x = Math.PI / 2; lb2.position.z = 0.65; lensGrp.add(lb2);
+
+    // Front frame
+    const fFrame = new THREE.Mesh(new THREE.TorusGeometry(0.38, 0.025, 10, 48), silverMat);
+    fFrame.rotation.x = Math.PI / 2; fFrame.position.z = 0.775; lensGrp.add(fFrame);
+
+    // Lens glass
+    const lensGlass = new THREE.Mesh(new THREE.CircleGeometry(0.36, 52),
+      new THREE.MeshStandardMaterial({ color: 0x0a1433, metalness: 0.05, roughness: 0.0, transparent: true, opacity: 0.78 }));
+    lensGlass.position.z = 0.782; lensGrp.add(lensGlass);
+
+    // Glass reflections
+    const gRef1 = new THREE.Mesh(new THREE.CircleGeometry(0.14, 36),
+      new THREE.MeshBasicMaterial({ color: 0x4466aa, transparent: true, opacity: 0.2 }));
+    gRef1.position.z = 0.784; lensGrp.add(gRef1);
+
+    const gArc = new THREE.Mesh(
+      new THREE.RingGeometry(0.26, 0.33, 52, 1, 0, Math.PI * 0.65),
+      new THREE.MeshBasicMaterial({ color: 0x99bbee, transparent: true, opacity: 0.32, side: THREE.DoubleSide }));
+    gArc.position.z = 0.785; gArc.rotation.z = 0.8; lensGrp.add(gArc);
+
+    // ── FOLLOW FOCUS (right side of lens) ──
+    const ff = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.32, 0.14),
+      new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.7, roughness: 0.35 }));
+    ff.position.set(0.55, -0.55, 0.55); root.add(ff);
+
+    const ffKnob = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.06, 16),
+      new THREE.MeshStandardMaterial({ color: 0x444444, metalness: 0.8, roughness: 0.25 }));
+    ffKnob.rotation.x = Math.PI / 2;
+    ffKnob.position.set(0.55, -0.55, 0.63); root.add(ffKnob);
+
+    // ── XLR PORTS ──
+    [-0.18, 0.18].forEach(y => {
+      const xlr = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.055, 0.11, 14), silverMat);
+      xlr.rotation.z = Math.PI / 2;
+      xlr.position.set(-1.07, y, -0.15); root.add(xlr);
+    });
+
+    const clock = new THREE.Clock();
+    let recPulse = 0;
+    (function animate() {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+      root.rotation.y = t * 0.48;
+      root.rotation.x = Math.sin(t * 0.28) * 0.045;
+      lb1.rotation.z = t * 0.2;
+      irisRing.rotation.z = -t * 0.35;
+      accent.position.x = Math.cos(t * 0.35) * 4;
+      accent.position.z = Math.sin(t * 0.35) * 4 + 4;
+      // REC blink
+      recPulse += 0.04;
+      recRing.material.opacity = 0.3 + Math.abs(Math.sin(recPulse)) * 0.4;
+      renderer.render(scene, camera);
+    })();
+  })();
+
+  // ═══════════════════════════════════════════════════════
+  // 3. HEADPHONES — over-ear studio monitors, centered, spins Y
+  //    Full headband arc + thick ear cups + driver detail
+  //    cable + ear cushion rim + yoke joints
+  // ═══════════════════════════════════════════════════════
+  (function buildHeadphones() {
+    const s = initCard('c-audio', 'w-audio', 0x050608);
+    if (!s) return;
+    const { renderer, scene, camera } = s;
+
+    const accent = new THREE.PointLight(0x2AFADF, 1.0, 18);
+    accent.position.set(-2, 3, 5);
+    scene.add(accent);
+
+    const root = new THREE.Group();
+    scene.add(root);
+
+    const blackMat = new THREE.MeshStandardMaterial({ color: 0x0e0e0e, metalness: 0.7, roughness: 0.3  });
+    const darkMat  = new THREE.MeshStandardMaterial({ color: 0x181818, metalness: 0.65, roughness: 0.4  });
+    const silverMat= new THREE.MeshStandardMaterial({ color: 0x888888, metalness: 0.95, roughness: 0.08 });
+    const cyanMat  = new THREE.MeshStandardMaterial({ color: 0x2AFADF, metalness: 0.4,  roughness: 0.3  });
+    const cushionMat=new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.05, roughness: 0.95 });
+
+    // ── HEADBAND ARC ──
+    // Main arc — torus segment
+    const bandArc = new THREE.Mesh(
+      new THREE.TorusGeometry(1.12, 0.065, 14, 60, Math.PI),
+      new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.82, roughness: 0.28 })
+    );
+    bandArc.rotation.z = Math.PI / 2;
+    bandArc.position.y = 0.05;
+    root.add(bandArc);
+
+    // Band padding underside
+    const bandPad = new THREE.Mesh(
+      new THREE.TorusGeometry(1.08, 0.045, 10, 60, Math.PI),
+      cushionMat
+    );
+    bandPad.rotation.z = Math.PI / 2;
+    bandPad.position.y = 0.04;
+    root.add(bandPad);
+
+    // Adjustment sliders (both sides)
+    [-1, 1].forEach(side => {
+      // Slider rail
+      const rail = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.45, 0.09), silverMat);
+      rail.position.set(side * 1.06, -0.78, 0);
+      root.add(rail);
+
+      // Slider block
+      const slider = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.18, 0.13), darkMat);
+      slider.position.set(side * 1.06, -0.68, 0);
+      root.add(slider);
+
+      // Size markings
+      for (let i = 0; i < 4; i++) {
+        const mark = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.008, 0.1),
+          new THREE.MeshBasicMaterial({ color: 0x444444 }));
+        mark.position.set(side * (1.09 + 0.012), -0.82 + i * 0.06, 0);
+        root.add(mark);
+      }
+
+      // ── YOKE JOINT ──
+      const yoke = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.12, 20), silverMat);
+      yoke.rotation.z = Math.PI / 2;
+      yoke.position.set(side * 1.06, -1.0, 0);
+      root.add(yoke);
+
+      // ── EAR CUP ──
+      const cupGroup = new THREE.Group();
+      cupGroup.position.set(side * 1.15, -1.02, 0);
+      root.add(cupGroup);
+
+      // Outer shell
+      const outer = new THREE.Mesh(
+        new THREE.SphereGeometry(0.42, 28, 22, 0, Math.PI * 2, 0, Math.PI * 0.62),
+        blackMat
+      );
+      outer.rotation.y = side > 0 ? Math.PI / 2 : -Math.PI / 2;
+      cupGroup.add(outer);
+
+      // Cup rim
+      const rim = new THREE.Mesh(
+        new THREE.TorusGeometry(0.38, 0.035, 12, 48),
+        cushionMat
+      );
+      rim.rotation.y = side > 0 ? -Math.PI / 2 : Math.PI / 2;
+      cupGroup.add(rim);
+
+      // Inner driver detail
+      const driver = new THREE.Mesh(
+        new THREE.CircleGeometry(0.28, 36),
+        new THREE.MeshStandardMaterial({ color: 0x333333, metalness: 0.5, roughness: 0.6 })
+      );
+      driver.rotation.y = side > 0 ? -Math.PI / 2 : Math.PI / 2;
+      driver.position.x = side * 0.02;
+      cupGroup.add(driver);
+
+      // Driver center dome
+      const dome = new THREE.Mesh(
+        new THREE.SphereGeometry(0.12, 16, 10, 0, Math.PI * 2, 0, Math.PI * 0.5),
+        new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.4, roughness: 0.7 })
+      );
+      dome.rotation.y = side > 0 ? -Math.PI / 2 : Math.PI / 2;
+      dome.position.x = side * 0.03;
+      cupGroup.add(dome);
+
+      // Driver surround ring
+      const surround = new THREE.Mesh(
+        new THREE.TorusGeometry(0.2, 0.04, 8, 36),
+        new THREE.MeshStandardMaterial({ color: 0x444444, metalness: 0.3, roughness: 0.8 })
+      );
+      surround.rotation.y = side > 0 ? -Math.PI / 2 : Math.PI / 2;
+      surround.position.x = side * 0.025;
+      cupGroup.add(surround);
+
+      // Cyan accent ring on cup exterior
+      const accentRing = new THREE.Mesh(
+        new THREE.TorusGeometry(0.40, 0.012, 8, 48),
+        cyanMat
+      );
+      accentRing.rotation.y = side > 0 ? -Math.PI / 2 : Math.PI / 2;
+      cupGroup.add(accentRing);
+
+      // Logo mark (tiny raised square)
+      const logo = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 0.03), silverMat);
+      logo.position.set(side * 0.41, 0.12, 0.08);
+      cupGroup.add(logo);
+
+      // Cushion foam ring
+      const foam = new THREE.Mesh(
+        new THREE.TorusGeometry(0.3, 0.085, 10, 48),
+        new THREE.MeshStandardMaterial({ color: 0x0d0d0d, metalness: 0.0, roughness: 1.0 })
+      );
+      foam.rotation.y = side > 0 ? -Math.PI / 2 : Math.PI / 2;
+      foam.position.x = side * -0.04;
+      cupGroup.add(foam);
+    });
+
+    // ── CABLE (left cup) ──
+    const cablePoints = [];
+    for (let i = 0; i <= 24; i++) {
+      const f = i / 24;
+      cablePoints.push(new THREE.Vector3(
+        -1.55 - Math.sin(f * Math.PI) * 0.2,
+        -1.02 - f * 1.1,
+        Math.sin(f * Math.PI * 3) * 0.08
+      ));
+    }
+    const cable = new THREE.TubeGeometry(
+      new THREE.CatmullRomCurve3(cablePoints), 20, 0.022, 8, false
+    );
+    root.add(new THREE.Mesh(cable, new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.3, roughness: 0.7 })));
+
+    // Cable plug
+    const plug = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.04, 0.04, 0.22, 12),
+      new THREE.MeshStandardMaterial({ color: 0x555555, metalness: 0.9, roughness: 0.15 })
+    );
+    plug.position.set(-1.55, -2.18, 0);
+    root.add(plug);
+
+    // ── CENTER POSITION — verified ──
+    // Band arc center is at y=0.05, ear cups at y=-1.02
+    // Total height ~2.1. Center y = (0.05 + (-1.02)) / 2 = -0.485
+    root.position.y = 0.42; // compensate to center vertically
+
+    camera.position.set(0, 0, 5.5);
+    camera.lookAt(0, 0, 0);
 
     const clock = new THREE.Clock();
     (function animate() {
       requestAnimationFrame(animate);
       const t = clock.getElapsedTime();
       root.rotation.y = t * 0.5;
-      root.rotation.x = Math.sin(t * 0.35) * 0.05;
-      l1.rotation.z = t * 0.25;
+      root.rotation.x = Math.sin(t * 0.3) * 0.05;
+      accent.position.x = Math.cos(t * 0.45) * 3;
+      accent.position.z = Math.sin(t * 0.45) * 3 + 4;
       renderer.render(scene, camera);
     })();
   })();
 
-  // ─────────────────────────────────────────────────────
-  // 3. AUDIO — Vinyl record + tonearm, spins on Y axis
-  // Full vinyl record with grooves, label, tonearm resting on it
-  // ─────────────────────────────────────────────────────
-  (function() {
-    const s = mkCard('c-audio', 0x060608);
+  // ═══════════════════════════════════════════════════════
+  // 4. ARTIST EASEL — centered, spins Y
+  //    Wooden tripod easel + stretched canvas with paint
+  //    strokes + palette + brush resting on ledge
+  // ═══════════════════════════════════════════════════════
+  (function buildEasel() {
+    const s = initCard('c-arte', 'w-arte', 0x080508);
     if (!s) return;
     const { renderer, scene, camera } = s;
+
+    const accent = new THREE.PointLight(0xFF6B2B, 0.9, 18);
+    accent.position.set(2, 3, 5);
+    scene.add(accent);
 
     const root = new THREE.Group();
     scene.add(root);
 
-    // Vinyl disc
-    const disc = new THREE.Mesh(
-      new THREE.CylinderGeometry(1.5, 1.5, 0.07, 80),
-      new THREE.MeshStandardMaterial({ color: 0x101015, metalness: 0.25, roughness: 0.55 })
-    );
-    root.add(disc);
+    const woodMat  = new THREE.MeshStandardMaterial({ color: 0xaa7733, metalness: 0.05, roughness: 0.72 });
+    const darkWood = new THREE.MeshStandardMaterial({ color: 0x7a5520, metalness: 0.02, roughness: 0.78 });
+    const metalMat = new THREE.MeshStandardMaterial({ color: 0x888888, metalness: 0.9,  roughness: 0.15 });
 
-    // Vinyl grooves — concentric rings
-    for (let i = 0; i < 22; i++) {
-      const r = 0.42 + i * 0.05;
-      const groove = new THREE.Mesh(
-        new THREE.TorusGeometry(r, 0.005, 4, 80),
-        new THREE.MeshBasicMaterial({ color: 0x252530, transparent: true, opacity: 0.7 })
+    // ── EASEL LEGS ──
+    // Helper: rotated cylinder from point A to point B
+    function addLeg(x1,y1,z1, x2,y2,z2, r, mat) {
+      const dx=x2-x1, dy=y2-y1, dz=z2-z1;
+      const len = Math.sqrt(dx*dx+dy*dy+dz*dz);
+      const cyl = new THREE.Mesh(new THREE.CylinderGeometry(r, r*0.9, len, 10), mat);
+      const mid = new THREE.Vector3((x1+x2)/2,(y1+y2)/2,(z1+z2)/2);
+      cyl.position.copy(mid);
+      cyl.quaternion.setFromUnitVectors(
+        new THREE.Vector3(0,1,0),
+        new THREE.Vector3(dx,dy,dz).normalize()
       );
-      groove.rotation.x = Math.PI / 2;
-      groove.position.y = 0.038;
-      root.add(groove);
+      root.add(cyl);
     }
 
-    // Outer edge highlight
-    root.add(new THREE.Mesh(
-      new THREE.TorusGeometry(1.5, 0.008, 6, 80),
-      new THREE.MeshBasicMaterial({ color: 0x333344, transparent: true, opacity: 0.5 })
-    )).rotation.x = Math.PI / 2;
+    // Front two legs
+    addLeg(-0.3, 1.1, 0.22,  -0.48, -1.2, 0.55,  0.048, woodMat);
+    addLeg( 0.3, 1.1, 0.22,   0.48, -1.2, 0.55,  0.048, woodMat);
+    // Back leg
+    addLeg( 0.0, 1.1, 0.18,   0.0,  -1.2,-0.6,   0.044, woodMat);
 
-    // Label (center circle) — cyan
-    const label = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.38, 0.38, 0.075, 48),
-      new THREE.MeshStandardMaterial({ color: 0x2AFADF, roughness: 0.55, metalness: 0.1 })
-    );
-    root.add(label);
+    // Cross brace (front legs)
+    addLeg(-0.4, -0.45, 0.45,  0.4, -0.45, 0.45,  0.032, darkWood);
+    // Back support brace
+    addLeg(-0.15, -0.2, 0.35,  0.0, -0.35,-0.45,  0.025, darkWood);
+    addLeg( 0.15, -0.2, 0.35,  0.0, -0.35,-0.45,  0.025, darkWood);
 
-    // Label text lines
-    for (let i = 0; i < 4; i++) {
-      const line = new THREE.Mesh(
-        new THREE.BoxGeometry(0.28 - i * 0.04, 0.012, 0.078),
-        new THREE.MeshBasicMaterial({ color: 0x001122 })
-      );
-      line.position.set(0, 0.04 - i * 0.06, 0);
-      root.add(line);
-    }
-
-    // Spindle hole
-    root.add(new THREE.Mesh(
-      new THREE.CylinderGeometry(0.028, 0.028, 0.1, 12),
-      new THREE.MeshBasicMaterial({ color: 0x000000 })
-    ));
-
-    // Reflection arc
-    const refArc = new THREE.Mesh(
-      new THREE.RingGeometry(0.7, 1.2, 80),
-      new THREE.MeshBasicMaterial({ color: 0x334466, transparent: true, opacity: 0.1, side: THREE.DoubleSide })
-    );
-    refArc.rotation.x = Math.PI / 2;
-    refArc.position.y = 0.04;
-    root.add(refArc);
-
-    // TONEARM — separate group, doesn't spin with disc
-    const arm = new THREE.Group();
-    scene.add(arm);
-    arm.position.set(1.3, 0.15, 0.8);
-
-    // Pivot base
-    arm.add(new THREE.Mesh(
-      new THREE.CylinderGeometry(0.09, 0.11, 0.14, 16),
-      new THREE.MeshStandardMaterial({ color: 0x555, metalness: 0.9, roughness: 0.2 })
-    ));
-
-    // Arm tube
-    const tube = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.026, 0.018, 1.5, 8),
-      new THREE.MeshStandardMaterial({ color: 0x999, metalness: 0.95, roughness: 0.1 })
-    );
-    tube.rotation.z = Math.PI / 2 - 0.35;
-    tube.rotation.y = -0.6;
-    tube.position.set(-0.72, 0.04, -0.45);
-    arm.add(tube);
-
-    // Headshell
-    const headshell = new THREE.Mesh(
-      new THREE.BoxGeometry(0.16, 0.055, 0.085),
-      new THREE.MeshStandardMaterial({ color: 0x333, metalness: 0.75, roughness: 0.35 })
-    );
-    headshell.position.set(-1.42, -0.34, -0.85);
-    arm.add(headshell);
-
-    // Needle
-    const needle = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.007, 0.002, 0.14, 6),
-      new THREE.MeshStandardMaterial({ color: 0xdddddd, metalness: 1, roughness: 0 })
-    );
-    needle.rotation.z = 0.22;
-    needle.position.set(-1.46, -0.43, -0.87);
-    arm.add(needle);
-
-    // Counterweight
-    const cw = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.065, 0.065, 0.1, 12),
-      new THREE.MeshStandardMaterial({ color: 0x222, metalness: 0.8, roughness: 0.2 })
-    );
-    cw.rotation.z = Math.PI / 2;
-    cw.position.set(0.55, 0.04, 0);
-    arm.add(cw);
-
-    camera.position.set(0, 1.8, 3.2);
-    camera.lookAt(0, 0, 0);
-
-    const clock = new THREE.Clock();
-    (function animate() {
-      requestAnimationFrame(animate);
-      const t = clock.getElapsedTime();
-      // Vinyl spins on its own axis (Y)
-      root.rotation.y = t * 0.7;
-      // Tonearm gentle sway
-      arm.rotation.y = Math.sin(t * 0.18) * 0.04;
-      renderer.render(scene, camera);
-    })();
-  })();
-
-  // ─────────────────────────────────────────────────────
-  // 4. DIRECCIÓN DE ARTE — Artist easel, spins on Y axis
-  // Wooden easel with a canvas on it, paint palette nearby
-  // ─────────────────────────────────────────────────────
-  (function() {
-    const s = mkCard('c-arte', 0x080608);
-    if (!s) return;
-    const { renderer, scene, camera } = s;
-
-    const root = new THREE.Group();
-    scene.add(root);
-
-    const woodMat = new THREE.MeshStandardMaterial({ color: 0xaa7733, roughness: 0.7, metalness: 0.05 });
-    const darkWood = new THREE.MeshStandardMaterial({ color: 0x7a5520, roughness: 0.75, metalness: 0.0 });
-
-    // EASEL — 3 legs
-    // Front left leg
-    const leg = (x, z, rx, rz) => {
-      const m = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.035, 2.4, 8), woodMat);
-      m.rotation.x = rx; m.rotation.z = rz;
-      m.position.set(x, -0.3, z);
-      return m;
-    };
-    root.add(leg(-0.35, 0.25, 0.18, 0.08));
-    root.add(leg(0.35, 0.25, 0.18, -0.08));
-    root.add(leg(0, -0.55, -0.2, 0));
-
-    // Cross brace
-    const brace = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.8, 8), darkWood);
-    brace.rotation.z = Math.PI / 2;
-    brace.position.set(0, -0.85, 0.15);
-    root.add(brace);
-
-    // Top bar
-    const topBar = new THREE.Mesh(new THREE.CylinderGeometry(0.038, 0.038, 0.85, 8), woodMat);
+    // ── TOP CROSSBAR ──
+    const topBar = new THREE.Mesh(new THREE.CylinderGeometry(0.036, 0.036, 0.75, 10), woodMat);
     topBar.rotation.z = Math.PI / 2;
-    topBar.position.set(0, 0.72, 0.18);
+    topBar.position.set(0, 1.08, 0.2);
     root.add(topBar);
 
-    // Canvas ledge
-    const ledge = new THREE.Mesh(new THREE.BoxGeometry(0.82, 0.06, 0.12), darkWood);
-    ledge.position.set(0, -0.1, 0.22);
+    // ── CANVAS LEDGE ──
+    const ledge = new THREE.Mesh(new THREE.BoxGeometry(0.76, 0.058, 0.1), darkWood);
+    ledge.position.set(0, 0.08, 0.26);
     root.add(ledge);
 
-    // CANVAS — white rectangle sitting on ledge
-    const canvasFrame = new THREE.Mesh(
-      new THREE.BoxGeometry(0.72, 0.9, 0.03),
-      new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.8 })
-    );
-    canvasFrame.position.set(0, 0.38, 0.24);
-    root.add(canvasFrame);
+    // Ledge lip
+    const lip = new THREE.Mesh(new THREE.BoxGeometry(0.76, 0.1, 0.022), darkWood);
+    lip.position.set(0, 0.07, 0.31);
+    root.add(lip);
 
-    // Canvas surface
-    const canvasSurf = new THREE.Mesh(
-      new THREE.PlaneGeometry(0.64, 0.82),
-      new THREE.MeshStandardMaterial({ color: 0xf0ead8, roughness: 0.9 })
-    );
-    canvasSurf.position.set(0, 0.38, 0.26);
-    root.add(canvasSurf);
-
-    // Paint strokes on canvas
-    const strokeColors = [0xFF6B2B, 0xFF3CAC, 0x2AFADF, 0xBCFF47, 0x9B5DFF];
-    strokeColors.forEach((col, i) => {
-      const stroke = new THREE.Mesh(
-        new THREE.PlaneGeometry(0.18 + Math.random() * 0.2, 0.035 + Math.random() * 0.04),
-        new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.85 })
-      );
-      stroke.position.set(
-        -0.22 + i * 0.1,
-        0.15 + (i % 3) * 0.16,
-        0.265
-      );
-      stroke.rotation.z = (Math.random() - 0.5) * 0.3;
-      root.add(stroke);
+    // Metal brackets on ledge
+    [-0.3, 0.3].forEach(x => {
+      const brk = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.12, 0.06), metalMat);
+      brk.position.set(x, 0.13, 0.26);
+      root.add(brk);
     });
 
-    // PALETTE — small kidney shape to the side
+    // ── STRETCHED CANVAS ──
+    const canvasGroup = new THREE.Group();
+    canvasGroup.position.set(0, 0.6, 0.3);
+    root.add(canvasGroup);
+
+    // Frame (dark wood border)
+    const frameThick = 0.032;
+    const fw = 0.68, fh = 0.88;
+    // Top / bottom / left / right bars
+    [[0, fh/2, fw, frameThick],[0, -fh/2, fw, frameThick],
+     [-fw/2, 0, frameThick, fh],[fw/2, 0, frameThick, fh]
+    ].forEach(([x,y,w,h]) => {
+      const f = new THREE.Mesh(new THREE.BoxGeometry(w, h, 0.03), darkWood);
+      f.position.set(x, y, -0.016);
+      canvasGroup.add(f);
+    });
+
+    // Canvas surface (linen texture approximation)
+    const canvas3d = new THREE.Mesh(
+      new THREE.PlaneGeometry(fw - frameThick*2, fh - frameThick*2),
+      new THREE.MeshStandardMaterial({ color: 0xf2e8d5, roughness: 0.92, metalness: 0 })
+    );
+    canvasGroup.add(canvas3d);
+
+    // ── PAINT STROKES on canvas ──
+    const strokes = [
+      { col: 0xFF6B2B, x: -0.1, y:  0.2, w: 0.32, h: 0.06, r: 0.15 },
+      { col: 0xFF3CAC, x:  0.08,y:  0.05,w: 0.25, h: 0.05, r:-0.2  },
+      { col: 0x2AFADF, x: -0.12,y: -0.1, w: 0.28, h: 0.045,r: 0.1  },
+      { col: 0xBCFF47, x:  0.1, y: -0.22,w: 0.22, h: 0.04, r:-0.1  },
+      { col: 0x9B5DFF, x: -0.05,y:  0.3, w: 0.18, h: 0.038,r: 0.25 },
+      { col: 0xFFCC00, x:  0.14,y:  0.18,w: 0.15, h: 0.035,r:-0.3  },
+    ];
+    strokes.forEach(({ col, x, y, w, h, r }) => {
+      const st = new THREE.Mesh(
+        new THREE.PlaneGeometry(w, h),
+        new THREE.MeshStandardMaterial({ color: col, roughness: 0.85, metalness: 0.05 })
+      );
+      st.position.set(x, y, 0.003);
+      st.rotation.z = r;
+      canvasGroup.add(st);
+    });
+
+    // Sketch lines (dark)
+    for (let i = 0; i < 3; i++) {
+      const line = new THREE.Mesh(new THREE.PlaneGeometry(0.38 - i*0.08, 0.008),
+        new THREE.MeshBasicMaterial({ color: 0x333322, transparent: true, opacity: 0.5 }));
+      line.position.set(-0.08 + i*0.05, -0.32 + i*0.12, 0.004);
+      line.rotation.z = (Math.random()-0.5)*0.3;
+      canvasGroup.add(line);
+    }
+
+    // ── PALETTE on ledge ──
     const palette = new THREE.Group();
-    palette.position.set(0.85, 0.2, 0.4);
-    palette.rotation.y = -0.5;
+    palette.position.set(-0.28, 0.13, 0.34);
+    palette.rotation.x = -0.15;
     root.add(palette);
 
     palette.add(new THREE.Mesh(
-      new THREE.CylinderGeometry(0.28, 0.28, 0.04, 32),
-      new THREE.MeshStandardMaterial({ color: 0xd4b896, roughness: 0.8 })
+      new THREE.CylinderGeometry(0.16, 0.16, 0.025, 28),
+      new THREE.MeshStandardMaterial({ color: 0xd4b896, roughness: 0.8, metalness: 0 })
     ));
 
-    // Paint blobs on palette
+    // Thumb hole
+    palette.add(new THREE.Mesh(
+      new THREE.CylinderGeometry(0.04, 0.04, 0.03, 14),
+      new THREE.MeshBasicMaterial({ color: 0x080808 })
+    )).position.set(0.1, 0.02, -0.06);
+
     [0xFF6B2B, 0xFF3CAC, 0xBCFF47, 0x2AFADF, 0x9B5DFF].forEach((col, i) => {
       const blob = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.05, 0.05, 0.05, 14),
+        new THREE.CylinderGeometry(0.036, 0.036, 0.028, 14),
         new THREE.MeshStandardMaterial({ color: col, roughness: 0.7 })
       );
       const a = (i / 5) * Math.PI * 2;
-      blob.position.set(Math.cos(a) * 0.16, 0.04, Math.sin(a) * 0.16);
+      blob.position.set(Math.cos(a)*0.1, 0.028, Math.sin(a)*0.1);
       palette.add(blob);
     });
 
-    // BRUSH — floating near palette
+    // ── BRUSH resting on ledge ──
     const brush = new THREE.Group();
-    brush.position.set(-0.9, 0.4, 0.3);
-    brush.rotation.z = -0.6;
+    brush.position.set(0.25, 0.13, 0.34);
+    brush.rotation.z = 0.15;
+    brush.rotation.x = -0.1;
     root.add(brush);
 
+    // Handle
     brush.add(new THREE.Mesh(
-      new THREE.CylinderGeometry(0.032, 0.025, 1.1, 8),
-      new THREE.MeshStandardMaterial({ color: 0xbb7722, roughness: 0.6 })
+      new THREE.CylinderGeometry(0.025, 0.02, 0.7, 8),
+      new THREE.MeshStandardMaterial({ color: 0xcc8833, roughness: 0.6, metalness: 0 })
     ));
 
     // Ferrule
-    brush.add(new THREE.Mesh(
-      new THREE.CylinderGeometry(0.036, 0.036, 0.1, 10),
-      new THREE.MeshStandardMaterial({ color: 0xaaaaaa, metalness: 0.9, roughness: 0.1 })
-    )).position.y = -0.58;
-
-    // Bristle tip
-    const bristle = new THREE.Mesh(
-      new THREE.ConeGeometry(0.036, 0.24, 8),
-      new THREE.MeshStandardMaterial({ color: 0xFF6B2B, roughness: 0.8 })
+    const ferrule = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.028, 0.028, 0.07, 10),
+      metalMat
     );
-    bristle.position.y = -0.73;
+    ferrule.position.y = -0.37;
+    brush.add(ferrule);
+
+    // Bristle
+    const bristle = new THREE.Mesh(
+      new THREE.ConeGeometry(0.026, 0.2, 8),
+      new THREE.MeshStandardMaterial({ color: 0xFF6B2B, roughness: 0.85 })
+    );
+    bristle.position.y = -0.5;
     brush.add(bristle);
 
-    camera.position.set(0, 0.4, 4.5);
+    // ── METAL HINGE BOLTS ──
+    [[0, 1.1, 0.24], [-0.48, -1.05, 0.5], [0.48, -1.05, 0.5]].forEach(([x,y,z]) => {
+      const bolt = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.06, 10), metalMat);
+      bolt.rotation.z = Math.PI / 2;
+      bolt.position.set(x, y, z);
+      root.add(bolt);
+    });
+
+    // Center root
+    root.position.y = 0.08;
+
+    camera.position.set(0, 0, 5.2);
     camera.lookAt(0, 0, 0);
 
     const clock = new THREE.Clock();
     (function animate() {
       requestAnimationFrame(animate);
       const t = clock.getElapsedTime();
-      root.rotation.y = t * 0.45;
-      root.rotation.x = Math.sin(t * 0.28) * 0.04;
+      root.rotation.y = t * 0.42;
+      root.rotation.x = Math.sin(t * 0.26) * 0.045;
+      accent.position.x = Math.cos(t * 0.38) * 4;
+      accent.position.z = Math.sin(t * 0.38) * 4 + 4;
       renderer.render(scene, camera);
     })();
   })();
 
-  // ─────────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════
   // HERO 3D
-  // ─────────────────────────────────────────────────────
-  (function() {
+  // ═══════════════════════════════════════════════════════
+  (function buildHero() {
     const canvas = document.getElementById('hero-canvas');
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -1012,74 +1315,72 @@
     camera.position.set(0, 0, 5);
     function resize() {
       const w = canvas.parentElement.clientWidth, h = canvas.parentElement.clientHeight;
-      renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix();
+      renderer.setSize(w, h); camera.aspect = w/h; camera.updateProjectionMatrix();
     }
     resize(); window.addEventListener('resize', resize);
     const mkP = (n, sp, col, sz, op) => {
-      const p = new Float32Array(n * 3);
-      for (let i = 0; i < n; i++) { p[i*3] = (Math.random()-.5)*sp; p[i*3+1] = (Math.random()-.5)*sp; p[i*3+2] = (Math.random()-.5)*(sp*.7); }
-      const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(p, 3));
-      return new THREE.Points(g, new THREE.PointsMaterial({ color: col, size: sz, transparent: true, opacity: op, sizeAttenuation: true }));
+      const p = new Float32Array(n*3);
+      for (let i=0;i<n;i++){ p[i*3]=(Math.random()-.5)*sp; p[i*3+1]=(Math.random()-.5)*sp; p[i*3+2]=(Math.random()-.5)*(sp*.7); }
+      const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(p,3));
+      return new THREE.Points(g, new THREE.PointsMaterial({color:col,size:sz,transparent:true,opacity:op,sizeAttenuation:true}));
     };
-    scene.add(mkP(1800, 20, 0xBCFF47, .03, .6));
-    scene.add(mkP(600, 18, 0xFF3CAC, .025, .35));
-    scene.add(mkP(400, 16, 0x2AFADF, .02, .25));
-    const ag = (geo, col, op) => { const m = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color: col, wireframe: true, transparent: true, opacity: op })); scene.add(m); return m; };
-    const ico = ag(new THREE.IcosahedronGeometry(1.2, 1), 0xBCFF47, .08); ico.position.set(2.5, .5, 0);
-    const oct = ag(new THREE.OctahedronGeometry(.7, 0), 0xFF3CAC, .12); oct.position.set(-3, -.8, -1);
-    const tet = ag(new THREE.TetrahedronGeometry(.5, 0), 0x2AFADF, .15); tet.position.set(-1.5, 1.5, -2);
-    const tor = ag(new THREE.TorusGeometry(.6, .08, 8, 24), 0x9B5DFF, .1); tor.position.set(1, -1.8, -1.5);
-    let mouseX = 0, mouseY = 0, tX = 0, tY = 0, scrollY = 0;
-    document.addEventListener('mousemove', e => { mouseX = (e.clientX / window.innerWidth - .5) * 2; mouseY = -(e.clientY / window.innerHeight - .5) * 2; });
-    window.addEventListener('scroll', () => { scrollY = window.scrollY; });
-    const clock = new THREE.Clock();
-    (function animate() {
+    scene.add(mkP(1800,20,0xBCFF47,.03,.6));
+    scene.add(mkP(600,18,0xFF3CAC,.025,.35));
+    scene.add(mkP(400,16,0x2AFADF,.02,.25));
+    const ag = (geo,col,op) => { const m=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color:col,wireframe:true,transparent:true,opacity:op})); scene.add(m); return m; };
+    const ico=ag(new THREE.IcosahedronGeometry(1.2,1),0xBCFF47,.08); ico.position.set(2.5,.5,0);
+    const oct=ag(new THREE.OctahedronGeometry(.7,0),0xFF3CAC,.12); oct.position.set(-3,-.8,-1);
+    const tet=ag(new THREE.TetrahedronGeometry(.5,0),0x2AFADF,.15); tet.position.set(-1.5,1.5,-2);
+    const tor=ag(new THREE.TorusGeometry(.6,.08,8,24),0x9B5DFF,.1); tor.position.set(1,-1.8,-1.5);
+    let mouseX=0,mouseY=0,tX=0,tY=0,scrollY=0;
+    document.addEventListener('mousemove',e=>{ mouseX=(e.clientX/window.innerWidth-.5)*2; mouseY=-(e.clientY/window.innerHeight-.5)*2; });
+    window.addEventListener('scroll',()=>{ scrollY=window.scrollY; });
+    const clock=new THREE.Clock();
+    (function animate(){
       requestAnimationFrame(animate);
-      const t = clock.getElapsedTime();
-      tX += (mouseX - tX) * .05; tY += (mouseY - tY) * .05;
-      camera.position.x = tX * .4; camera.position.y = tY * .2;
-      const sp = Math.min(scrollY / (canvas.parentElement.clientHeight || window.innerHeight), 1);
-      camera.position.z = 5 - sp * 2.5; camera.rotation.z = sp * .1;
-      scene.children[0].rotation.y = t * .04; scene.children[0].rotation.x = t * .02;
-      scene.children[1].rotation.y = -t * .03; scene.children[2].rotation.x = t * .05;
-      ico.rotation.x = t * .3 + tY * .5; ico.rotation.y = t * .4 + tX * .5; ico.position.y = .5 + Math.sin(t * .7) * .3;
-      oct.rotation.x = -t * .5; oct.rotation.z = t * .3; oct.position.y = -.8 + Math.cos(t * .5) * .25;
-      tet.rotation.y = t * .8; tet.rotation.x = t * .6; tet.position.x = -1.5 + Math.sin(t * .4) * .2;
-      tor.rotation.x = t * .4; tor.rotation.y = t * .6; tor.position.y = -1.8 + Math.sin(t * .8) * .2;
-      renderer.render(scene, camera);
+      const t=clock.getElapsedTime();
+      tX+=(mouseX-tX)*.05; tY+=(mouseY-tY)*.05;
+      camera.position.x=tX*.4; camera.position.y=tY*.2;
+      const sp=Math.min(scrollY/(canvas.parentElement.clientHeight||window.innerHeight),1);
+      camera.position.z=5-sp*2.5; camera.rotation.z=sp*.1;
+      scene.children[0].rotation.y=t*.04; scene.children[0].rotation.x=t*.02;
+      scene.children[1].rotation.y=-t*.03; scene.children[2].rotation.x=t*.05;
+      ico.rotation.x=t*.3+tY*.5; ico.rotation.y=t*.4+tX*.5; ico.position.y=.5+Math.sin(t*.7)*.3;
+      oct.rotation.x=-t*.5; oct.rotation.z=t*.3; oct.position.y=-.8+Math.cos(t*.5)*.25;
+      tet.rotation.y=t*.8; tet.rotation.x=t*.6; tet.position.x=-1.5+Math.sin(t*.4)*.2;
+      tor.rotation.x=t*.4; tor.rotation.y=t*.6; tor.position.y=-1.8+Math.sin(t*.8)*.2;
+      renderer.render(scene,camera);
     })();
   })();
 
   // CURSOR
-  const cursor = document.getElementById('cursor'), cf = document.getElementById('cf');
-  let mx = 0, my = 0, fx = 0, fy = 0;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
-  (function a() { fx += (mx - fx) * .12; fy += (my - fy) * .12; cf.style.left = fx + 'px'; cf.style.top = fy + 'px'; requestAnimationFrame(a); })();
-  document.querySelectorAll('a,button').forEach(el => {
-    el.addEventListener('mouseenter', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; cf.style.width = '60px'; cf.style.height = '60px'; });
-    el.addEventListener('mouseleave', () => { cursor.style.width = '12px'; cursor.style.height = '12px'; cf.style.width = '36px'; cf.style.height = '36px'; });
+  const cursor=document.getElementById('cursor'), cf=document.getElementById('cf');
+  let mx=0,my=0,fx=0,fy=0;
+  document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+  (function a(){ fx+=(mx-fx)*.12; fy+=(my-fy)*.12; cf.style.left=fx+'px'; cf.style.top=fy+'px'; requestAnimationFrame(a); })();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ cursor.style.width='20px'; cursor.style.height='20px'; cf.style.width='60px'; cf.style.height='60px'; });
+    el.addEventListener('mouseleave',()=>{ cursor.style.width='12px'; cursor.style.height='12px'; cf.style.width='36px'; cf.style.height='36px'; });
   });
 
-  // NAV scroll
-  window.addEventListener('scroll', () => document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 80));
+  // NAV
+  window.addEventListener('scroll',()=> document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY>80));
 
   // Reveal
-  const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) x.target.classList.add('visible'); }), { threshold: .08 });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-  document.querySelectorAll('.hero .reveal').forEach(el => setTimeout(() => el.classList.add('visible'), 100));
+  const obs=new IntersectionObserver(e=>e.forEach(x=>{ if(x.isIntersecting)x.target.classList.add('visible'); }),{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  document.querySelectorAll('.hero .reveal').forEach(el=>setTimeout(()=>el.classList.add('visible'),100));
 
   // Auto section
-  const autoSec = document.querySelector('.auto-section');
-  if (autoSec) {
-    const ao = new IntersectionObserver(e => {
-      e.forEach(x => {
-        if (x.isIntersecting) {
-          autoSec.classList.add('revealed');
-          ['rw1','rw2','rw3','rw4'].forEach((id, i) => setTimeout(() => { const el = document.getElementById(id); if (el) el.style.opacity = '1'; }, 1200 + i * 200));
-          ao.disconnect();
-        }
-      });
-    }, { threshold: .2 });
+  const autoSec=document.querySelector('.auto-section');
+  if(autoSec){
+    const ao=new IntersectionObserver(e=>{
+      e.forEach(x=>{ if(x.isIntersecting){
+        autoSec.classList.add('revealed');
+        ['rw1','rw2','rw3','rw4'].forEach((id,i)=>setTimeout(()=>{ const el=document.getElementById(id); if(el)el.style.opacity='1'; },1200+i*200));
+        ao.disconnect();
+      }});
+    },{threshold:.2});
     ao.observe(autoSec);
   }
   </script>
