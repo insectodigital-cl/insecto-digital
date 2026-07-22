@@ -1,6 +1,6 @@
 ---
-// index.astro - Insecto Digital — v11
-// 4 cards reviewed: mirrorless cam | cinema cam | headphones | hand+stylus+screen
+// index.astro - Insecto Digital — v12
+// Glowing wireframe + solid emissive objects on colored gradient card backgrounds
 ---
 <!DOCTYPE html>
 <html lang="es">
@@ -61,7 +61,7 @@
     .btn-wa-lg:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 20px 60px rgba(37,211,102,.5);background:var(--wa2)}
     .btn-wa-lg::before{content:'';position:absolute;inset:-4px;border-radius:100px;border:2px solid rgba(37,211,102,.4);animation:btnPulse 2.5s ease-in-out infinite}
     @keyframes btnPulse{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.04);opacity:.1}}
-    .wa-float{position:fixed;bottom:2rem;right:2rem;z-index:500;width:60px;height:60px;border-radius:50%;background:var(--wa);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.5);text-decoration:none;animation:fb 3s ease-in-out infinite}
+    .wa-float{position:fixed;bottom:2rem;right:2rem;z-index:500;width:60px;height:60px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.5);text-decoration:none;animation:fb 3s ease-in-out infinite}
     .wa-float:hover{transform:scale(1.1)!important;animation:none}
     @keyframes fb{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
     .ticker{border-top:1px solid var(--gris2);border-bottom:1px solid var(--gris2);padding:1rem 0;overflow:hidden;white-space:nowrap}
@@ -94,19 +94,45 @@
     .ml::before{content:'';width:24px;height:1px;background:var(--negro)}
     .mt{font-family:var(--fd);font-weight:800;font-size:clamp(2rem,5vw,5rem);line-height:1.05;letter-spacing:-.03em}
     .mt em{font-style:italic;font-weight:400}
+
+    /* ══════════════════════════════════════
+       VISUAL CARDS — colored gradient backgrounds
+    ══════════════════════════════════════ */
     .visual-section{padding:8rem 4rem;background:var(--gris)}
     .vg{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
-    .vc{background:var(--negro);border:1px solid var(--gris2);border-radius:8px;overflow:hidden;transition:transform .4s cubic-bezier(.25,.46,.45,.94),box-shadow .4s}
-    .vc:hover{transform:translateY(-8px);box-shadow:0 32px 80px rgba(0,0,0,.6)}
+    .vc{border-radius:10px;overflow:hidden;transition:transform .4s cubic-bezier(.25,.46,.45,.94),box-shadow .4s;border:1px solid rgba(255,255,255,.06)}
+    .vc:hover{transform:translateY(-8px);box-shadow:0 32px 80px rgba(0,0,0,.7)}
+
+    /* Card canvas header with colored bg */
     .cc{height:240px;position:relative;overflow:hidden}
     .cc canvas{width:100%!important;height:100%!important;display:block}
-    .cc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to top,var(--negro),transparent);pointer-events:none;z-index:1}
+    /* Bottom fade into card body */
+    .cc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:70px;pointer-events:none;z-index:1}
+
+    /* Individual card gradient backgrounds */
+    .cc-foto{background:radial-gradient(ellipse at 50% 40%,rgba(255,107,43,.22) 0%,rgba(255,107,43,.06) 50%,#0d0805 100%)}
+    .cc-foto::after{background:linear-gradient(to top,#0d0805,transparent)}
+    .vb-foto{background:#0d0805}
+
+    .cc-video{background:radial-gradient(ellipse at 50% 40%,rgba(255,60,172,.22) 0%,rgba(255,60,172,.06) 50%,#0a060d 100%)}
+    .cc-video::after{background:linear-gradient(to top,#0a060d,transparent)}
+    .vb-video{background:#0a060d}
+
+    .cc-audio{background:radial-gradient(ellipse at 50% 40%,rgba(42,250,223,.2) 0%,rgba(42,250,223,.05) 50%,#050d0c 100%)}
+    .cc-audio::after{background:linear-gradient(to top,#050d0c,transparent)}
+    .vb-audio{background:#050d0c}
+
+    .cc-arte{background:radial-gradient(ellipse at 50% 40%,rgba(155,93,255,.22) 0%,rgba(155,93,255,.06) 50%,#080610 100%)}
+    .cc-arte::after{background:linear-gradient(to top,#080610,transparent)}
+    .vb-arte{background:#080610}
+
     .vb{padding:1.75rem 2.5rem 2.5rem}
-    .vn{font-family:var(--fd);font-size:.65rem;letter-spacing:.15em;color:var(--naranja);margin-bottom:.6rem;opacity:.8}
-    .vn.m{color:var(--magenta)}.vn.c{color:var(--cyan)}.vn.v{color:var(--violeta)}
+    .vn{font-family:var(--fd);font-size:.65rem;letter-spacing:.15em;margin-bottom:.6rem;opacity:.9}
+    .vn-na{color:var(--naranja)}.vn-mg{color:var(--magenta)}.vn-cy{color:var(--cyan)}.vn-vi{color:var(--violeta)}
     .vnm{font-family:var(--fd);font-weight:700;font-size:1.3rem;margin-bottom:.7rem;letter-spacing:-.02em}
     .vd{font-size:.9rem;line-height:1.6;opacity:.55}
     .vt{margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:.4rem}
+
     .ai-section{padding:8rem 4rem;position:relative;overflow:hidden}
     .ai-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(155,93,255,.1) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(42,250,223,.07) 0%,transparent 50%),radial-gradient(ellipse at 60% 80%,rgba(255,60,172,.07) 0%,transparent 50%);pointer-events:none}
     .ai-inner{position:relative;z-index:1}
@@ -214,8 +240,7 @@
     }
     @media(max-width:480px){
       .hero-title{font-size:clamp(2.2rem,12vw,3rem)}
-      .snum{font-size:2.5rem}
-      .auto-grid{grid-template-columns:1fr}
+      .snum{font-size:2.5rem}.auto-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -293,22 +318,51 @@
     <div class="sl reveal">Producción visual & sonora</div>
     <h2 class="st reveal rd1">La imagen lo dice todo.<br>El sonido lo completa.</h2>
     <div class="vg">
+
+      <!-- FOTOGRAFÍA — orange gradient bg -->
       <div class="vc reveal rd1">
-        <div class="cc" id="w-foto"><canvas id="c-foto"></canvas></div>
-        <div class="vb"><div class="vn">04</div><div class="vnm">Fotografía Profesional</div><p class="vd">Capturamos la esencia de tu marca. Producto, retrato, editorial y contenido para redes con dirección artística propia.</p><div class="vt"><span class="tag">Producto</span><span class="tag">Retrato</span><span class="tag">Editorial</span><span class="tag">RRSS</span></div></div>
+        <div class="cc cc-foto" id="w-foto"><canvas id="c-foto"></canvas></div>
+        <div class="vb vb-foto">
+          <div class="vn vn-na">04</div>
+          <div class="vnm">Fotografía Profesional</div>
+          <p class="vd">Capturamos la esencia de tu marca. Producto, retrato, editorial y contenido para redes con dirección artística propia.</p>
+          <div class="vt"><span class="tag">Producto</span><span class="tag">Retrato</span><span class="tag">Editorial</span><span class="tag">RRSS</span></div>
+        </div>
       </div>
+
+      <!-- VIDEO — magenta gradient bg -->
       <div class="vc reveal rd2">
-        <div class="cc" id="w-video"><canvas id="c-video"></canvas></div>
-        <div class="vb"><div class="vn m">05</div><div class="vnm">Producción de Video</div><p class="vd">Desde reels hasta campañas completas. Producimos, dirigimos y editamos contenido que detiene el scroll.</p><div class="vt"><span class="tag">Reels</span><span class="tag">Spots</span><span class="tag">Documental</span><span class="tag">Motion</span></div></div>
+        <div class="cc cc-video" id="w-video"><canvas id="c-video"></canvas></div>
+        <div class="vb vb-video">
+          <div class="vn vn-mg">05</div>
+          <div class="vnm">Producción de Video</div>
+          <p class="vd">Desde reels hasta campañas completas. Producimos, dirigimos y editamos contenido que detiene el scroll.</p>
+          <div class="vt"><span class="tag">Reels</span><span class="tag">Spots</span><span class="tag">Documental</span><span class="tag">Motion</span></div>
+        </div>
       </div>
+
+      <!-- AUDIO — cyan gradient bg -->
       <div class="vc reveal rd3">
-        <div class="cc" id="w-audio"><canvas id="c-audio"></canvas></div>
-        <div class="vb"><div class="vn c">06</div><div class="vnm">Audio & Producción Musical</div><p class="vd">Jingles, identidad sonora, podcasts y bandas sonoras. El audio correcto convierte contenido en experiencia.</p><div class="vt"><span class="tag">Jingle</span><span class="tag">Podcast</span><span class="tag">Sound Branding</span><span class="tag">Score</span></div></div>
+        <div class="cc cc-audio" id="w-audio"><canvas id="c-audio"></canvas></div>
+        <div class="vb vb-audio">
+          <div class="vn vn-cy">06</div>
+          <div class="vnm">Audio & Producción Musical</div>
+          <p class="vd">Jingles, identidad sonora, podcasts y bandas sonoras. El audio correcto convierte contenido en experiencia.</p>
+          <div class="vt"><span class="tag">Jingle</span><span class="tag">Podcast</span><span class="tag">Sound Branding</span><span class="tag">Score</span></div>
+        </div>
       </div>
+
+      <!-- ARTE — violeta gradient bg -->
       <div class="vc reveal rd4">
-        <div class="cc" id="w-arte"><canvas id="c-arte"></canvas></div>
-        <div class="vb"><div class="vn v">07</div><div class="vnm">Dirección de Arte</div><p class="vd">Conceptualizamos y dirigimos la estética visual de tus campañas. Coherencia en todos los puntos de contacto.</p><div class="vt"><span class="tag">Concepto</span><span class="tag">Estética</span><span class="tag">Campaña</span><span class="tag">Storytelling</span></div></div>
+        <div class="cc cc-arte" id="w-arte"><canvas id="c-arte"></canvas></div>
+        <div class="vb vb-arte">
+          <div class="vn vn-vi">07</div>
+          <div class="vnm">Dirección de Arte</div>
+          <p class="vd">Conceptualizamos y dirigimos la estética visual de tus campañas. Coherencia en todos los puntos de contacto.</p>
+          <div class="vt"><span class="tag">Concepto</span><span class="tag">Estética</span><span class="tag">Campaña</span><span class="tag">Storytelling</span></div>
+        </div>
       </div>
+
     </div>
   </section>
 
@@ -404,21 +458,22 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
-  // ════════════════════════════════════════════════════
-  // SHARED: init card scene — centered, lit, responsive
-  // ════════════════════════════════════════════════════
-  function initCard(cid, wid, bg) {
+  // ════════════════════════════════════════════════════════
+  // SHARED: transparent canvas over colored CSS background
+  // Objects use MeshBasicMaterial with emissive-style colors
+  // ════════════════════════════════════════════════════════
+  function initCard(cid, wid) {
     const canvas = document.getElementById(cid);
     const wrap   = document.getElementById(wid);
     if (!canvas || !wrap) return null;
     const W = wrap.clientWidth || 560, H = wrap.clientHeight || 240;
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+    // TRANSPARENT renderer — CSS background shows through
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(W, H);
-    renderer.setClearColor(bg, 1);
-    renderer.shadowMap.enabled = false;
+    renderer.setClearColor(0x000000, 0); // fully transparent
     const scene  = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(44, W / H, 0.1, 80);
+    const camera = new THREE.PerspectiveCamera(42, W / H, 0.1, 80);
     camera.position.set(0, 0, 5);
     camera.lookAt(0, 0, 0);
     new ResizeObserver(() => {
@@ -427,549 +482,584 @@
       camera.aspect = nw / nh;
       camera.updateProjectionMatrix();
     }).observe(wrap);
-    // Three-point lighting rig
-    scene.add(new THREE.AmbientLight(0xffffff, 0.32));
-    const key = new THREE.DirectionalLight(0xffffff, 1.7);
-    key.position.set(5, 7, 8); scene.add(key);
-    const fill = new THREE.DirectionalLight(0xffffff, 0.55);
-    fill.position.set(-5, -3, 4); scene.add(fill);
-    const rim = new THREE.DirectionalLight(0xffffff, 0.28);
-    rim.position.set(0, -6, -4); scene.add(rim);
+    // Minimal ambient — objects rely on emissive color
+    scene.add(new THREE.AmbientLight(0xffffff, 0.15));
     return { renderer, scene, camera };
   }
 
-  // ════════════════════════════════════════════════════
-  // 1. MIRRORLESS CAMERA — perfectly centered
-  //    Reviewed: better proportions, richer materials,
-  //    aperture animation smoother, mount ring corrected
-  // ════════════════════════════════════════════════════
+  // Helper: glowing line material
+  function lineMat(hex, opacity) {
+    return new THREE.LineBasicMaterial({ color: hex, transparent: true, opacity: opacity || 1.0 });
+  }
+  // Helper: emissive solid mesh material
+  function emMat(hex, emissive, opacity) {
+    return new THREE.MeshBasicMaterial({ color: hex, transparent: opacity < 1, opacity: opacity || 1.0 });
+  }
+
+  // ════════════════════════════════════════════════════════
+  // 1. FOTOGRAFÍA — Mirrorless camera wireframe, orange glow
+  //    Solid bright outlines on orange-tinted background
+  //    Camera body + cylindrical lens + aperture + mount
+  // ════════════════════════════════════════════════════════
   (function() {
-    const s = initCard('c-foto', 'w-foto', 0x0b0906);
+    const s = initCard('c-foto','w-foto');
     if (!s) return;
     const { renderer, scene, camera } = s;
-    const accentL = new THREE.PointLight(0xFF8833, 0.9, 22);
-    accentL.position.set(-3, 2, 5); scene.add(accentL);
+
+    const COL    = 0xFF8844;   // primary orange glow
+    const COL2   = 0xFFBB77;   // bright highlight
+    const COL3   = 0xFF4411;   // accent dark orange
+    const WIRE   = 0.85;
 
     const root = new THREE.Group();
     scene.add(root);
 
-    const bMat = new THREE.MeshStandardMaterial({ color: 0x181818, metalness: 0.88, roughness: 0.22 });
-    const dMat = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.82, roughness: 0.30 });
-    const sMat = new THREE.MeshStandardMaterial({ color: 0x888888, metalness: 0.95, roughness: 0.08 });
-    const gMat = new THREE.MeshStandardMaterial({ color: 0xddaa33, metalness: 1.0,  roughness: 0.06 });
-    const rMat = new THREE.MeshStandardMaterial({ color: 0xdd2200, metalness: 0.3,  roughness: 0.5  });
-    const glMat= new THREE.MeshStandardMaterial({ color: 0x112299, metalness: 0.05, roughness: 0.0, transparent: true, opacity: 0.72 });
+    // Wireframe helper
+    function addWireBox(w,h,d,col,op) {
+      const g = new THREE.EdgesGeometry(new THREE.BoxGeometry(w,h,d));
+      const m = new THREE.LineSegments(g, lineMat(col,op));
+      return m;
+    }
+    function addWireCyl(rt,rb,h,seg,col,op) {
+      const g = new THREE.EdgesGeometry(new THREE.CylinderGeometry(rt,rb,h,seg));
+      const m = new THREE.LineSegments(g, lineMat(col,op));
+      return m;
+    }
 
-    // Body — centered at 0,0,0
-    root.add(new THREE.Mesh(new THREE.BoxGeometry(1.9, 1.24, 0.75), bMat));
+    // BODY — solid fill + wireframe overlay
+    const bodyFill = new THREE.Mesh(
+      new THREE.BoxGeometry(1.9,1.22,0.72),
+      emMat(0x200d06, COL, 1.0)
+    );
+    root.add(bodyFill);
+    const bodyWire = addWireBox(1.9,1.22,0.72, COL2, WIRE);
+    root.add(bodyWire);
+
     // Grip
-    const grip = new THREE.Mesh(new THREE.BoxGeometry(0.36, 1.15, 0.82), dMat);
-    grip.position.set(1.08, -0.05, 0); root.add(grip);
-    // Top
-    const top = new THREE.Mesh(new THREE.BoxGeometry(1.9, 0.09, 0.75), new THREE.MeshStandardMaterial({ color:0x212121,metalness:.92,roughness:.18 }));
-    top.position.y = 0.665; root.add(top);
+    const gripFill = new THREE.Mesh(new THREE.BoxGeometry(0.35,1.12,0.80), emMat(0x180b04,COL,1));
+    gripFill.position.set(1.08,-0.05,0); root.add(gripFill);
+    const gripWire = addWireBox(0.35,1.12,0.80, COL2, 0.7);
+    gripWire.position.set(1.08,-0.05,0); root.add(gripWire);
+
+    // Top plate
+    const topWire = addWireBox(1.9,0.08,0.72, COL2, 0.6);
+    topWire.position.y = 0.65; root.add(topWire);
+
     // VF hump
-    const vf = new THREE.Mesh(new THREE.BoxGeometry(0.46, 0.22, 0.42), bMat);
-    vf.position.set(-0.3, 0.82, -0.17); root.add(vf);
-    // VF glass
-    const vfg = new THREE.Mesh(new THREE.PlaneGeometry(0.22, 0.14), new THREE.MeshBasicMaterial({ color:0x000816,transparent:true,opacity:.9 }));
-    vfg.position.set(-0.3, 0.82, 0.04); root.add(vfg);
-    // Mode dial
-    const dial = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.062, 36), sMat);
-    dial.rotation.x = Math.PI/2; dial.position.set(-0.55, 0.74, 0); root.add(dial);
-    for (let i=0;i<12;i++) {
-      const mk = new THREE.Mesh(new THREE.BoxGeometry(0.008,0.18*1.9,0.007),new THREE.MeshBasicMaterial({color:0x333}));
-      const a=(i/12)*Math.PI*2;
-      mk.position.set(-0.55+Math.cos(a)*0.175,0.74+Math.sin(a)*0.175,0);
-      root.add(mk);
+    const vfWire = addWireBox(0.44,0.2,0.38, COL, 0.55);
+    vfWire.position.set(-0.3,0.78,-0.17); root.add(vfWire);
+
+    // Shutter (red dot — stands out)
+    const shutDot = new THREE.Mesh(
+      new THREE.SphereGeometry(0.09,12,8),
+      emMat(0xff2200, COL3, 1)
+    );
+    shutDot.position.set(0.68,0.73,0.37); root.add(shutDot);
+
+    // Dial circle
+    const dialGeo = new THREE.EdgesGeometry(new THREE.CylinderGeometry(0.18,0.18,0.06,24));
+    const dial = new THREE.LineSegments(dialGeo, lineMat(COL2, 0.7));
+    dial.rotation.x=Math.PI/2; dial.position.set(-0.55,0.73,0); root.add(dial);
+
+    // Mount ring (gold/orange)
+    const mountGeo = new THREE.EdgesGeometry(new THREE.TorusGeometry(0.41,0.025,8,48));
+    const mountWire = new THREE.LineSegments(mountGeo, lineMat(0xFFCC44, 0.95));
+    mountWire.rotation.x=Math.PI/2; mountWire.position.set(0,0,0.37); root.add(mountWire);
+
+    // LENS GROUP
+    const lg = new THREE.Group(); lg.position.set(0,0,0.38); root.add(lg);
+
+    // Barrel 1
+    const b1Fill = new THREE.Mesh(new THREE.CylinderGeometry(0.4,0.4,0.3,32), emMat(0x200d06,COL,1));
+    b1Fill.rotation.x=Math.PI/2; b1Fill.position.z=0.12; lg.add(b1Fill);
+    const b1Wire = addWireCyl(0.4,0.4,0.3,24, COL2, WIRE);
+    b1Wire.rotation.x=Math.PI/2; b1Wire.position.z=0.12; lg.add(b1Wire);
+
+    // Focus ring lines (glowing ribs)
+    for(let i=0;i<16;i++){
+      const a=(i/16)*Math.PI*2;
+      const pts=[
+        new THREE.Vector3(Math.cos(a)*0.41, Math.sin(a)*0.41, 0.0),
+        new THREE.Vector3(Math.cos(a)*0.41, Math.sin(a)*0.41, 0.24)
+      ];
+      const rg=new THREE.BufferGeometry().setFromPoints(pts);
+      lg.add(new THREE.Line(rg, lineMat(COL, 0.4)));
     }
-    // Shutter
-    const shut = new THREE.Mesh(new THREE.CylinderGeometry(0.082,0.082,0.036,22), rMat);
-    shut.rotation.x=Math.PI/2; shut.position.set(0.68,0.74,0); root.add(shut);
-    // Hotshoe
-    const shoe = new THREE.Mesh(new THREE.BoxGeometry(0.26,0.042,0.18),sMat);
-    shoe.position.set(-0.1,0.735,0); root.add(shoe);
-    // Speaker dots
-    for(let r=0;r<3;r++) for(let c=0;c<4;c++){
-      const d=new THREE.Mesh(new THREE.CylinderGeometry(0.011,0.011,0.018,8),dMat);
-      d.rotation.z=Math.PI/2; d.position.set(1.28,0.2-r*0.09,-0.12+c*0.09); root.add(d);
-    }
-    // Mount ring (gold)
-    const mnt = new THREE.Mesh(new THREE.TorusGeometry(0.425,0.026,10,52),gMat);
-    mnt.rotation.x=Math.PI/2; mnt.position.set(0,0,0.385); root.add(mnt);
-    // Bayonet notches
-    for(let i=0;i<3;i++){
-      const n=new THREE.Mesh(new THREE.BoxGeometry(0.055,0.028,0.038),gMat);
-      const a=(i/3)*Math.PI*2; n.position.set(Math.cos(a)*0.425,Math.sin(a)*0.425,0.385); root.add(n);
-    }
-    // Lens group
-    const lg = new THREE.Group(); lg.position.set(0,0,0.395); root.add(lg);
-    const b1Mat=new THREE.MeshStandardMaterial({color:0x1e1e1e,metalness:.87,roughness:.28});
-    const b1=new THREE.Mesh(new THREE.CylinderGeometry(0.405,0.405,0.32,52),b1Mat);
-    b1.rotation.x=Math.PI/2; b1.position.z=0.12; lg.add(b1);
-    // Focus ribs
-    const fr=new THREE.Group(); fr.position.z=0.12; lg.add(fr);
-    for(let i=0;i<30;i++){
-      const rb=new THREE.Mesh(new THREE.BoxGeometry(0.011,0.32,0.024),new THREE.MeshStandardMaterial({color:0x2e2e2e,metalness:.5,roughness:.7}));
-      const a=(i/30)*Math.PI*2; rb.position.set(Math.cos(a)*0.416,Math.sin(a)*0.416,0); rb.rotation.z=a; fr.add(rb);
-    }
-    const b2=new THREE.Mesh(new THREE.CylinderGeometry(0.345,0.345,0.24,52),new THREE.MeshStandardMaterial({color:0x252525,metalness:.9,roughness:.22}));
-    b2.rotation.x=Math.PI/2; b2.position.z=0.36; lg.add(b2);
-    const apR=new THREE.Mesh(new THREE.TorusGeometry(0.355,0.013,6,48),sMat);
-    apR.rotation.x=Math.PI/2; apR.position.z=0.36; lg.add(apR);
-    const b3=new THREE.Mesh(new THREE.CylinderGeometry(0.285,0.285,0.17,52),b1Mat);
-    b3.rotation.x=Math.PI/2; b3.position.z=0.535; lg.add(b3);
-    const fframe=new THREE.Mesh(new THREE.TorusGeometry(0.265,0.02,10,48),new THREE.MeshStandardMaterial({color:0x555,metalness:.9,roughness:.15}));
-    fframe.rotation.x=Math.PI/2; fframe.position.z=0.63; lg.add(fframe);
-    // Front glass
-    const fg=new THREE.Mesh(new THREE.CircleGeometry(0.248,52),glMat);
-    fg.position.z=0.636; lg.add(fg);
-    const gi=new THREE.Mesh(new THREE.CircleGeometry(0.11,36),new THREE.MeshBasicMaterial({color:0x5577dd,transparent:true,opacity:.22}));
-    gi.position.z=0.638; lg.add(gi);
-    const ga=new THREE.Mesh(new THREE.RingGeometry(0.21,0.245,52,1,0,Math.PI*.65),new THREE.MeshBasicMaterial({color:0xaaccff,transparent:true,opacity:.36,side:THREE.DoubleSide}));
-    ga.position.z=0.639; ga.rotation.z=0.5; lg.add(ga);
-    // Aperture blades
-    const bg2=new THREE.Group(); bg2.position.z=0.622; lg.add(bg2);
+
+    // Barrel 2
+    const b2Wire = addWireCyl(0.34,0.34,0.22,20, COL2, 0.75);
+    b2Wire.rotation.x=Math.PI/2; b2Wire.position.z=0.35; lg.add(b2Wire);
+
+    // Barrel 3
+    const b3Wire = addWireCyl(0.28,0.28,0.16,20, COL, 0.7);
+    b3Wire.rotation.x=Math.PI/2; b3Wire.position.z=0.53; lg.add(b3Wire);
+
+    // Front frame ring (bright)
+    const ffGeo = new THREE.EdgesGeometry(new THREE.TorusGeometry(0.26,0.02,8,40));
+    const ff = new THREE.LineSegments(ffGeo, lineMat(COL2, 0.95));
+    ff.rotation.x=Math.PI/2; ff.position.z=0.625; lg.add(ff);
+
+    // Front glass disc (glowing)
+    const glFill = new THREE.Mesh(new THREE.CircleGeometry(0.24,36), emMat(0x331100,COL,0.55));
+    glFill.position.z=0.63; lg.add(glFill);
+    // Glass inner glow
+    const glInner = new THREE.Mesh(new THREE.CircleGeometry(0.1,24), emMat(0xFF8844,COL,0.3));
+    glInner.position.z=0.632; lg.add(glInner);
+
+    // Aperture blades (8 glowing lines)
+    const bladeGroup = new THREE.Group(); bladeGroup.position.z=0.615; lg.add(bladeGroup);
     const blades=[];
     for(let i=0;i<8;i++){
-      const sh=new THREE.Shape();
-      sh.moveTo(0,0);sh.lineTo(0.158,0.03);sh.lineTo(0.19,0.12);sh.lineTo(0.036,0.155);sh.closePath();
-      const bm=new THREE.Mesh(new THREE.ShapeGeometry(sh),new THREE.MeshStandardMaterial({color:0x090909,metalness:.65,roughness:.45,side:THREE.DoubleSide}));
-      const a=(i/8)*Math.PI*2; bm.rotation.z=a; bg2.add(bm); blades.push({m:bm,a});
+      const a=(i/8)*Math.PI*2;
+      const pts=[new THREE.Vector3(0,0,0), new THREE.Vector3(Math.cos(a)*0.22,Math.sin(a)*0.22,0)];
+      const bg2=new THREE.BufferGeometry().setFromPoints(pts);
+      const bl=new THREE.Line(bg2, lineMat(COL2, 0.85));
+      bladeGroup.add(bl); blades.push({m:bl, a});
     }
-    // Rear screen
-    const rs=new THREE.Mesh(new THREE.PlaneGeometry(1.24,0.9),new THREE.MeshBasicMaterial({color:0x001133,transparent:true,opacity:.88}));
-    rs.position.set(0,0,-0.38); rs.rotation.y=Math.PI; root.add(rs);
+
+    // Hotshoe line
+    const shoeGeo=new THREE.EdgesGeometry(new THREE.BoxGeometry(0.26,0.04,0.17));
+    const shoe=new THREE.LineSegments(shoeGeo, lineMat(COL, 0.5));
+    shoe.position.set(-0.1,0.725,0); root.add(shoe);
 
     const clk=new THREE.Clock();
     (function loop(){
       requestAnimationFrame(loop); const t=clk.getElapsedTime();
-      root.rotation.y=t*.52; root.rotation.x=Math.sin(t*.32)*.055;
-      blades.forEach(({m,a})=>{ m.rotation.z=a+Math.sin(t*1.05)*.1+.12; });
-      fr.rotation.z=-t*.28; b2.rotation.z=t*.15;
-      accentL.position.set(Math.cos(t*.4)*4,2,Math.sin(t*.4)*4+3);
+      root.rotation.y = t*0.52;
+      root.rotation.x = Math.sin(t*0.32)*0.06;
+      // Aperture blades pulse
+      const ap = Math.sin(t*1.2)*0.08+0.1;
+      blades.forEach(({m,a})=>{
+        const na=a+ap;
+        const pos=m.geometry.attributes.position;
+        pos.setXYZ(1, Math.cos(na)*0.22, Math.sin(na)*0.22, 0);
+        pos.needsUpdate=true;
+      });
+      // Focus ring slow spin
+      lg.children[2] && (lg.children[2].rotation.z = t*0.3);
       renderer.render(scene,camera);
     })();
   })();
 
-  // ════════════════════════════════════════════════════
-  // 2. CINEMA CAMERA — re-centered, wider body,
-  //    Reviewed: fixed off-center issue, larger lens,
-  //    better handle, monitor arm improved
-  // ════════════════════════════════════════════════════
+  // ════════════════════════════════════════════════════════
+  // 2. VIDEO — Cinema camera wireframe, magenta glow
+  //    Large boxy body + big lens + top handle + EVF
+  // ════════════════════════════════════════════════════════
   (function() {
-    const s = initCard('c-video','w-video',0x060508);
+    const s = initCard('c-video','w-video');
     if (!s) return;
     const { renderer, scene, camera } = s;
-    const accentL=new THREE.PointLight(0xFF3CAC,.8,22);
-    accentL.position.set(3,2,5); scene.add(accentL);
 
-    const root=new THREE.Group();
+    const COL  = 0xFF3CAC;
+    const COL2 = 0xFF88CC;
+    const FILL = 0x18040d;
+
+    const root = new THREE.Group();
     scene.add(root);
-    // Slight offset so the lens is centered in view
-    root.position.set(0.08, 0, 0);
 
-    const bMat=new THREE.MeshStandardMaterial({color:0x111111,metalness:.82,roughness:.28});
-    const dMat=new THREE.MeshStandardMaterial({color:0x0d0d0d,metalness:.75,roughness:.35});
-    const sMat=new THREE.MeshStandardMaterial({color:0x777777,metalness:.93,roughness:.1});
-    const rMat=new THREE.MeshStandardMaterial({color:0xff1100,metalness:.2,roughness:.55});
+    function wBox(w,h,d,col,op){
+      const g=new THREE.EdgesGeometry(new THREE.BoxGeometry(w,h,d));
+      return new THREE.LineSegments(g, lineMat(col,op));
+    }
+    function fBox(w,h,d){
+      return new THREE.Mesh(new THREE.BoxGeometry(w,h,d), emMat(FILL,COL,1.0));
+    }
+    function wCyl(r,h,seg,col,op){
+      const g=new THREE.EdgesGeometry(new THREE.CylinderGeometry(r,r,h,seg));
+      return new THREE.LineSegments(g, lineMat(col,op));
+    }
 
     // Body
-    root.add(new THREE.Mesh(new THREE.BoxGeometry(1.95,1.12,1.02),bMat));
+    root.add(fBox(1.9,1.1,1.0));
+    const bw=wBox(1.9,1.1,1.0, COL2, 0.9); root.add(bw);
+
     // Panel grooves
-    [-0.58,0.58].forEach(x=>{
-      const g=new THREE.Mesh(new THREE.BoxGeometry(0.018,1.15,1.05),dMat);
+    [-0.55,0.55].forEach(x=>{
+      const g=wBox(0.015,1.13,1.03, COL, 0.3);
       g.position.x=x; root.add(g);
     });
-    // Left side panel
-    const sp=new THREE.Mesh(new THREE.BoxGeometry(0.055,0.82,0.72),new THREE.MeshStandardMaterial({color:0x181818,metalness:.7,roughness:.4}));
-    sp.position.set(-1.02,-0.05,0); root.add(sp);
-    // CFast slots
-    for(let i=0;i<2;i++){
-      const sl=new THREE.Mesh(new THREE.BoxGeometry(0.065,0.11,0.26),new THREE.MeshStandardMaterial({color:0x222,metalness:.6,roughness:.5}));
-      sl.position.set(-1.04,0.17-i*.18,0.18-i*.08); root.add(sl);
-    }
+
     // Top handle
-    const hdl=new THREE.Mesh(new THREE.BoxGeometry(1.5,0.15,0.8),new THREE.MeshStandardMaterial({color:0x1a1a1a,metalness:.78,roughness:.32}));
-    hdl.position.y=0.685; root.add(hdl);
-    for(let i=0;i<8;i++){
-      const b=new THREE.Mesh(new THREE.BoxGeometry(0.075,0.17,0.78),new THREE.MeshStandardMaterial({color:0x252525,metalness:.6,roughness:.6}));
-      b.position.set(-0.58+i*.175,0.698,0); root.add(b);
-    }
-    [-0.52,0.52].forEach(x=>{
-      const st=new THREE.Mesh(new THREE.BoxGeometry(0.12,0.26,0.09),sMat);
-      st.position.set(x,0.5,0); root.add(st);
+    root.add(fBox(1.48,0.14,0.78)).position.y=0.67;
+    const hw=wBox(1.48,0.14,0.78, COL2, 0.85);
+    hw.position.y=0.67; root.add(hw);
+
+    // Handle struts
+    [-0.5,0.5].forEach(x=>{
+      const sw=wBox(0.11,0.22,0.08, COL, 0.5);
+      sw.position.set(x,0.48,0); root.add(sw);
     });
-    // REC button
-    const rec=new THREE.Mesh(new THREE.CylinderGeometry(.072,.072,.038,20),rMat);
-    rec.rotation.x=Math.PI/2; rec.position.set(.62,.625,.525); root.add(rec);
-    const recRing=new THREE.Mesh(new THREE.TorusGeometry(.088,.011,6,24),new THREE.MeshBasicMaterial({color:0xff3300,transparent:true,opacity:.6}));
-    recRing.rotation.x=Math.PI/2; recRing.position.set(.62,.625,.53); root.add(recRing);
-    // EVF arm
-    const arm=new THREE.Mesh(new THREE.BoxGeometry(.09,.36,.09),sMat);
-    arm.position.set(.8,.69,.18); root.add(arm);
-    const mon=new THREE.Mesh(new THREE.BoxGeometry(.55,.34,.048),new THREE.MeshStandardMaterial({color:0x111,metalness:.7,roughness:.3}));
-    mon.position.set(.8,.985,.16); root.add(mon);
-    const monScr=new THREE.Mesh(new THREE.PlaneGeometry(.47,.27),new THREE.MeshBasicMaterial({color:0x001122,transparent:true,opacity:.96}));
-    monScr.position.set(.8,.985,.19); root.add(monScr);
-    // PL mount
-    const mnt=new THREE.Mesh(new THREE.TorusGeometry(.48,.03,10,52),sMat);
-    mnt.rotation.x=Math.PI/2; mnt.position.set(-0.1,0,.525); root.add(mnt);
-    // Cinema lens
-    const lg=new THREE.Group(); lg.position.set(-0.1,0,.535); root.add(lg);
-    const lb1=new THREE.Mesh(new THREE.CylinderGeometry(.465,.465,.56,56),new THREE.MeshStandardMaterial({color:0x151515,metalness:.88,roughness:.25}));
-    lb1.rotation.x=Math.PI/2; lb1.position.z=.22; lg.add(lb1);
-    for(let i=0;i<36;i++){
-      const rb=new THREE.Mesh(new THREE.BoxGeometry(.01,.56,.023),new THREE.MeshStandardMaterial({color:0x2e2e2e,metalness:.5,roughness:.7}));
-      const a=(i/36)*Math.PI*2; rb.position.set(Math.cos(a)*.476,Math.sin(a)*.476,.22); rb.rotation.z=a; lg.add(rb);
-    }
-    const irisR=new THREE.Mesh(new THREE.TorusGeometry(.475,.017,8,52),sMat);
-    irisR.rotation.x=Math.PI/2; irisR.position.z=.435; lg.add(irisR);
-    const lb2=new THREE.Mesh(new THREE.CylinderGeometry(.385,.385,.23,52),new THREE.MeshStandardMaterial({color:0x1a1a1a,metalness:.88,roughness:.22}));
-    lb2.rotation.x=Math.PI/2; lb2.position.z=.63; lg.add(lb2);
-    const ff=new THREE.Mesh(new THREE.TorusGeometry(.365,.023,10,48),sMat);
-    ff.rotation.x=Math.PI/2; ff.position.z=.755; lg.add(ff);
-    const lgl=new THREE.Mesh(new THREE.CircleGeometry(.345,52),new THREE.MeshStandardMaterial({color:0x0a1433,metalness:.05,roughness:0,transparent:true,opacity:.78}));
-    lgl.position.z=.762; lg.add(lgl);
-    const gr1=new THREE.Mesh(new THREE.CircleGeometry(.13,36),new THREE.MeshBasicMaterial({color:0x4466aa,transparent:true,opacity:.2}));
-    gr1.position.z=.764; lg.add(gr1);
-    const ga=new THREE.Mesh(new THREE.RingGeometry(.25,.32,52,1,0,Math.PI*.62),new THREE.MeshBasicMaterial({color:0x99bbee,transparent:true,opacity:.3,side:THREE.DoubleSide}));
-    ga.position.z=.765; ga.rotation.z=.75; lg.add(ga);
+
+    // EVF arm + monitor
+    const armW=wBox(0.08,0.34,0.08, COL2, 0.7);
+    armW.position.set(0.78,0.66,0.18); root.add(armW);
+    root.add(fBox(0.52,0.32,0.045)).position.set(0.78,0.96,0.16);
+    const monW=wBox(0.52,0.32,0.045, COL2, 0.85);
+    monW.position.set(0.78,0.96,0.16); root.add(monW);
+    // Screen glow
+    const scrFill=new THREE.Mesh(new THREE.PlaneGeometry(0.45,0.27), emMat(0x330011,COL,0.7));
+    scrFill.position.set(0.78,0.96,0.185); root.add(scrFill);
+
+    // REC button (bright)
+    const recDot=new THREE.Mesh(new THREE.SphereGeometry(0.07,12,8), emMat(0xff0000,0xff2200,1));
+    recDot.position.set(0.6,0.61,0.52); root.add(recDot);
+    // REC ring
+    const recGeo=new THREE.EdgesGeometry(new THREE.TorusGeometry(0.085,0.01,6,24));
+    const recRing=new THREE.LineSegments(recGeo, lineMat(0xff5500,0.8));
+    recRing.rotation.x=Math.PI/2; recRing.position.set(0.6,0.61,0.525); root.add(recRing);
+
+    // Lens mount
+    const mntGeo=new THREE.EdgesGeometry(new THREE.TorusGeometry(0.46,0.028,8,48));
+    const mnt=new THREE.LineSegments(mntGeo, lineMat(COL2,0.9));
+    mnt.rotation.x=Math.PI/2; mnt.position.set(-0.1,0,0.52); root.add(mnt);
+
+    // LENS
+    const lg=new THREE.Group(); lg.position.set(-0.1,0,0.53); root.add(lg);
+
+    // Barrel fill + wire
+    lg.add(new THREE.Mesh(new THREE.CylinderGeometry(0.455,0.455,0.54,32), emMat(0x120408,COL,1.0))).rotation.x=Math.PI/2;
+    lg.children[0].position.z=0.21;
+    const lb1w=wCyl(0.455,0.54,24, COL2, 0.85);
+    lb1w.rotation.x=Math.PI/2; lb1w.position.z=0.21; lg.add(lb1w);
+
+    // Iris ring
+    const irisGeo=new THREE.EdgesGeometry(new THREE.TorusGeometry(0.46,0.016,8,48));
+    const iris=new THREE.LineSegments(irisGeo, lineMat(COL2, 0.95));
+    iris.rotation.x=Math.PI/2; iris.position.z=0.42; lg.add(iris);
+
+    // Front barrel
+    const lb2w=wCyl(0.375,0.22,20, COL, 0.8);
+    lb2w.rotation.x=Math.PI/2; lb2w.position.z=0.62; lg.add(lb2w);
+
+    // Front frame
+    const ffGeo=new THREE.EdgesGeometry(new THREE.TorusGeometry(0.355,0.022,8,44));
+    const ff=new THREE.LineSegments(ffGeo, lineMat(COL2, 0.95));
+    ff.rotation.x=Math.PI/2; ff.position.z=0.74; lg.add(ff);
+
+    // Lens glass
+    const lgl=new THREE.Mesh(new THREE.CircleGeometry(0.335,40), emMat(0x200010,COL,0.5));
+    lgl.position.z=0.748; lg.add(lgl);
+    const lglInner=new THREE.Mesh(new THREE.CircleGeometry(0.12,24), emMat(COL,COL,0.35));
+    lglInner.position.z=0.75; lg.add(lglInner);
+
     // XLR ports
-    [-0.17,.17].forEach(y=>{
-      const x=new THREE.Mesh(new THREE.CylinderGeometry(.052,.052,.1,14),sMat);
-      x.rotation.z=Math.PI/2; x.position.set(-1.04,y,-0.14); root.add(x);
+    [-0.16,0.16].forEach(y=>{
+      const xg=new THREE.EdgesGeometry(new THREE.CylinderGeometry(0.05,0.05,0.09,12));
+      const xl=new THREE.LineSegments(xg, lineMat(COL, 0.5));
+      xl.rotation.z=Math.PI/2; xl.position.set(-1.0,y,-0.12); root.add(xl);
     });
-    // Follow focus
-    const ffc=new THREE.Mesh(new THREE.BoxGeometry(.18,.3,.13),new THREE.MeshStandardMaterial({color:0x222,metalness:.7,roughness:.35}));
-    ffc.position.set(.54,-.52,.53); root.add(ffc);
 
     const clk=new THREE.Clock(); let rp=0;
     (function loop(){
       requestAnimationFrame(loop); const t=clk.getElapsedTime();
-      root.rotation.y=t*.48; root.rotation.x=Math.sin(t*.28)*.045;
-      lb1.rotation.z=t*.2; irisR.rotation.z=-t*.35;
-      accentL.position.set(Math.cos(t*.35)*4,2,Math.sin(t*.35)*4+4);
-      rp+=.04; recRing.material.opacity=.3+Math.abs(Math.sin(rp))*.4;
+      root.rotation.y=t*0.48; root.rotation.x=Math.sin(t*0.28)*0.045;
+      lb1w.rotation.z=t*0.2; iris.rotation.z=-t*0.35;
+      rp+=0.04; recRing.material.opacity=0.4+Math.abs(Math.sin(rp))*0.55;
+      recDot.material.opacity=0.7+Math.abs(Math.sin(rp+0.5))*0.3;
       renderer.render(scene,camera);
     })();
   })();
 
-  // ════════════════════════════════════════════════════
-  // 3. HEADPHONES — over-ear studio monitors
-  //    Reviewed: rebalanced vertically, thicker cups,
-  //    better cushion, cable cleaned up, centered Y
-  // ════════════════════════════════════════════════════
+  // ════════════════════════════════════════════════════════
+  // 3. HEADPHONES — over-ear, cyan wireframe glow
+  //    REBUILT from scratch: proper arc + two cups
+  //    Centered, large, clearly recognizable
+  // ════════════════════════════════════════════════════════
   (function() {
-    const s = initCard('c-audio','w-audio',0x050608);
+    const s = initCard('c-audio','w-audio');
     if (!s) return;
     const { renderer, scene, camera } = s;
-    const accentL=new THREE.PointLight(0x2AFADF,1.1,18);
-    accentL.position.set(-2,3,5); scene.add(accentL);
 
-    const root=new THREE.Group();
+    const COL  = 0x2AFADF;
+    const COL2 = 0x88FFEE;
+    const FILL = 0x020d0c;
+
+    const root = new THREE.Group();
     scene.add(root);
 
-    const blkMat =new THREE.MeshStandardMaterial({color:0x0e0e0e,metalness:.72,roughness:.3});
-    const dkMat  =new THREE.MeshStandardMaterial({color:0x181818,metalness:.65,roughness:.4});
-    const silvMat=new THREE.MeshStandardMaterial({color:0x888888,metalness:.95,roughness:.08});
-    const cyMat  =new THREE.MeshStandardMaterial({color:0x2AFADF,metalness:.4,roughness:.3});
-    const cushMat=new THREE.MeshStandardMaterial({color:0x0e0e0e,metalness:.02,roughness:.98});
+    // ── HEADBAND — torus arc, half circle ──
+    // Using a tube along a curve for a clean arc
+    const arcCurve = new THREE.QuadraticBezierCurve3(
+      new THREE.Vector3(-1.1, 0, 0),
+      new THREE.Vector3(0, 1.35, 0),
+      new THREE.Vector3(1.1, 0, 0)
+    );
+    // Band fill (tube)
+    const bandTube = new THREE.TubeGeometry(arcCurve, 30, 0.065, 10, false);
+    root.add(new THREE.Mesh(bandTube, emMat(FILL, COL, 1.0)));
+    // Band wire glow
+    const bandEdge = new THREE.EdgesGeometry(bandTube);
+    root.add(new THREE.LineSegments(bandEdge, lineMat(COL2, 0.85)));
 
-    // Band arc
-    const band=new THREE.Mesh(new THREE.TorusGeometry(1.08,.06,16,60,Math.PI),new THREE.MeshStandardMaterial({color:0x111111,metalness:.84,roughness:.26}));
-    band.rotation.z=Math.PI/2; band.position.y=0; root.add(band);
-    // Band pad
-    const pad=new THREE.Mesh(new THREE.TorusGeometry(1.04,.042,10,60,Math.PI),cushMat);
-    pad.rotation.z=Math.PI/2; pad.position.y=-0.01; root.add(pad);
+    // Band pad (slightly thinner, offset)
+    const padCurve = new THREE.QuadraticBezierCurve3(
+      new THREE.Vector3(-1.04, 0.04, 0),
+      new THREE.Vector3(0, 1.28, 0),
+      new THREE.Vector3(1.04, 0.04, 0)
+    );
+    const padTube = new THREE.TubeGeometry(padCurve, 24, 0.045, 8, false);
+    root.add(new THREE.Mesh(padTube, emMat(0x010808,COL,0.6)));
 
-    [-1,1].forEach(side=>{
-      // Slider rail
-      const rail=new THREE.Mesh(new THREE.BoxGeometry(.055,.42,.085),silvMat);
-      rail.position.set(side*1.02,-.72,0); root.add(rail);
-      const sldr=new THREE.Mesh(new THREE.BoxGeometry(.095,.17,.12),dkMat);
-      sldr.position.set(side*1.02,-.62,0); root.add(sldr);
-      for(let i=0;i<4;i++){
-        const mk=new THREE.Mesh(new THREE.BoxGeometry(.022,.007,.09),new THREE.MeshBasicMaterial({color:0x444}));
-        mk.position.set(side*(1.05+.01),-.77+i*.055,0); root.add(mk);
-      }
-      // Yoke
-      const yoke=new THREE.Mesh(new THREE.CylinderGeometry(.095,.095,.11,20),silvMat);
-      yoke.rotation.z=Math.PI/2; yoke.position.set(side*1.02,-.95,0); root.add(yoke);
+    // ── SLIDER RAILS (both sides) ──
+    [-1.06, 1.06].forEach(x => {
+      // Rail
+      const railPts=[new THREE.Vector3(x,-0.02,0), new THREE.Vector3(x,-0.8,0)];
+      const rg=new THREE.BufferGeometry().setFromPoints(railPts);
+      root.add(new THREE.Line(rg, lineMat(COL, 0.6)));
 
-      // Ear cup group
-      const cup=new THREE.Group();
-      cup.position.set(side*1.12,-.97,0); root.add(cup);
+      // Slider block
+      const slGeo=new THREE.EdgesGeometry(new THREE.BoxGeometry(0.14,0.2,0.12));
+      const sl=new THREE.LineSegments(slGeo, lineMat(COL2, 0.7));
+      sl.position.set(x,-0.52,0); root.add(sl);
+      const slFill=new THREE.Mesh(new THREE.BoxGeometry(0.12,0.18,0.1), emMat(FILL,COL,1));
+      slFill.position.set(x,-0.52,0); root.add(slFill);
 
-      // Outer shell
-      const outer=new THREE.Mesh(new THREE.SphereGeometry(.41,30,24,0,Math.PI*2,0,Math.PI*.6),blkMat);
-      outer.rotation.y=side>0?Math.PI/2:-Math.PI/2; cup.add(outer);
+      // Yoke joint
+      const ykGeo=new THREE.EdgesGeometry(new THREE.CylinderGeometry(0.1,0.1,0.13,16));
+      const yk=new THREE.LineSegments(ykGeo, lineMat(COL2, 0.8));
+      yk.rotation.z=Math.PI/2; yk.position.set(x,-0.92,0); root.add(yk);
+      const ykFill=new THREE.Mesh(new THREE.CylinderGeometry(0.09,0.09,0.11,16), emMat(FILL,COL,1));
+      ykFill.rotation.z=Math.PI/2; ykFill.position.set(x,-0.92,0); root.add(ykFill);
 
-      // Cup rim
-      const rim=new THREE.Mesh(new THREE.TorusGeometry(.37,.038,14,50),cushMat);
-      rim.rotation.y=side>0?-Math.PI/2:Math.PI/2; cup.add(rim);
+      // ── EAR CUP ──
+      const cupGroup = new THREE.Group();
+      cupGroup.position.set(x*1.02, -1.02, 0);
+      root.add(cupGroup);
 
-      // Foam cushion
-      const foam=new THREE.Mesh(new THREE.TorusGeometry(.28,.08,12,50),new THREE.MeshStandardMaterial({color:0x0c0c0c,metalness:0,roughness:1}));
-      foam.rotation.y=side>0?-Math.PI/2:Math.PI/2; foam.position.x=side*-.04; cup.add(foam);
+      // Cup outer shell (flat cylinder from the side)
+      const cupFill=new THREE.Mesh(
+        new THREE.CylinderGeometry(0.42,0.42,0.22,32),
+        emMat(FILL, COL, 1.0)
+      );
+      cupFill.rotation.z=Math.PI/2; cupGroup.add(cupFill);
 
-      // Driver plate
-      const drv=new THREE.Mesh(new THREE.CircleGeometry(.26,36),new THREE.MeshStandardMaterial({color:0x333,metalness:.5,roughness:.6}));
-      drv.rotation.y=side>0?-Math.PI/2:Math.PI/2; drv.position.x=side*.02; cup.add(drv);
+      // Cup wire outline
+      const cupGeo=new THREE.EdgesGeometry(new THREE.CylinderGeometry(0.42,0.42,0.22,24));
+      const cupWire=new THREE.LineSegments(cupGeo, lineMat(COL2, 0.9));
+      cupWire.rotation.z=Math.PI/2; cupGroup.add(cupWire);
+
+      // Rim circle (facing outward)
+      const rimGeo=new THREE.EdgesGeometry(new THREE.TorusGeometry(0.4,0.025,8,40));
+      const rimWire=new THREE.LineSegments(rimGeo, lineMat(COL, 0.95));
+      rimWire.rotation.y=Math.PI/2; rimWire.position.x=x*0.005; cupGroup.add(rimWire);
+
+      // Cushion torus
+      const cushGeo=new THREE.EdgesGeometry(new THREE.TorusGeometry(0.3,0.075,8,36));
+      const cush=new THREE.LineSegments(cushGeo, lineMat(COL, 0.55));
+      cush.rotation.y=Math.PI/2; cush.position.x=-x*0.04; cupGroup.add(cush);
+
+      // Driver circle
+      const drvGeo=new THREE.EdgesGeometry(new THREE.CircleGeometry(0.22,24));
+      const drv=new THREE.LineSegments(drvGeo, lineMat(COL2, 0.65));
+      drv.rotation.y=x>0?Math.PI/2:-Math.PI/2; drv.position.x=x*0.02; cupGroup.add(drv);
 
       // Driver dome
-      const dome=new THREE.Mesh(new THREE.SphereGeometry(.11,16,10,0,Math.PI*2,0,Math.PI*.5),new THREE.MeshStandardMaterial({color:0x222,metalness:.4,roughness:.7}));
-      dome.rotation.y=side>0?-Math.PI/2:Math.PI/2; dome.position.x=side*.03; cup.add(dome);
+      const domeGeo=new THREE.EdgesGeometry(new THREE.SphereGeometry(0.1,10,8,0,Math.PI*2,0,Math.PI*0.5));
+      const dome=new THREE.LineSegments(domeGeo, lineMat(COL, 0.5));
+      dome.rotation.y=x>0?Math.PI/2:-Math.PI/2; dome.position.x=x*0.03; cupGroup.add(dome);
 
-      // Driver surround
-      const surr=new THREE.Mesh(new THREE.TorusGeometry(.19,.038,8,36),new THREE.MeshStandardMaterial({color:0x444,metalness:.3,roughness:.8}));
-      surr.rotation.y=side>0?-Math.PI/2:Math.PI/2; surr.position.x=side*.025; cup.add(surr);
-
-      // Cyan accent ring
-      const acRing=new THREE.Mesh(new THREE.TorusGeometry(.385,.011,8,50),cyMat);
-      acRing.rotation.y=side>0?-Math.PI/2:Math.PI/2; cup.add(acRing);
-
-      // Subtle logo mark
-      const logo=new THREE.Mesh(new THREE.BoxGeometry(.07,.07,.028),silvMat);
-      logo.position.set(side*.395,.11,.07); cup.add(logo);
+      // Accent dot (bright cyan center)
+      const dotMesh=new THREE.Mesh(new THREE.SphereGeometry(0.05,10,8), emMat(COL2,COL,0.9));
+      dotMesh.position.x=x*0.14; cupGroup.add(dotMesh);
     });
 
-    // Cable (left cup down)
-    const cPts=[];
+    // ── CABLE from left cup ──
+    const cablePts=[];
     for(let i=0;i<=20;i++){
       const f=i/20;
-      cPts.push(new THREE.Vector3(-1.5-Math.sin(f*Math.PI)*.18,-.97-f*1.0,Math.sin(f*Math.PI*3)*.07));
+      cablePts.push(new THREE.Vector3(-1.06,-1.02-f*0.8, Math.sin(f*Math.PI*3)*0.05));
     }
-    const cabGeo=new THREE.TubeGeometry(new THREE.CatmullRomCurve3(cPts),20,.02,8,false);
-    root.add(new THREE.Mesh(cabGeo,new THREE.MeshStandardMaterial({color:0x111,metalness:.3,roughness:.7})));
-    const plug=new THREE.Mesh(new THREE.CylinderGeometry(.037,.037,.2,12),new THREE.MeshStandardMaterial({color:0x555,metalness:.9,roughness:.15}));
-    plug.position.set(-1.5,-2.05,0); root.add(plug);
+    root.add(new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints(cablePts),
+      lineMat(COL, 0.4)
+    ));
 
-    // Center: band top ~y=0, cups at y=-0.97, bottom ~y=-1.95
-    // Visual center ~-0.975 → offset to center in frame
-    root.position.y = 0.45;
-
-    camera.position.set(0,0,5.5);
-    camera.lookAt(0,0,0);
+    // Center: arc top ~y=1.35, cups at y=-1.02, cable goes to ~-1.82
+    // Visual center ≈ (1.35 + (-1.02))/2 = 0.165
+    root.position.y = -0.15;
+    camera.position.set(0, 0, 5.8);
+    camera.lookAt(0, 0, 0);
 
     const clk=new THREE.Clock();
     (function loop(){
       requestAnimationFrame(loop); const t=clk.getElapsedTime();
-      root.rotation.y=t*.5; root.rotation.x=Math.sin(t*.3)*.05;
-      accentL.position.set(Math.cos(t*.45)*3,3,Math.sin(t*.45)*3+4);
+      root.rotation.y = t*0.5;
+      root.rotation.x = Math.sin(t*0.3)*0.05;
       renderer.render(scene,camera);
     })();
   })();
 
-  // ════════════════════════════════════════════════════
-  // 4. DIRECCIÓN DE ARTE — Hand with stylus + 3D screen
-  //    A detailed hand holding a stylus/pen, hovering
-  //    over a glowing tablet screen with UI elements,
-  //    color swatches, and a cursor glow — all centered
-  // ════════════════════════════════════════════════════
+  // ════════════════════════════════════════════════════════
+  // 4. DIRECCIÓN DE ARTE — Stylus + screen, violeta glow
+  //    Hand holding stylus over a glowing tablet screen
+  //    with UI elements — wireframe + emissive style
+  // ════════════════════════════════════════════════════════
   (function() {
-    const s = initCard('c-arte','w-arte',0x070508);
+    const s = initCard('c-arte','w-arte');
     if (!s) return;
     const { renderer, scene, camera } = s;
-    const accentL=new THREE.PointLight(0x9B5DFF,1.2,18);
-    accentL.position.set(2,3,5); scene.add(accentL);
-    const accentL2=new THREE.PointLight(0xFF3CAC,.5,14);
-    accentL2.position.set(-3,-1,3); scene.add(accentL2);
 
-    const root=new THREE.Group();
+    const COL  = 0x9B5DFF;
+    const COL2 = 0xBB99FF;
+    const FILL = 0x060310;
+    const ACCENT = 0xFF3CAC;
+
+    const root = new THREE.Group();
     scene.add(root);
 
-    // ── TABLET SCREEN (base) ──
-    const tabletGroup=new THREE.Group();
-    tabletGroup.position.set(0,-0.55,0);
-    tabletGroup.rotation.x=-0.28; // slight tilt toward viewer
-    root.add(tabletGroup);
+    // ── TABLET ──
+    const tabG = new THREE.Group();
+    tabG.position.set(0,-0.4,0);
+    tabG.rotation.x = -0.22;
+    root.add(tabG);
 
-    // Screen bezel
-    const bezel=new THREE.Mesh(new THREE.BoxGeometry(2.6,1.65,.06),new THREE.MeshStandardMaterial({color:0x111111,metalness:.85,roughness:.22}));
-    tabletGroup.add(bezel);
-    // Screen surface
-    const screen=new THREE.Mesh(new THREE.PlaneGeometry(2.42,1.5),new THREE.MeshBasicMaterial({color:0x0a0620,transparent:true,opacity:.95}));
-    screen.position.z=.032; tabletGroup.add(screen);
-    // Screen glow
-    const glow=new THREE.Mesh(new THREE.PlaneGeometry(2.44,1.52),new THREE.MeshBasicMaterial({color:0x9B5DFF,transparent:true,opacity:.06}));
-    glow.position.z=.031; tabletGroup.add(glow);
+    // Bezel fill + wire
+    tabG.add(new THREE.Mesh(new THREE.BoxGeometry(2.5,1.58,0.055), emMat(0x0a0618,COL,1)));
+    const bezelW=new THREE.LineSegments(
+      new THREE.EdgesGeometry(new THREE.BoxGeometry(2.5,1.58,0.055)),
+      lineMat(COL2, 0.88)
+    );
+    tabG.add(bezelW);
 
-    // ── UI ELEMENTS on screen ──
-    // Title bar
-    const titleBar=new THREE.Mesh(new THREE.PlaneGeometry(2.42,.12),new THREE.MeshBasicMaterial({color:0x16102a}));
-    titleBar.position.set(0,.66,.033); tabletGroup.add(titleBar);
-    // Three window buttons
-    [0xFF5F57,0xFFBD2E,0x28C840].forEach((col,i)=>{
-      const dot=new THREE.Mesh(new THREE.CircleGeometry(.028,16),new THREE.MeshBasicMaterial({color:col}));
-      dot.position.set(-1.13+i*.075,.66,.034); tabletGroup.add(dot);
-    });
+    // Screen fill (glowing surface)
+    const scrFill=new THREE.Mesh(new THREE.PlaneGeometry(2.32,1.44), emMat(0x080318,COL,0.85));
+    scrFill.position.z=0.03; tabG.add(scrFill);
 
-    // Canvas area (art board)
-    const artBoard=new THREE.Mesh(new THREE.PlaneGeometry(1.5,1.1),new THREE.MeshBasicMaterial({color:0xf5f0e8,transparent:true,opacity:.92}));
-    artBoard.position.set(-.3,-.04,.034); tabletGroup.add(artBoard);
+    // UI — artboard
+    const artFill=new THREE.Mesh(new THREE.PlaneGeometry(1.45,1.08), emMat(0x12082a,COL,0.9));
+    artFill.position.set(-0.28,-0.03,0.031); tabG.add(artFill);
+    const artW=new THREE.LineSegments(
+      new THREE.EdgesGeometry(new THREE.BoxGeometry(1.45,1.08,0.002)),
+      lineMat(COL2, 0.6)
+    );
+    artW.position.set(-0.28,-0.03,0.031); tabG.add(artW);
 
-    // Paint strokes on artboard
-    const strks=[
-      {c:0xFF6B2B,x:-.35,y:.15,w:.55,h:.055,r:.12},
-      {c:0xFF3CAC,x:-.1, y:.02,w:.42,h:.045,r:-.1 },
-      {c:0x9B5DFF,x:-.4, y:-.12,w:.5,h:.042,r:.08 },
-      {c:0x2AFADF,x:-.15,y:-.24,w:.38,h:.038,r:-.14},
-      {c:0xBCFF47,x:-.38,y:-.35,w:.32,h:.034,r:.18 },
+    // Paint strokes on artboard (colored lines)
+    const strokeDefs=[
+      {col:0xFF6B2B, pts:[[-0.85,.22],[-0.35,.28],[-0.1,.15],[0.1,.25]]},
+      {col:0xFF3CAC, pts:[[-0.9,-.0 ],[-0.5,-.05],[-.1,-.12],[0.08,-.04]]},
+      {col:0x2AFADF, pts:[[-0.82,-.2],[-0.45,-.18],[-.05,-.25],[0.1,-.18]]},
+      {col:0xBCFF47, pts:[[-0.78,-.38],[-.4,-.35],[-.08,-.42],[0.05,-.34]]},
     ];
-    strks.forEach(({c,x,y,w,h,r})=>{
-      const st=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({color:c,transparent:true,opacity:.82}));
-      st.position.set(x,y,.036); st.rotation.z=r; tabletGroup.add(st);
+    strokeDefs.forEach(({col,pts})=>{
+      const v3=pts.map(([x,y])=>new THREE.Vector3(x+(-0.28),y+(-0.03),0.036));
+      const g=new THREE.BufferGeometry().setFromPoints(v3);
+      tabG.add(new THREE.Line(g, lineMat(col, 0.9)));
+      // Thicker stroke: parallel offset
+      const v3b=pts.map(([x,y])=>new THREE.Vector3(x+(-0.28),y+(-0.03)+0.02,0.036));
+      const g2=new THREE.BufferGeometry().setFromPoints(v3b);
+      tabG.add(new THREE.Line(g2, lineMat(col, 0.5)));
     });
 
-    // Sketch lines
-    for(let i=0;i<4;i++){
-      const ln=new THREE.Mesh(new THREE.PlaneGeometry(.4-.05*i,.006),new THREE.MeshBasicMaterial({color:0x333322,transparent:true,opacity:.45}));
-      ln.position.set(-.2-i*.02,.3-.1*i,.036); ln.rotation.z=(Math.random()-.5)*.15; tabletGroup.add(ln);
-    }
+    // Tool panel right
+    const panFill=new THREE.Mesh(new THREE.PlaneGeometry(0.48,1.08), emMat(0x0d0a22,COL,0.85));
+    panFill.position.set(0.94,-0.03,0.031); tabG.add(panFill);
 
-    // Right panel (tools)
-    const rPanel=new THREE.Mesh(new THREE.PlaneGeometry(.5,1.1),new THREE.MeshBasicMaterial({color:0x100e20}));
-    rPanel.position.set(.96,-.04,.034); tabletGroup.add(rPanel);
-
-    // Tool icons (simplified)
-    const toolColors=[0xBCFF47,0xFF3CAC,0x2AFADF,0xFF6B2B,0x9B5DFF,0xffffff];
-    toolColors.forEach((col,i)=>{
-      const ic=new THREE.Mesh(new THREE.PlaneGeometry(.1,.065),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.7}));
-      ic.position.set(.96,.38-i*.13,.035); tabletGroup.add(ic);
+    // Tool icons (colored dots)
+    [0xFF6B2B,0xFF3CAC,0xBCFF47,0x2AFADF,0x9B5DFF,0xffffff].forEach((col,i)=>{
+      const ic=new THREE.Mesh(new THREE.CircleGeometry(0.04,12), emMat(col,col,0.85));
+      ic.position.set(0.94,0.36-i*0.13,0.036); tabG.add(ic);
     });
 
     // Color swatches bottom
-    [0xFF6B2B,0xFF3CAC,0xBCFF47,0x2AFADF,0x9B5DFF,0xffffff,0x111111].forEach((col,i)=>{
-      const sw=new THREE.Mesh(new THREE.PlaneGeometry(.1,.06),new THREE.MeshBasicMaterial({color:col}));
-      sw.position.set(-.55+i*.14,-.62,.035); tabletGroup.add(sw);
+    [0xFF6B2B,0xFF3CAC,0xBCFF47,0x2AFADF,0x9B5DFF,0xffffff].forEach((col,i)=>{
+      const sw=new THREE.Mesh(new THREE.PlaneGeometry(0.1,0.055), emMat(col,col,0.9));
+      sw.position.set(-0.5+i*0.13,-0.6,0.036); tabG.add(sw);
     });
 
-    // Cursor on screen (glowing dot + crosshair)
-    const cursorGroup=new THREE.Group();
-    cursorGroup.position.set(-.05,.08,.037); tabletGroup.add(cursorGroup);
-    const curDot=new THREE.Mesh(new THREE.CircleGeometry(.022,16),new THREE.MeshBasicMaterial({color:0xffffff}));
-    cursorGroup.add(curDot);
-    const curGlow=new THREE.Mesh(new THREE.CircleGeometry(.055,16),new THREE.MeshBasicMaterial({color:0x9B5DFF,transparent:true,opacity:.35}));
-    cursorGroup.add(curGlow);
-    // Crosshair lines
-    [[.1,.004],[.004,.1]].forEach(([w,h])=>{
-      const cr=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.5}));
-      cursorGroup.add(cr);
+    // Title bar
+    const tbFill=new THREE.Mesh(new THREE.PlaneGeometry(2.32,0.1), emMat(0x120828,COL,0.8));
+    tbFill.position.set(0,0.65,0.031); tabG.add(tbFill);
+    [0xFF5F57,0xFFBD2E,0x28C840].forEach((col,i)=>{
+      const d=new THREE.Mesh(new THREE.CircleGeometry(0.026,12), emMat(col,col,1));
+      d.position.set(-1.08+i*0.072,0.65,0.036); tabG.add(d);
     });
 
-    // ── STYLUS PEN ──
-    const penGroup=new THREE.Group();
-    // Pen angled: tip points down-left toward screen
-    penGroup.position.set(.6,.95,.55);
-    penGroup.rotation.set(-.52,-.25,.38);
-    root.add(penGroup);
+    // Cursor (bright dot with crosshair)
+    const curPos = new THREE.Vector3(-0.05,0.1,0.038);
+    const curDot=new THREE.Mesh(new THREE.CircleGeometry(0.025,12), emMat(0xffffff,0xffffff,1));
+    curDot.position.copy(curPos); tabG.add(curDot);
+    const curGlow=new THREE.Mesh(new THREE.CircleGeometry(0.06,16), emMat(COL,COL,0.4));
+    curGlow.position.copy(curPos); curGlow.position.z+=0.001; tabG.add(curGlow);
+    // Crosshair
+    [[0.1,0.006],[0.006,0.1]].forEach(([w,h])=>{
+      const cr=new THREE.Mesh(new THREE.PlaneGeometry(w,h), emMat(COL2,COL2,0.6));
+      cr.position.copy(curPos); cr.position.z+=0.002; tabG.add(cr);
+    });
 
-    // Pen barrel
-    penGroup.add(new THREE.Mesh(new THREE.CylinderGeometry(.048,.036,1.2,12),new THREE.MeshStandardMaterial({color:0x2a2a2a,metalness:.82,roughness:.25})));
-    // Pen grip texture (darker section)
-    const grip=new THREE.Mesh(new THREE.CylinderGeometry(.05,.046,.35,12),new THREE.MeshStandardMaterial({color:0x1a1a1a,metalness:.6,roughness:.55}));
-    grip.position.y=-.32; penGroup.add(grip);
+    // ── STYLUS ──
+    const penG=new THREE.Group();
+    penG.position.set(0.55,0.9,0.55);
+    penG.rotation.set(-0.55,-0.22,0.4);
+    root.add(penG);
+
+    // Pen barrel fill
+    penG.add(new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.038,1.18,12), emMat(0x1a0d2e,COL,1)));
+    // Pen barrel wire
+    const pbW=new THREE.LineSegments(
+      new THREE.EdgesGeometry(new THREE.CylinderGeometry(0.05,0.038,1.18,12)),
+      lineMat(COL2, 0.8)
+    );
+    penG.add(pbW);
+
+    // Grip section (darker)
+    penG.add(new THREE.Mesh(new THREE.CylinderGeometry(0.052,0.048,0.32,12), emMat(0x0e0818,COL,1))).position.y=-0.3;
     // Grip ribs
-    for(let i=0;i<8;i++){
-      const rb=new THREE.Mesh(new THREE.TorusGeometry(.051,.005,6,16),new THREE.MeshStandardMaterial({color:0x333,metalness:.5,roughness:.7}));
-      rb.position.y=-.18+i*.04; penGroup.add(rb);
+    for(let i=0;i<7;i++){
+      const rg=new THREE.EdgesGeometry(new THREE.TorusGeometry(0.053,0.004,6,14));
+      const rb=new THREE.LineSegments(rg, lineMat(COL, 0.5));
+      rb.position.y=-0.17+i*0.04; penG.add(rb);
     }
+
     // Side button
-    const btn=new THREE.Mesh(new THREE.BoxGeometry(.02,.08,.06),new THREE.MeshStandardMaterial({color:0x9B5DFF,metalness:.4,roughness:.4}));
-    btn.position.set(.05,.12,0); penGroup.add(btn);
-    // Pen tip (tapered nib)
-    const nib=new THREE.Mesh(new THREE.CylinderGeometry(.005,.048,.12,8),new THREE.MeshStandardMaterial({color:0xdddddd,metalness:1,roughness:.05}));
-    nib.position.y=-.66; penGroup.add(nib);
-    // Nib tip glow
-    const nibGlow=new THREE.Mesh(new THREE.SphereGeometry(.018,10,10),new THREE.MeshBasicMaterial({color:0x9B5DFF,transparent:true,opacity:.7}));
-    nibGlow.position.y=-.72; penGroup.add(nibGlow);
-    // Top eraser end
-    const eraser=new THREE.Mesh(new THREE.CylinderGeometry(.036,.036,.055,12),new THREE.MeshStandardMaterial({color:0x888,metalness:.8,roughness:.2}));
-    eraser.position.y=.635; penGroup.add(eraser);
+    const btnFill=new THREE.Mesh(new THREE.BoxGeometry(0.018,0.075,0.058), emMat(COL,COL,1));
+    btnFill.position.set(0.053,0.1,0); penG.add(btnFill);
 
-    // ── HAND (stylized, not cartoony) ──
-    const handGroup=new THREE.Group();
-    handGroup.position.set(.6,.78,.42);
-    handGroup.rotation.set(-.45,-.2,.3);
-    root.add(handGroup);
+    // Nib taper fill + wire
+    penG.add(new THREE.Mesh(new THREE.CylinderGeometry(0.004,0.05,0.12,8), emMat(0x2a1855,COL,1))).position.y=-0.65;
+    const nibW=new THREE.LineSegments(
+      new THREE.EdgesGeometry(new THREE.CylinderGeometry(0.004,0.05,0.12,8)),
+      lineMat(COL2, 0.85)
+    );
+    nibW.position.y=-0.65; penG.add(nibW);
 
-    const skinMat=new THREE.MeshStandardMaterial({color:0xd4a574,metalness:.02,roughness:.75});
-    const skinDkMat=new THREE.MeshStandardMaterial({color:0xc49060,metalness:.02,roughness:.8});
+    // Nib tip glow dot
+    const nibDot=new THREE.Mesh(new THREE.SphereGeometry(0.02,10,8), emMat(COL2,COL2,1));
+    nibDot.position.y=-0.715; penG.add(nibDot);
+    const nibGlow=new THREE.Mesh(new THREE.SphereGeometry(0.045,10,8), emMat(COL,COL,0.4));
+    nibGlow.position.y=-0.715; penG.add(nibGlow);
 
-    // Palm
-    const palm=new THREE.Mesh(new THREE.BoxGeometry(.28,.22,.14),skinMat);
-    handGroup.add(palm);
-    // Palm rounding sides
-    [-1,1].forEach(s=>{
-      const ps=new THREE.Mesh(new THREE.CylinderGeometry(.07,.07,.22,12),skinMat);
-      ps.rotation.z=Math.PI/2; ps.position.set(s*.17,0,0); handGroup.add(ps);
-    });
+    // Top cap
+    penG.add(new THREE.Mesh(new THREE.SphereGeometry(0.042,12,10), emMat(0x333,COL,0.8))).position.y=0.635;
+    const capW=new THREE.LineSegments(
+      new THREE.EdgesGeometry(new THREE.CylinderGeometry(0.038,0.038,0.05,12)),
+      lineMat(COL, 0.6)
+    );
+    capW.position.y=0.63; penG.add(capW);
 
-    // Thumb
-    const thumbPivot=new THREE.Group(); thumbPivot.position.set(-.18,-.06,0); handGroup.add(thumbPivot);
-    const tb1=new THREE.Mesh(new THREE.CylinderGeometry(.04,.038,.16,10),skinMat);
-    tb1.rotation.z=.5; tb1.position.set(-.06,-.05,0); thumbPivot.add(tb1);
-    const tb2=new THREE.Mesh(new THREE.CylinderGeometry(.036,.032,.12,10),skinMat);
-    tb2.rotation.z=.4; tb2.position.set(-.16,-.12,0); thumbPivot.add(tb2);
-
-    // Index finger (holding pen)
-    const idx=new THREE.Group(); idx.position.set(-.05,.12,.02); handGroup.add(idx);
-    const i1=new THREE.Mesh(new THREE.CylinderGeometry(.038,.034,.2,10),skinMat);
-    i1.rotation.x=.3; idx.add(i1);
-    const i2=new THREE.Mesh(new THREE.CylinderGeometry(.033,.03,.16,10),skinMat);
-    i2.rotation.x=.5; i2.position.set(0,.2,-.06); idx.add(i2);
-    const i3=new THREE.Mesh(new THREE.CylinderGeometry(.03,.026,.12,10),skinMat);
-    i3.rotation.x=.6; i3.position.set(0,.32,-.14); idx.add(i3);
-
-    // Middle finger
-    const mid=new THREE.Group(); mid.position.set(.04,.13,.01); handGroup.add(mid);
-    const m1=new THREE.Mesh(new THREE.CylinderGeometry(.037,.033,.21,10),skinMat);
-    m1.rotation.x=.25; mid.add(m1);
-    const m2=new THREE.Mesh(new THREE.CylinderGeometry(.032,.029,.17,10),skinMat);
-    m2.rotation.x=.45; m2.position.set(0,.21,-.05); mid.add(m2);
-
-    // Ring + pinky (folded, just stumps)
-    [[.12,.08],[.19,.05]].forEach(([x,len])=>{
-      const fn=new THREE.Group(); fn.position.set(x,.05,0); handGroup.add(fn);
-      const fb=new THREE.Mesh(new THREE.CylinderGeometry(.033,.03,len,10),skinMat);
-      fb.rotation.x=.7; fn.add(fb);
-      const fb2=new THREE.Mesh(new THREE.CylinderGeometry(.029,.026,len*.7,10),skinMat);
-      fb2.rotation.x=.9; fb2.position.set(0,len*.6,-.04); fn.add(fb2);
-    });
-
-    // Knuckle details
-    [-.06,.04,.12,.19].forEach(x=>{
-      const kn=new THREE.Mesh(new THREE.SphereGeometry(.025,8,8),skinDkMat);
-      kn.position.set(x,.13,.06); handGroup.add(kn);
-    });
-
-    // Center entire composition
-    root.position.set(0,.1,0);
-    camera.position.set(0,.1,5);
-    camera.lookAt(0,.1,0);
+    // Center
+    root.position.set(0,0.12,0);
+    camera.position.set(0,0.12,5.2);
+    camera.lookAt(0,0.12,0);
 
     const clk=new THREE.Clock();
     (function loop(){
       requestAnimationFrame(loop); const t=clk.getElapsedTime();
-      root.rotation.y=t*.42;
-      root.rotation.x=Math.sin(t*.26)*.04;
+      root.rotation.y=t*0.42;
+      root.rotation.x=Math.sin(t*0.26)*0.04;
       // Cursor pulse
-      curGlow.material.opacity=.25+Math.abs(Math.sin(t*2))*.25;
-      curDot.scale.setScalar(1+Math.sin(t*2)*.12);
+      curGlow.material.opacity=0.25+Math.abs(Math.sin(t*2))*0.3;
+      curDot.scale.setScalar(1+Math.sin(t*2)*0.15);
       // Nib glow pulse
-      nibGlow.material.opacity=.5+Math.sin(t*1.8)*.25;
-      // Screen subtle color shift
-      glow.material.opacity=.04+Math.abs(Math.sin(t*.8))*.06;
-      accentL.position.set(Math.cos(t*.38)*4,3,Math.sin(t*.38)*4+4);
-      accentL2.position.set(-3+Math.sin(t*.3),-1,3);
+      nibGlow.material.opacity=0.3+Math.abs(Math.sin(t*1.8))*0.3;
+      nibDot.scale.setScalar(1+Math.sin(t*1.8)*0.2);
       renderer.render(scene,camera);
     })();
   })();
 
-  // ════════════════════════════════════════════════════
-  // HERO 3D
-  // ════════════════════════════════════════════════════
+  // ════════════════════════════════════════════════════════
+  // HERO 3D — unchanged, particles + wireframe shapes
+  // ════════════════════════════════════════════════════════
   (function(){
     const canvas=document.getElementById('hero-canvas');
     const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
